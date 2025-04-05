@@ -1,0 +1,45 @@
+:root {
+    --color-grey: #F1EFEC;
+    --color-tan: #D4C9BE;
+    --color-navy: #123458;
+    --color-black: #030303;
+}
+
+body {
+    background-color: var(--color-navy);
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    color: var(--color-tan)
+}
+
+main {
+    height: auto;
+    margin: 1.5rem;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    color: var(--color-tan);
+    position: absolute;
+    bottom: 1rem;
+}
+
+#valueContainer {
+    background-color: var(--color-tan);
+}
+
+#caseContainer {
+    background-color: var(--color-tan);
+}
+
+#playerContainer {
+    background-color: var(--color-tan);
+}
+
+@media (max-width: 500px) {
+    
+}
