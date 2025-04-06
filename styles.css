@@ -59,12 +59,45 @@ footer {
     flex-direction: column;
     justify-content: start;
     align-items: center;
+    font-size: 25px;
     width: 50%;
     height: 50%;
     background-color: var(--color-grey);
     border-radius: 10px;
     border: solid var(--color-tan);
     box-shadow: 5px 5px var(--color-tan);
+}
+
+#inputSetupContainer {
+    display: flex;
+    height: 100%;
+    width: 90%;
+    justify-content: space-around;
+    font-size: large;
+}
+
+#gameSetupForm {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+    text-align: center;
+    gap: 20px;
+}
+
+#displayPlayerList {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    text-align: center;
+}
+
+#displayPlayerList h2 {
+    margin: 0;
+}
+
+#playerSetupList {
+    list-style: none;
+    padding: 0;
 }
 
 #casesAndValuesContainer {
@@ -91,6 +124,15 @@ footer {
 
 #modifiers {
     background-color: var(--color-grey);
+}
+
+
+
+.setupPlayer {
+    background-color: var(--color-navy);
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
 }
 
 @media (max-width: 500px) {

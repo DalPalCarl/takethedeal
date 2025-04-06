@@ -15,10 +15,26 @@
         <section id="gameSetupContainer">
             <div id="gameSetup">
                 <h1>Game Setup</h1>
-                <form id="gameSetupForm">
-                    <input type="number" name="playerCount" min="2" max="10" value="2">
-                    <button type="submit">Start Game</button>
-                </form>
+                <div id="inputSetupContainer">
+                    <form id="gameSetupForm">
+                        <input type="text" id="newPlayerName" minlength="1" maxlength="16" placeholder="Add Player" pattern="[a-zA-Z ]+" required>
+                        <button type="button" id="addPlayer">Add</button>
+                        <label for="modifierSetting">Modifier Frequency</label>
+                        <select id="modifierSetting" name="modifierSetting">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="volatile">Volatile</option>
+                        </select>
+                        <button type="submit">Start Game</button>
+                    </form>
+                    <div id="displayPlayerList">
+                        <h2>Players</h2>
+                        <ul id="playerSetupList">
+        
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </section>
     </section>
