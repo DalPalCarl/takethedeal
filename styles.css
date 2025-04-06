@@ -2,6 +2,7 @@
     --color-grey: #F1EFEC;
     --color-tan: #D4C9BE;
     --color-navy: #123458;
+    --color-light-navy: #286fbb;
     --color-black: #030303;
 }
 
@@ -84,6 +85,10 @@ footer {
     gap: 20px;
 }
 
+#gameSetupForm #addPlayer, #modifierSetting {
+    margin-bottom: 1rem;
+}
+
 #displayPlayerList {
     display: flex;
     flex-direction: column;
@@ -96,8 +101,10 @@ footer {
 }
 
 #playerSetupList {
+    display: flex;
     list-style: none;
     padding: 0;
+    flex-wrap: wrap;
 }
 
 #casesAndValuesContainer {
@@ -110,16 +117,19 @@ footer {
     grid-template-rows: 5fr 1fr;
     background-color: var(--color-tan);
     margin: .5rem;
+    padding: .5rem;
 }
 
 #caseContainer {
     background-color: var(--color-tan);
     margin: .5rem;
+    padding: .5rem;
 }
 
 #playerContainer {
     background-color: var(--color-tan);
     margin: .5rem;
+    padding: .5rem;
 }
 
 #modifiers {
@@ -129,10 +139,11 @@ footer {
 
 
 .setupPlayer {
-    background-color: var(--color-navy);
+    background-color: var(--color-light-navy);
+    border: solid .15rem var(--color-navy);
     border-radius: 10px;
     margin: 5px;
-    padding: 5px;
+    padding: 10px;
 }
 
 @media (max-width: 500px) {

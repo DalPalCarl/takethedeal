@@ -17,7 +17,12 @@
                 <h1>Game Setup</h1>
                 <div id="inputSetupContainer">
                     <form id="gameSetupForm">
-                        <input type="text" id="newPlayerName" minlength="1" maxlength="16" placeholder="Add Player" pattern="[a-zA-Z ]+" required>
+                        <input type="text" id="newPlayerName" 
+                            minlength="1" maxlength="16" 
+                            placeholder="Add Player" 
+                            pattern="[a-zA-Z ]+"
+                            autocomplete="off"
+                            autofocus="true">
                         <button type="button" id="addPlayer">Add</button>
                         <label for="modifierSetting">Modifier Frequency</label>
                         <select id="modifierSetting" name="modifierSetting">
@@ -28,13 +33,12 @@
                         <button type="submit">Start Game</button>
                     </form>
                     <div id="displayPlayerList">
-                        <h2>Players</h2>
+                        <h2>Players (2-10)</h2>
                         <ul id="playerSetupList">
         
                         </ul>
                     </div>
                 </div>
-
             </div>
         </section>
     </section>
@@ -43,7 +47,10 @@
         <section id="casesAndValuesContainer">
             <section id="valueContainer">
                 <section id="values">
+                    <h3>Values</h3>
+                    <div id="valueGrid">
 
+                    </div>
                 </section>
                 <section id="modifiers">
 
@@ -54,6 +61,10 @@
             <!-- Cases -->
     
             <section id="caseContainer">
+                <h3>Cases</h3>
+                <div id="caseGrid">
+
+                </div>
                 
             </section>
         </section>
