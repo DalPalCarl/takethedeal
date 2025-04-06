@@ -5,7 +5,12 @@
     --color-black: #030303;
 }
 
+html {
+    height: 100vh;
+}
+
 body {
+    height: inherit;
     background-color: var(--color-navy);
 }
 
@@ -16,8 +21,10 @@ header {
 }
 
 main {
-    height: auto;
+    display: grid;
+    grid-template-rows: 3fr 1fr;
     margin: 1.5rem;
+    height: 80vh;
 }
 
 footer {
@@ -28,16 +35,62 @@ footer {
     bottom: 1rem;
 }
 
+#gameSetupBackdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px) brightness(50%);
+}
+
+#gameSetupContainer {
+    display: flex;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#gameSetup {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 50%;
+    height: 50%;
+    background-color: var(--color-grey);
+    border-radius: 10px;
+    border: solid var(--color-tan);
+    box-shadow: 5px 5px var(--color-tan);
+}
+
+#casesAndValuesContainer {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
 #valueContainer {
+    display: grid;
+    grid-template-rows: 5fr 1fr;
     background-color: var(--color-tan);
+    margin: .5rem;
 }
 
 #caseContainer {
     background-color: var(--color-tan);
+    margin: .5rem;
 }
 
 #playerContainer {
     background-color: var(--color-tan);
+    margin: .5rem;
+}
+
+#modifiers {
+    background-color: var(--color-grey);
 }
 
 @media (max-width: 500px) {
