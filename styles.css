@@ -23,7 +23,6 @@ header {
 
 main {
     display: grid;
-    grid-template-rows: 3fr 1fr;
     margin: 1.5rem;
     height: 80vh;
 }
@@ -109,12 +108,13 @@ footer {
 
 #casesAndValuesContainer {
     display: grid;
-    grid-template-columns: 2fr 3fr;
+    grid-template-columns: 2fr 3fr 1fr;
 }
 
 #valueContainer {
     display: grid;
     grid-template-rows: 5fr 1fr;
+    justify-content: center;
     background-color: var(--color-tan);
     margin: .5rem;
     padding: .5rem;
@@ -132,6 +132,17 @@ footer {
     padding: .5rem;
 }
 
+#caseGrid {
+    display: grid;
+}
+
+#valueGrid {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    gap: .5rem;
+}
+
 #modifiers {
     background-color: var(--color-grey);
 }
@@ -144,6 +155,34 @@ footer {
     border-radius: 10px;
     margin: 5px;
     padding: 10px;
+}
+
+.value {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    width: 50px;
+}
+
+.onePenalty {
+    background-color: blue;
+}
+
+.twoPenalties {
+    background-color: green;
+}
+
+.threePenalties {
+    background-color: yellow;
+}
+
+.fourPenalties {
+    background-color: orangered;
+}
+
+.maxPenalty {
+    background-color: red;
 }
 
 @media (max-width: 500px) {
