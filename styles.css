@@ -134,6 +134,8 @@ footer {
 
 #caseGrid {
     display: grid;
+    gap: .5rem;
+    justify-content: center;
 }
 
 #valueGrid {
@@ -183,6 +185,17 @@ footer {
 
 .maxPenalty {
     background-color: red;
+}
+
+.modifier {
+    background-color: purple;
+}
+
+.case {
+    background-color: var(--color-light-navy);
+    color: var(--color-grey);
+    aspect-ratio: 1 / 1;
+    width: max(50px, 50%);
 }
 
 @media (max-width: 500px) {

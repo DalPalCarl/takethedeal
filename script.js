@@ -41,7 +41,6 @@ gameSetupForm.on("submit", (event) => {
         modifierCount = modifierSetting === 'low' ? 2 : modifierSetting === 'medium' ? (playerCount * (ROUNDS / 4)) : (playerCount * (ROUNDS / 2));
         $("#gameSetupBackdrop").fadeOut()
         initializeGame();
-        //console.log("Players: ", playerCount, " : Modifiers: ", modifierCount);
 
     }
 })
@@ -67,7 +66,7 @@ function shuffle() {
 function initializeGame() {
     totalCases = ROUNDS * playerCount;
     $(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css("grid-template-rows", "repeat(" + playerCount + ", 50px)");
-    $(caseBoard).css("grid-template-rows", playerCount);
+    $(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css(("grid-template-rows", "repeat(" + playerCount + ", 50px)"));
     loadValues();
     loadModifiers();
     loadCases();
@@ -116,7 +115,11 @@ function loadPlayers() {
 
 }
 function loadCases() {
-
+    for(let i = 0; i < totalCases; i++){
+        const newCase = document.createElement("button");
+        $(newCase).addClass("case").text(i+1);
+        $(caseBoard).append(newCase);
+    }
 }
 
 function shuffleValues() {
