@@ -30,6 +30,20 @@ $("#newPlayerName").on("keypress", (event) => {
     }
 })
 
+function GameState(playerCount, modifierSetting, playerList){
+    this.rounds = ROUNDS;
+    this.playerCount = playerCount;
+    this.modifierSetting = modifierSetting;
+    this.players = playerList;
+    this.penaltyList = [];
+    this.modifierList = [];
+}
+
+function Player(name){
+    this.name = name;
+    this.selectedCase = null;
+}
+
 gameSetupForm.on("submit", (event) => {
     event.preventDefault();
     if(playerSetupList[0].children.length <= 1){
