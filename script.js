@@ -100,8 +100,9 @@ function initializeGame() {
     $(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css(("grid-template-rows", "repeat(" + playerCount + ", 50px)"));
     shuffle(game.players);
 
-
-    loadPenalties();
+    game.penaltyList = generatePenaltyList(totalCases);
+    loadPenalties(totalCases, game.penaltyList);
+    shuffle(game.penaltyList);
     loadModifiers();
     loadCases();
     loadPlayers();
@@ -109,38 +110,35 @@ function initializeGame() {
 
 function generatePenaltyList(cases) {
     let penList = [];
-    penList = [...penList, [].fill(1, 0, (cases/(ROUNDS/2))-1)];
-    penList = [...penList, [].fill(2, 0, (cases/(ROUNDS/4)))];
-    penList = [...penList, [].fill(3, 0, (cases/(ROUNDS/8)))];
-    penList = [...penList, [].fill(4, 0, (cases/(ROUNDS/8)))];
-    penList = [...penList, 5];
+    penList.push(...Array((cases/(ROUNDS/4))-1).fill(1));
+    penList.push(...Array(cases/(ROUNDS/2)).fill(2));
+    penList.push(...Array(cases/ROUNDS).fill(3));
+    penList.push(...Array(cases/ROUNDS).fill(4));
+    penList.push(5);
+    return penList;
 }
 
-function loadPenalties() {
-    for(let i = 0; i < (totalCases/(ROUNDS/4))-1; i++){
+function loadPenalties(totalCases, pList) {
+    for(let i = 0; i < totalCases; i++){
         const newVal = document.createElement("div");
-        $(newVal).addClass("value onePenalty").text("1");
+        switch (pList[i]){
+            case 1:
+                $(newVal).addClass("value onePenalty").text("1");
+                break;
+            case 2:
+                $(newVal).addClass("value twoPenalties").text("2");
+                break;
+            case 3:
+                $(newVal).addClass("value threePenalties").text("3");
+                break;
+            case 4:
+                $(newVal).addClass("value fourPenalties").text("4");
+                break;
+            case 5:
+                $(newVal).addClass("value maxPenalty").text("Max");
+            }
         $(valueBoard).append(newVal);
     }
-    for(let i = 0; i < (totalCases/(ROUNDS/2)); i++){
-        const newVal = document.createElement("div");
-        $(newVal).addClass("value twoPenalties").text("2");
-        $(valueBoard).append(newVal);
-    }
-    for(let i = 0; i < (totalCases/ROUNDS); i++){
-        const newVal = document.createElement("div");
-        $(newVal).addClass("value threePenalties").text("3");
-        $(valueBoard).append(newVal);
-    }
-    for(let i = 0; i < (totalCases/ROUNDS); i++){
-        const newVal = document.createElement("div");
-        $(newVal).addClass("value fourPenalties ").text("4");
-        $(valueBoard).append(newVal);
-    }
-    const newVal = document.createElement("div");
-    $(newVal).addClass("value maxPenalty").text("Max");
-    $(valueBoard).append(newVal);
-
 }
 function loadModifiers() {
 
