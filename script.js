@@ -101,17 +101,22 @@ function initializeGame() {
     shuffle(game.players);
 
 
-    loadValues();
+    loadPenalties();
     loadModifiers();
     loadCases();
     loadPlayers();
 }
 
-function generateValues() {
-    
+function generatePenaltyList(cases) {
+    let penList = [];
+    penList = [...penList, [].fill(1, 0, (cases/(ROUNDS/2))-1)];
+    penList = [...penList, [].fill(2, 0, (cases/(ROUNDS/4)))];
+    penList = [...penList, [].fill(3, 0, (cases/(ROUNDS/8)))];
+    penList = [...penList, [].fill(4, 0, (cases/(ROUNDS/8)))];
+    penList = [...penList, 5];
 }
 
-function loadValues() {
+function loadPenalties() {
     for(let i = 0; i < (totalCases/(ROUNDS/4))-1; i++){
         const newVal = document.createElement("div");
         $(newVal).addClass("value onePenalty").text("1");
