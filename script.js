@@ -34,7 +34,7 @@ $("#newPlayerName").on("keypress", (event) => {
 })
 
 $(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)");
-$(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)");
+$(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS-2) + ", 1fr)");
 $(modifiers).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr");
 
 function GameState(playerCount, modifierNumber, playerList){
@@ -107,8 +107,8 @@ function initializeGame() {
     shuffle(game.penaltyList);
     game.modifierList = generateModifierList(totalCases, modifierCount)
     const modifierData = game.modifierList.slice(0, modifierCount*2);
-    console.log(modifierData);
     loadModifiers(modifierData);
+    shuffle(game.modifierList);
     loadCases();
     loadPlayers();
 }
