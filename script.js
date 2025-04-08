@@ -33,6 +33,10 @@ $("#newPlayerName").on("keypress", (event) => {
     }
 })
 
+$(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)");
+$(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)");
+$(modifiers).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr");
+
 function GameState(playerCount, modifierNumber, playerList){
     this.rounds = 8;
     this.playerCount = playerCount;
@@ -54,9 +58,6 @@ gameSetupForm.on("submit", (event) => {
         alert("Must have at least 2 players to start!");
     }
     else {
-        const modifierSetting = gameSetupForm[0].modifierSetting.value
-        playerCount = playerSetupList[0].children.length;
-        modifierCount = modifierSetting === 'low' ? 2 : modifierSetting === 'medium' ? (playerCount * (ROUNDS / 4)) : (playerCount * (ROUNDS / 2));
         $("#gameSetupBackdrop").fadeOut()
         initializeGame();
     }
@@ -76,6 +77,10 @@ function addPlayerToList() {
     }
 }
 
+function removePlayerFromList() {
+
+}
+
 function shuffle(arr) {
     let currentIndex = arr.length;
     while(currentIndex != 0){
@@ -86,27 +91,35 @@ function shuffle(arr) {
 }
 
 function initializeGame() {
-    const genPlayers = () => {
-        let pList = [];
-        playerSetupList.children().each((_, p) => {
-            const playerObject = new Player(p.innerText);
-            pList = [...pList, playerObject];
-        });
-        return pList;
-    }
-    game = new GameState(playerCount, modifierCount, genPlayers());
+    const modifierSetting = gameSetupForm[0].modifierSetting.value
+    playerCount = playerSetupList[0].children.length;
     totalCases = ROUNDS * playerCount;
-    $(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)").css("grid-template-rows", "repeat(auto-fit, 1fr)");
-    $(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)").css("grid-template-rows", "repeat(auto-fit, 1fr)");
+    modifierCount = modifierSetting === 'low' ? 1 
+        : modifierSetting === 'medium' ? (totalCases/8) 
+        : (totalCases/4);
+    
+    game = new GameState(playerCount, modifierCount, generatePlayers());
+    
     shuffle(game.players);
 
     game.penaltyList = generatePenaltyList(totalCases);
     loadPenalties(totalCases, game.penaltyList);
     shuffle(game.penaltyList);
-
-    loadModifiers();
+    game.modifierList = generateModifierList(totalCases, modifierCount)
+    const modifierData = game.modifierList.slice(0, modifierCount*2);
+    console.log(modifierData);
+    loadModifiers(modifierData);
     loadCases();
     loadPlayers();
+}
+
+function generatePlayers() {
+    let pList = [];
+    playerSetupList.children().each((_, p) => {
+        const playerObject = new Player(p.innerText);
+        pList = [...pList, playerObject];
+    });
+    return pList;
 }
 
 function generatePenaltyList(cases) {
@@ -117,6 +130,16 @@ function generatePenaltyList(cases) {
     penList.push(...Array(cases/ROUNDS).fill(4));
     penList.push(5);
     return penList;
+}
+
+function generateModifierList(cases, setting) {
+    let modList = [];
+    for(let i = 0; i < setting; i++){
+        modList.push(2);
+        modList.push(3);
+    }
+    modList.push(...Array(cases-(setting*2)).fill(null));
+    return modList;
 }
 
 function loadPenalties(totalCases, pList) {
@@ -141,9 +164,14 @@ function loadPenalties(totalCases, pList) {
         $(valueBoard).append(newVal);
     }
 }
-function loadModifiers() {
-
+function loadModifiers(modifierData) {
+    modifierData.forEach((mod) => {
+        const modElement = document.createElement("div");
+        $(modElement).addClass("modifier").text(mod + "X");
+        $(modifiers).append(modElement);
+    })
 }
+
 function loadPlayers() {
     $(game.players).each((_, p) => {
         const playerElement = document.createElement("div");
@@ -158,10 +186,6 @@ function loadCases() {
         $(newCase).addClass("case").text(i+1);
         $(caseBoard).append(newCase);
     }
-}
-
-function shuffleValues() {
-
 }
 
 // Animation Functions

@@ -18,14 +18,16 @@ body {
 header {
     display: flex;
     justify-content: center;
-    color: var(--color-tan)
+    color: var(--color-tan);
+    margin: 0;
 }
 
 main {
     display: flex;
     justify-content: center;
     margin: 1.5rem;
-    height: auto;
+    margin-top: 0;
+    height: max(90vh, 50%);
 }
 
 footer {
@@ -110,7 +112,8 @@ footer {
 
 #valueContainer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: start;
     background-color: var(--color-tan);
     margin: .5rem;
     padding: .5rem;
@@ -143,17 +146,21 @@ footer {
 
 #valueGrid {
     display: grid;
-    align-items: center;
+    align-self: start;
     justify-items: center;
+    align-content: center;
     gap: .5rem;
+    width: fit-content;
 }
 
 #modifiers {
     display: grid;
+    grid-template-rows: 1fr 1fr;
     background-color: var(--color-grey);
+    margin-top: 1.5rem;
+    padding: .1rem;
+    gap: .2rem;
 }
-
-
 
 .setupPlayer {
     background-color: var(--color-light-navy);
@@ -192,7 +199,12 @@ footer {
 }
 
 .modifier {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
     background-color: purple;
+    width: 100%;
 }
 
 .case {
