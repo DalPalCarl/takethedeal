@@ -96,13 +96,14 @@ function initializeGame() {
     }
     game = new GameState(playerCount, modifierCount, genPlayers());
     totalCases = ROUNDS * playerCount;
-    $(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css("grid-template-rows", "repeat(" + playerCount + ", 50px)");
-    $(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css(("grid-template-rows", "repeat(" + playerCount + ", 50px)"));
+    $(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)").css("grid-template-rows", "repeat(auto-fit, 1fr)");
+    $(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)").css("grid-template-rows", "repeat(auto-fit, 1fr)");
     shuffle(game.players);
 
     game.penaltyList = generatePenaltyList(totalCases);
     loadPenalties(totalCases, game.penaltyList);
     shuffle(game.penaltyList);
+
     loadModifiers();
     loadCases();
     loadPlayers();

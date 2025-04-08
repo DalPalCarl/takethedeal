@@ -25,7 +25,7 @@ main {
     display: flex;
     justify-content: center;
     margin: 1.5rem;
-    height: 80vh;
+    height: auto;
 }
 
 footer {
@@ -61,8 +61,8 @@ footer {
     justify-content: start;
     align-items: center;
     font-size: 25px;
-    width: 50%;
-    height: 50%;
+    width: 70%;
+    height: auto;
     background-color: var(--color-grey);
     border-radius: 10px;
     border: solid var(--color-tan);
@@ -86,6 +86,7 @@ footer {
 }
 
 #gameSetupForm #addPlayer, #modifierSetting {
+    contain: content;
     margin-bottom: 1rem;
 }
 
@@ -102,6 +103,7 @@ footer {
 
 #playerSetupList {
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
     padding: 0;
 }
@@ -112,12 +114,15 @@ footer {
     background-color: var(--color-tan);
     margin: .5rem;
     padding: .5rem;
+    height: inherit;
 }
 
 #caseContainer {
     background-color: var(--color-tan);
     margin: .5rem;
     padding: .5rem;
+    height: inherit;
+    width: auto;
 }
 
 #playerContainer {
@@ -126,12 +131,14 @@ footer {
     background-color: var(--color-tan);
     margin: .5rem;
     padding: .5rem;
+    height: inherit;
 }
 
 #caseGrid {
     display: grid;
-    gap: .5rem;
+    gap: 5px;
     justify-content: center;
+    width: fit-content;
 }
 
 #valueGrid {
@@ -161,7 +168,7 @@ footer {
     justify-content: center;
     align-items: center;
     aspect-ratio: 1 / 1;
-    width: 50px;
+    width: 100%;
 }
 
 .onePenalty {
@@ -192,14 +199,16 @@ footer {
     background-color: var(--color-light-navy);
     color: var(--color-grey);
     aspect-ratio: 1 / 1;
-    width: max(50px, 50%);
+    width: 100%;
 }
 
 .player {
     background-color: #123458;
     color: var(--color-grey);
     padding: .5rem;
-    margin: .5rem;
+    margin-inline: .5rem;
+    margin-bottom: .2rem;
+    width: 200px;
 }
 
 @media (max-width: 500px) {
