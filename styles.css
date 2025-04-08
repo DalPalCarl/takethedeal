@@ -22,7 +22,8 @@ header {
 }
 
 main {
-    display: grid;
+    display: flex;
+    justify-content: center;
     margin: 1.5rem;
     height: 80vh;
 }
@@ -103,17 +104,10 @@ footer {
     display: flex;
     list-style: none;
     padding: 0;
-    flex-wrap: wrap;
-}
-
-#casesAndValuesContainer {
-    display: grid;
-    grid-template-columns: 2fr 3fr 1fr;
 }
 
 #valueContainer {
-    display: grid;
-    grid-template-rows: 5fr 1fr;
+    display: flex;
     justify-content: center;
     background-color: var(--color-tan);
     margin: .5rem;
@@ -127,6 +121,8 @@ footer {
 }
 
 #playerContainer {
+    display: flex;
+    flex-direction: column;
     background-color: var(--color-tan);
     margin: .5rem;
     padding: .5rem;
@@ -146,6 +142,7 @@ footer {
 }
 
 #modifiers {
+    display: grid;
     background-color: var(--color-grey);
 }
 
@@ -196,6 +193,13 @@ footer {
     color: var(--color-grey);
     aspect-ratio: 1 / 1;
     width: max(50px, 50%);
+}
+
+.player {
+    background-color: #123458;
+    color: var(--color-grey);
+    padding: .5rem;
+    margin: .5rem;
 }
 
 @media (max-width: 500px) {

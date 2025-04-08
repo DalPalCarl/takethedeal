@@ -2,6 +2,7 @@
 
 const valueBoard = $("#valueGrid");
 const caseBoard = $("#caseGrid");
+const playerBoard = $("#playerContainer");
 const modifiers = $("#modifiers");
 const gameSetupForm = $("#gameSetupForm");
 const playerSetupList = $("#playerSetupList");
@@ -14,6 +15,8 @@ let modifierCount = 0;
 let totalCases = 0;
 
 let penaltyList = [];
+
+let game;
 
 $("#testButton").on("click", () => {
     $("#gameSetupBackdrop").fadeOut();
@@ -30,10 +33,10 @@ $("#newPlayerName").on("keypress", (event) => {
     }
 })
 
-function GameState(playerCount, modifierSetting, playerList){
-    this.rounds = ROUNDS;
+function GameState(playerCount, modifierNumber, playerList){
+    this.rounds = 8;
     this.playerCount = playerCount;
-    this.modifierSetting = modifierSetting;
+    this.modifierNumber = modifierNumber;
     this.players = playerList;
     this.penaltyList = [];
     this.modifierList = [];
@@ -41,6 +44,7 @@ function GameState(playerCount, modifierSetting, playerList){
 
 function Player(name){
     this.name = name;
+    this.score = 0;
     this.selectedCase = null;
 }
 
@@ -55,7 +59,6 @@ gameSetupForm.on("submit", (event) => {
         modifierCount = modifierSetting === 'low' ? 2 : modifierSetting === 'medium' ? (playerCount * (ROUNDS / 4)) : (playerCount * (ROUNDS / 2));
         $("#gameSetupBackdrop").fadeOut()
         initializeGame();
-
     }
 })
 
@@ -73,14 +76,31 @@ function addPlayerToList() {
     }
 }
 
-function shuffle() {
-
+function shuffle(arr) {
+    let currentIndex = arr.length;
+    while(currentIndex != 0){
+        let randIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [arr[currentIndex], arr[randIndex]] = [arr[randIndex], arr[currentIndex]];
+    }
 }
 
 function initializeGame() {
+    const genPlayers = () => {
+        let pList = [];
+        playerSetupList.children().each((_, p) => {
+            const playerObject = new Player(p.innerText);
+            pList = [...pList, playerObject];
+        });
+        return pList;
+    }
+    game = new GameState(playerCount, modifierCount, genPlayers());
     totalCases = ROUNDS * playerCount;
     $(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css("grid-template-rows", "repeat(" + playerCount + ", 50px)");
     $(caseBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 50px)").css(("grid-template-rows", "repeat(" + playerCount + ", 50px)"));
+    shuffle(game.players);
+
+
     loadValues();
     loadModifiers();
     loadCases();
@@ -92,30 +112,25 @@ function generateValues() {
 }
 
 function loadValues() {
-    let caseIndex = 1;
     for(let i = 0; i < (totalCases/(ROUNDS/4))-1; i++){
         const newVal = document.createElement("div");
         $(newVal).addClass("value onePenalty").text("1");
         $(valueBoard).append(newVal);
-        caseIndex++;
     }
     for(let i = 0; i < (totalCases/(ROUNDS/2)); i++){
         const newVal = document.createElement("div");
         $(newVal).addClass("value twoPenalties").text("2");
         $(valueBoard).append(newVal);
-        caseIndex++;
     }
     for(let i = 0; i < (totalCases/ROUNDS); i++){
         const newVal = document.createElement("div");
         $(newVal).addClass("value threePenalties").text("3");
         $(valueBoard).append(newVal);
-        caseIndex++;
     }
     for(let i = 0; i < (totalCases/ROUNDS); i++){
         const newVal = document.createElement("div");
         $(newVal).addClass("value fourPenalties ").text("4");
         $(valueBoard).append(newVal);
-        caseIndex++;
     }
     const newVal = document.createElement("div");
     $(newVal).addClass("value maxPenalty").text("Max");
@@ -126,8 +141,13 @@ function loadModifiers() {
 
 }
 function loadPlayers() {
-
+    $(game.players).each((_, p) => {
+        const playerElement = document.createElement("div");
+        $(playerElement).addClass("player").text(p.name);
+        $(playerBoard).append(playerElement);
+    })
 }
+
 function loadCases() {
     for(let i = 0; i < totalCases; i++){
         const newCase = document.createElement("button");
