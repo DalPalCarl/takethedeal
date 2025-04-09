@@ -1,6 +1,7 @@
 :root {
     --color-grey: #F1EFEC;
     --color-tan: #D4C9BE;
+    --color-dark-tan: #857e78;
     --color-navy: #123458;
     --color-light-navy: #286fbb;
     --p-1: #16C47F;
@@ -14,10 +15,6 @@
     --p-max: rgb(44, 44, 44);
     --m: #F9E400;
     --mB: #afa100;
-}
-
-html {
-    
 }
 
 body {
@@ -39,6 +36,7 @@ main {
     margin-top: 0;
     margin-bottom: 5rem;
     height: max(90vh, 50%);
+    user-select: none;
 }
 
 footer {
@@ -261,21 +259,30 @@ footer {
     box-shadow: 0 5px var(--color-navy);
 }
 
-.casePressed {
+.caseSelected {
     pointer-events: none;
     animation: pressDown 1000ms ease-out 0 forwards ;
+}
+
+.caseRevealed {
+    
 }
 
 .case:hover {
     filter: brightness(50%);
 }
 
+.caseRevealed {
+
+}
+
 /* Player Classes */
 
 .player {
+    display: flex;
+    justify-content: space-around;
     background-color: #123458;
     color: var(--color-grey);
-    padding: 1rem;
     margin-inline: .5rem;
     margin-bottom: .2rem;
     font-size: 1.5rem;
@@ -293,6 +300,27 @@ footer {
 
 .playerFinished {
     filter: grayscale(100);
+}
+
+.playerName {
+    padding: 1rem;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.playerSelectedCase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    padding: 0;
+    width: 60px;
+    margin: .2rem;
+    color: var(--color-grey);
+    background-color: var(--color-light-navy);
+    border-radius: 10px;
+    box-shadow: -3px 3px var(--color-tan);
+    aspect-ratio: 1 / 1;
 }
 
 /* Fonts */
@@ -337,7 +365,7 @@ footer {
     }
     100% {
         background-color: var(--color-tan);
-        color: var(--color-grey);
+        color: var(--color-dark-tan);
         transform: translateY(5px);
         box-shadow: 0 0 var(--color-navy);
     }

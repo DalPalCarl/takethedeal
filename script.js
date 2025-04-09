@@ -35,6 +35,7 @@ $(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
 
 function GameState(playerCount, modifierNumber, playerList){
     this.round = 0;
+    this.roundStep = 0;
     this.playerCount = playerCount;
     this.modifierNumber = modifierNumber;
     this.players = playerList;
@@ -157,8 +158,12 @@ function loadModifiers(modifierData) {
 function loadPlayers() {
     $(game.players).each((i, p) => {
         const playerElement = document.createElement("div");
+        const playerName = document.createElement("p");
+        $(playerName).text(p.name).addClass("playerName");
         $(playerElement).css("transform", "scale(0)");
-        $(playerElement).addClass("player teko").text(p.name).css("animation", "popIn 1000ms " + (200 * i) + "ms forwards");
+        $(playerElement).addClass("player teko")
+            .append(playerName)
+            .css("animation", "popIn 1000ms " + (200 * i) + "ms forwards");
         $(playerBoard).append(playerElement);
     })
 }
@@ -179,8 +184,8 @@ function initializeGame() {
     playerCount = playerSetupList[0].children.length;
     totalCases = ROUNDS * playerCount;
     modifierCount = modifierSetting === 'low' ? 1 
-        : modifierSetting === 'medium' ? (totalCases/8) 
-        : (totalCases/4);
+        : modifierSetting === 'medium' ? (totalCases/ROUNDS) 
+        : (totalCases/(ROUNDS)/2);
     
     game = new GameState(playerCount, modifierCount, generatePlayers());
     
@@ -199,7 +204,6 @@ function initializeGame() {
 
 function startFirstRound() {
     $(playerBoard).children().first().addClass("playerTurn");
-    $(playerBoard).children().last().addClass("playerFinished");
     // $(playerBoard.children()).each((_, player) => {
     //     console.log(player);
     // })
@@ -207,12 +211,49 @@ function startFirstRound() {
 
 function handleCaseClicked(clickedCase, index) {
     if(game.round === 0){
-        $(clickedCase).addClass("casePressed")
+        $(clickedCase).addClass("caseSelected")
+            .css("pointer-events", "none")
             .css("animation", "pressDown 1000ms forwards")
             .prop("disabled", true);
-        console.log("Case Selected: ", index+1);
+        const activePlayer = game.players[game.roundStep];
+        const selectedCaseElem = document.createElement("div");
+        activePlayer.selectedCase = index;
+        $(selectedCaseElem).addClass("playerSelectedCase").text(index+1)
+            .css("animation", "popIn 500ms ease-out forwards");
+        $(".playerTurn").append(selectedCaseElem);
+        progressGameStep();
     }
-    console.log(clickedCase, game.penaltyList[index]);
+    // console.log(clickedCase, game.penaltyList[index]);
+}
+
+function progressGameStep() {
+    // 1) Query active cases, check if equals 1
+    // 2) Else, we check the current round. If it is less than ROUNDS,
+    //    we keep playing as normal
+    // 3) If the round is equal to ROUNDS, then we initiate the DoND round
+    const casesLeft = $(".case").length - $(".caseRevealed").length;
+    if(casesLeft > 1){
+        if(game.round === ROUNDS){
+            console.log("LAST ROUND");
+        }
+        else if(game.round > ROUNDS){
+            console.log("Players left to pick cases!");
+        }
+        else{
+            // do regular selection process
+            const prevPlayer = playerBoard.children()[game.roundStep];
+            $(prevPlayer).removeClass("playerTurn");
+
+            game.roundStep++;
+            if(game.roundStep === playerCount){
+                game.roundStep = 0;
+                game.round++;
+            }
+
+            const nextPlayer = playerBoard.children()[game.roundStep];
+            $(nextPlayer).addClass("playerTurn");
+        }
+    }
 }
 
 // Animation Functions
