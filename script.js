@@ -18,10 +18,6 @@ let penaltyList = [];
 
 let game;
 
-$("#testButton").on("click", () => {
-    $("#gameSetupBackdrop").fadeOut();
-})
-
 $("#addPlayer").on("click", () => {
     addPlayerToList();
 })
@@ -33,12 +29,12 @@ $("#newPlayerName").on("keypress", (event) => {
     }
 })
 
-$(valueBoard).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr)");
-$(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS-2) + ", 1fr)");
-$(modifiers).css("grid-template-columns", "repeat(" + ROUNDS + ", 1fr");
+$(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
+$(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
+$(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
 
 function GameState(playerCount, modifierNumber, playerList){
-    this.rounds = 8;
+    this.rounds = ROUNDS;
     this.playerCount = playerCount;
     this.modifierNumber = modifierNumber;
     this.players = playerList;
@@ -49,6 +45,7 @@ function GameState(playerCount, modifierNumber, playerList){
 function Player(name){
     this.name = name;
     this.score = 0;
+    this.maxPenalty = false;
     this.selectedCase = null;
 }
 
@@ -58,14 +55,17 @@ gameSetupForm.on("submit", (event) => {
         alert("Must have at least 2 players to start!");
     }
     else {
-        $("#gameSetupBackdrop").fadeOut()
+        $("#gameSetupBackdrop").fadeOut();
         initializeGame();
+        setTimeout(() => {
+            startFirstRound();
+        }, 2000);
     }
 })
 
 
 function addPlayerToList() {
-    if(playerSetupList[0].children.length > MAXPLAYERCOUNT){
+    if(playerSetupList[0].children.length >= MAXPLAYERCOUNT){
         alert("Cannot add any more players!");
     }
     else if(newPlayerName[0].value !== ""){
@@ -88,29 +88,6 @@ function shuffle(arr) {
         currentIndex--;
         [arr[currentIndex], arr[randIndex]] = [arr[randIndex], arr[currentIndex]];
     }
-}
-
-function initializeGame() {
-    const modifierSetting = gameSetupForm[0].modifierSetting.value
-    playerCount = playerSetupList[0].children.length;
-    totalCases = ROUNDS * playerCount;
-    modifierCount = modifierSetting === 'low' ? 1 
-        : modifierSetting === 'medium' ? (totalCases/8) 
-        : (totalCases/4);
-    
-    game = new GameState(playerCount, modifierCount, generatePlayers());
-    
-    shuffle(game.players);
-
-    game.penaltyList = generatePenaltyList(totalCases);
-    loadPenalties(totalCases, game.penaltyList);
-    shuffle(game.penaltyList);
-    game.modifierList = generateModifierList(totalCases, modifierCount)
-    const modifierData = game.modifierList.slice(0, modifierCount*2);
-    loadModifiers(modifierData);
-    shuffle(game.modifierList);
-    loadCases();
-    loadPlayers();
 }
 
 function generatePlayers() {
@@ -145,37 +122,41 @@ function generateModifierList(cases, setting) {
 function loadPenalties(totalCases, pList) {
     for(let i = 0; i < totalCases; i++){
         const newVal = document.createElement("div");
+        $(newVal).css("transform", "scale(0)");
         switch (pList[i]){
             case 1:
-                $(newVal).addClass("value onePenalty").text("1");
+                $(newVal).addClass("value onePenalty teko text-thicc").text("1").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 2:
-                $(newVal).addClass("value twoPenalties").text("2");
+                $(newVal).addClass("value twoPenalties teko text-thicc").text("2").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 3:
-                $(newVal).addClass("value threePenalties").text("3");
+                $(newVal).addClass("value threePenalties teko text-thicc").text("3").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 4:
-                $(newVal).addClass("value fourPenalties").text("4");
+                $(newVal).addClass("value fourPenalties teko text-thicc").text("4").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 5:
-                $(newVal).addClass("value maxPenalty").text("Max");
+                $(newVal).addClass("value maxPenalty teko text-thicc").html("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d='M416 398.9c58.5-41.1 96-104.1 96-174.9C512 100.3 397.4 0 256 0S0 100.3 0 224c0 70.7 37.5 133.8 96 174.9c0 .4 0 .7 0 1.1l0 64c0 26.5 21.5 48 48 48l48 0 0-48c0-8.8 7.2-16 16-16s16 7.2 16 16l0 48 64 0 0-48c0-8.8 7.2-16 16-16s16 7.2 16 16l0 48 48 0c26.5 0 48-21.5 48-48l0-64c0-.4 0-.7 0-1.1zM96 256a64 64 0 1 1 128 0A64 64 0 1 1 96 256zm256-64a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/></svg>")
+                .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
             }
         $(valueBoard).append(newVal);
     }
 }
 function loadModifiers(modifierData) {
-    modifierData.forEach((mod) => {
+    modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
-        $(modElement).addClass("modifier").text(mod + "X");
+        $(modElement).css("transform", "scale(0)");
+        $(modElement).addClass("modifier teko text-thicc").text(mod + "X").css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
         $(modifiers).append(modElement);
     })
 }
 
 function loadPlayers() {
-    $(game.players).each((_, p) => {
+    $(game.players).each((i, p) => {
         const playerElement = document.createElement("div");
-        $(playerElement).addClass("player").text(p.name);
+        $(playerElement).css("transform", "scale(0)");
+        $(playerElement).addClass("player teko").text(p.name).css("animation", "popIn 1000ms " + (200 * i) + "ms forwards");
         $(playerBoard).append(playerElement);
     })
 }
@@ -183,9 +164,39 @@ function loadPlayers() {
 function loadCases() {
     for(let i = 0; i < totalCases; i++){
         const newCase = document.createElement("button");
-        $(newCase).addClass("case").text(i+1);
+        $(newCase).css("transform", "scale(0)");
+        $(newCase).addClass("case teko").text(i+1).css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
         $(caseBoard).append(newCase);
     }
+}
+
+function initializeGame() {
+    const modifierSetting = gameSetupForm[0].modifierSetting.value
+    playerCount = playerSetupList[0].children.length;
+    totalCases = ROUNDS * playerCount;
+    modifierCount = modifierSetting === 'low' ? 1 
+        : modifierSetting === 'medium' ? (totalCases/8) 
+        : (totalCases/4);
+    
+    game = new GameState(playerCount, modifierCount, generatePlayers());
+    
+    shuffle(game.players);
+
+    game.penaltyList = generatePenaltyList(totalCases);
+    loadPenalties(totalCases, game.penaltyList);
+    shuffle(game.penaltyList);
+    game.modifierList = generateModifierList(totalCases, modifierCount)
+    const modifierData = game.modifierList.slice(0, modifierCount*2);
+    loadModifiers(modifierData);
+    shuffle(game.modifierList);
+    loadCases();
+    loadPlayers();
+}
+
+function startFirstRound() {
+    $(playerBoard.children()).each((_, player) => {
+        $(player).addClass("playerTurn");
+    })
 }
 
 // Animation Functions
