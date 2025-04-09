@@ -56,7 +56,8 @@ gameSetupForm.on("submit", (event) => {
         alert("Must have at least 2 players to start!");
     }
     else {
-        $("#gameSetupBackdrop").fadeOut();
+        $("#backdrop").fadeOut();
+        $("#gameSetupContainer").fadeOut();
         initializeGame();
         setTimeout(() => {
             startFirstRound();
@@ -185,7 +186,7 @@ function initializeGame() {
     totalCases = ROUNDS * playerCount;
     modifierCount = modifierSetting === 'low' ? 1 
         : modifierSetting === 'medium' ? (totalCases/ROUNDS) 
-        : (totalCases/(ROUNDS)/2);
+        : (totalCases/(ROUNDS/2));
     
     game = new GameState(playerCount, modifierCount, generatePlayers());
     
@@ -223,7 +224,14 @@ function handleCaseClicked(clickedCase, index) {
         $(".playerTurn").append(selectedCaseElem);
         progressGameStep();
     }
+    else{
+        $("#backdrop").fadeIn();
+    }
     // console.log(clickedCase, game.penaltyList[index]);
+}
+
+function revealCase() {
+
 }
 
 function progressGameStep() {

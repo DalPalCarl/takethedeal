@@ -47,7 +47,7 @@ footer {
     bottom: 1rem;
 }
 
-#gameSetupBackdrop {
+#backdrop {
     display: block;
     position: fixed;
     top: 0;
@@ -60,10 +60,14 @@ footer {
 
 #gameSetupContainer {
     display: flex;
-    z-index: 2;
+    position:absolute;
+    justify-self: center;
+    align-self: center;
+    z-index: 3;
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 #gameSetup {

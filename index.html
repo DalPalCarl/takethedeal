@@ -14,37 +14,40 @@
     <header>
         <!-- <h1>Drink or No Drink</h1> -->
     </header>
-    <section id="gameSetupBackdrop">
-        <section id="gameSetupContainer">
-            <div id="gameSetup" class="boardBG teko">
-                <h1>Game Setup</h1>
-                <div id="inputSetupContainer">
-                    <form id="gameSetupForm">
-                        <input type="text" id="newPlayerName" 
-                            minlength="1" maxlength="16" 
-                            placeholder="Add Player" 
-                            pattern="[a-zA-Z ]+"
-                            autocomplete="off"
-                            autofocus="true">
-                        <button type="button" id="addPlayer">Add</button>
-                        <label for="modifierSetting">Modifier Frequency</label>
-                        <select id="modifierSetting" name="modifierSetting">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="volatile">Volatile</option>
-                        </select>
-                        <button type="submit">Start Game</button>
-                    </form>
-                    <div id="displayPlayerList">
-                        <h2>Players</h2>
-                        <ul id="playerSetupList">
-        
-                        </ul>
-                    </div>
+    
+    <section id="gameSetupContainer">
+        <div id="gameSetup" class="boardBG teko">
+            <h1>Game Setup</h1>
+            <div id="inputSetupContainer">
+                <form id="gameSetupForm">
+                    <input type="text" id="newPlayerName" 
+                        minlength="1" maxlength="16" 
+                        placeholder="Add Player" 
+                        pattern="[a-zA-Z ]+"
+                        autocomplete="off"
+                        autofocus="true">
+                    <button type="button" id="addPlayer">Add</button>
+                    <label for="modifierSetting">Modifier Frequency</label>
+                    <select id="modifierSetting" name="modifierSetting">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="volatile">Volatile</option>
+                    </select>
+                    <button type="submit">Start Game</button>
+                </form>
+                <div id="displayPlayerList">
+                    <h2>Players</h2>
+                    <ul id="playerSetupList">
+    
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
     </section>
+
+    <section id="backdrop">
+    </section>
+
     <main>
         <!-- Penalty values -->
         <section id="valueContainer" class="boardBG">
