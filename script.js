@@ -34,7 +34,7 @@ $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
 $(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
 
 function GameState(playerCount, modifierNumber, playerList){
-    this.rounds = ROUNDS;
+    this.round = 0;
     this.playerCount = playerCount;
     this.modifierNumber = modifierNumber;
     this.players = playerList;
@@ -113,6 +113,8 @@ function generateModifierList(cases, setting) {
     let modList = [];
     for(let i = 0; i < setting; i++){
         modList.push(2);
+    }
+    for(let i = 0; i < setting; i++){
         modList.push(3);
     }
     modList.push(...Array(cases-(setting*2)).fill(null));
@@ -193,16 +195,23 @@ function initializeGame() {
     shuffle(game.modifierList);
     loadCases();
     loadPlayers();
-    $(playerBoard).children().first().addClass("playerTurn");
 }
 
 function startFirstRound() {
+    $(playerBoard).children().first().addClass("playerTurn");
+    $(playerBoard).children().last().addClass("playerFinished");
     // $(playerBoard.children()).each((_, player) => {
     //     console.log(player);
     // })
 }
 
 function handleCaseClicked(clickedCase, index) {
+    if(game.round === 0){
+        $(clickedCase).addClass("casePressed")
+            .css("animation", "pressDown 1000ms forwards")
+            .prop("disabled", true);
+        console.log("Case Selected: ", index+1);
+    }
     console.log(clickedCase, game.penaltyList[index]);
 }
 

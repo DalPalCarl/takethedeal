@@ -184,10 +184,16 @@ footer {
 
 .setupPlayer {
     background-color: var(--color-light-navy);
-    border: solid .15rem var(--color-navy);
     border-radius: 10px;
+    width: 50px;
     margin: 5px;
+    color: var(--color-grey);
     padding: 10px;
+    box-shadow: 5px 5px var(--color-navy);
+}
+
+.setupPlayer:hover {
+    filter: brightness(70%);
 }
 
 .value {
@@ -255,9 +261,16 @@ footer {
     box-shadow: 0 5px var(--color-navy);
 }
 
+.casePressed {
+    pointer-events: none;
+    animation: pressDown 1000ms ease-out 0 forwards ;
+}
+
 .case:hover {
     filter: brightness(50%);
 }
+
+/* Player Classes */
 
 .player {
     background-color: #123458;
@@ -269,10 +282,17 @@ footer {
     width: 200px;
     border-radius: 10px;
     box-shadow: -5px 5px var(--color-light-navy);
+    transition: all 200ms;
 }
 
 .playerTurn {
     background-color: white;
+    color: black;
+    box-shadow: -5px 5px var(--color-light-navy), 0 0 10px var(--color-light-navy);
+}
+
+.playerFinished {
+    filter: grayscale(100);
 }
 
 /* Fonts */
@@ -308,5 +328,17 @@ footer {
     }
     100% {
         transform: scale(100%);
+    }
+}
+
+@keyframes pressDown {
+    0% {
+
+    }
+    100% {
+        background-color: var(--color-tan);
+        color: var(--color-grey);
+        transform: translateY(5px);
+        box-shadow: 0 0 var(--color-navy);
     }
 }
