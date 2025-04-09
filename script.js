@@ -165,7 +165,9 @@ function loadCases() {
     for(let i = 0; i < totalCases; i++){
         const newCase = document.createElement("button");
         $(newCase).css("transform", "scale(0)");
-        $(newCase).addClass("case teko").text(i+1).css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
+        $(newCase).addClass("case teko").text(i+1)
+            .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
+        newCase.addEventListener("click", () => handleCaseClicked(newCase, i));
         $(caseBoard).append(newCase);
     }
 }
@@ -191,12 +193,17 @@ function initializeGame() {
     shuffle(game.modifierList);
     loadCases();
     loadPlayers();
+    $(playerBoard).children().first().addClass("playerTurn");
 }
 
 function startFirstRound() {
-    $(playerBoard.children()).each((_, player) => {
-        $(player).addClass("playerTurn");
-    })
+    // $(playerBoard.children()).each((_, player) => {
+    //     console.log(player);
+    // })
+}
+
+function handleCaseClicked(clickedCase, index) {
+    console.log(clickedCase, game.penaltyList[index]);
 }
 
 // Animation Functions
