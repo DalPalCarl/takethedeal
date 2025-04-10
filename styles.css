@@ -69,7 +69,7 @@ footer {
     justify-content: end;
     align-items: end;
     width: 30rem;
-    height: 22rem;
+    height: 26rem;
     overflow: hidden;
     border-radius: 10px;
 }
@@ -91,11 +91,26 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15rem;
+    font-size: 20rem;
     width: 30rem;
     height: 20rem;
     border-radius: 10px;
     box-shadow: 0 15rem var(--shadow-color);
+}
+
+#closeCaseRevealModalButton {
+    margin: 1rem;
+    border: none;
+    border-radius: 10px;
+    color: var(--color-grey);
+    background-color: var(--color-navy);
+    box-shadow: 0 5px var(--color-light-navy);
+    font-size: 2rem;
+}
+
+#closeCaseRevealModalButton:hover {
+    filter: brightness(110%);
+    cursor: pointer;
 }
 
 
@@ -410,6 +425,11 @@ footer {
     
 }
 
+.popIn {
+    --anim-delay: 0ms;
+    animation: popIn 1000ms var(--anim-delay) forwards;
+}
+
 @keyframes popIn {
     0% {
         transform: scale(0%);
@@ -424,19 +444,31 @@ footer {
 
 @keyframes pressDown {
     0% {
-
+        transform: scale(100%);
     }
     100% {
         background-color: var(--color-tan);
         color: var(--color-dark-tan);
         transform: translateY(5px);
-        box-shadow: 0 0 var(--color-navy);
+        box-shadow: 0 0;
+    }
+}
+
+@keyframes pressDownPenalty {
+    0% {
+        transform: scale(100%);
+    }
+    100% {
+        background-color: var(--color-tan);
+        color: var(--color-dark-tan);
+        transform: translate(5px, 5px);
+        box-shadow: 0 0;
     }
 }
 
 @keyframes caseRevealDown {
     0% {
-        transform: translateY(-7rem);
+        /* transform: translateY(-7rem); */
     }
     100% {
         transform: translateY(30rem);

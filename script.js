@@ -20,6 +20,7 @@ let penaltyList = [];
 let game;
 
 $("#caseRevealContainer").hide();
+$("#closeCaseRevealModalButton").hide();
 
 $("#addPlayer").on("click", () => {
     addPlayerToList();
@@ -62,9 +63,7 @@ gameSetupForm.on("submit", (event) => {
         $("#backdrop").fadeOut();
         $("#gameSetup").fadeOut();
         initializeGame();
-        setTimeout(() => {
-            startFirstRound();
-        }, 2000);
+        startFirstRound();
     }
 })
 
@@ -177,7 +176,8 @@ function loadCases() {
         const newCase = document.createElement("button");
         $(newCase).css("transform", "scale(0)");
         $(newCase).addClass("case teko").text(i+1)
-            .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
+            .prop("--anim-delay", `${(20 * i)}ms`)
+            .addClass("popIn");
         newCase.addEventListener("click", () => handleCaseClicked(newCase, i));
         $(caseBoard).append(newCase);
     }
@@ -214,11 +214,10 @@ function startFirstRound() {
 }
 
 function handleCaseClicked(clickedCase, index) {
+    $(clickedCase).addClass("caseSelected")
+        .css("animation", "pressDown 1000ms forwards")
+        .prop("disabled", true);
     if(game.round === 0){
-        $(clickedCase).addClass("caseSelected")
-            .css("pointer-events", "none")
-            .css("animation", "pressDown 1000ms forwards")
-            .prop("disabled", true);
         const activePlayer = game.players[game.roundStep];
         const selectedCaseElem = document.createElement("div");
         activePlayer.selectedCase = index;
@@ -235,16 +234,40 @@ function handleCaseClicked(clickedCase, index) {
 
 function revealCase(clickedCase, index) {
     $("#backdrop").fadeIn();
-    revealCaseElement.addClass("caseStyle");
-    $("#caseRevealContainer").fadeIn(2000, () => {
-        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in").delay(1000)
+    revealCaseElement.addClass("caseStyle").text(index+1);
+    updatePlayerScore(game.players[game.roundStep], game.penaltyList[index], game.modifierList[index]);
+    $("#caseRevealContainer").fadeIn(1000, () => {
+        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in").delay(1000 + (Math.random() * 5000))
             .one("animationend", () => {
                 const penaltyClass = findPenaltyClass(index);
-                console.log(penaltyClass)
-                revealCaseElement.removeClass("caseStyle").addClass(penaltyClass);
-                $("#caseRevealCase").css("animation", "caseRevealUp 1000ms ease-in forwards")
+                const penaltyElement = $("#valueGrid").find($("."+ penaltyClass + "")).first();
+                revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
+                $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
+                .one("animationend", () => {
+                    $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
+                        .one("click", () => {
+                            handleContinueButton(penaltyElement, penaltyClass);
+                            $("#caseRevealCase").css("animation", "none");
+                    });
+                })
             })
     });
+}
+
+function handleContinueButton(penaltyElem, penaltyClass) {
+    $("#backdrop").hide();
+    $("#closeCaseRevealModalButton").hide();
+    $("#caseRevealContainer").hide();
+    penaltyElem.css("animation", "pressDownPenalty 1000ms forwards")
+        .one("animationend", () => {
+            penaltyElem.removeClass(penaltyClass);
+            revealCaseElement.removeClass(penaltyClass);
+        });
+    progressGameStep();
+}
+
+function updatePlayerScore(player, score, mod){
+    console.log(player.name, " | ", score, " | ", mod);
 }
 
 function findPenaltyClass(i) {
