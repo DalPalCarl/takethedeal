@@ -17,6 +17,10 @@
     --mB: #afa100;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     height: inherit;
     background-color: var(--color-navy);
@@ -47,6 +51,54 @@ footer {
     bottom: 1rem;
 }
 
+#caseRevealContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    width: 40rem;
+    height: 40rem;
+}
+
+#caseRevealMask {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    width: 30rem;
+    height: 22rem;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+#caseRevealBackground {
+    display: flex;
+    width: 30rem;
+    height: 15rem;
+    background-color: var(--color-dark-tan);
+    border-radius: 10px;
+    box-shadow: 0 -5rem var(--color-tan)
+}
+
+#caseRevealCase {
+    transform: translateY(-7rem);
+}
+
+#caseRevealCaseFront {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15rem;
+    width: 30rem;
+    height: 20rem;
+    border-radius: 10px;
+    box-shadow: 0 15rem var(--shadow-color);
+}
+
+
 #backdrop {
     display: block;
     position: fixed;
@@ -58,20 +110,9 @@ footer {
     backdrop-filter: blur(2px) brightness(50%);
 }
 
-#gameSetupContainer {
-    display: flex;
-    position:absolute;
-    justify-self: center;
-    align-self: center;
-    z-index: 3;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
 #gameSetup {
     display: flex;
+    z-index: 4;
     flex-direction: column;
     justify-content: start;
     align-items: center;
@@ -169,19 +210,33 @@ footer {
 #modifiers {
     display: grid;
     justify-items: center;
+    align-content: center;
+    align-self: start;
     background-color: var(--color-tan);
     border-radius: 10px;
     margin-top: 1.5rem;
-    padding: .1rem;
+    padding: .2rem;
+    padding-bottom: 1rem;
     gap: .2rem;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .boardBG {
     background-color: var(--color-grey);
     border-radius: 10px;
     border: solid var(--color-tan);
+}
+
+.modalContainer {
+    display: flex;
+    position: absolute;
+    justify-self: center;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
 .setupPlayer {
@@ -206,37 +261,39 @@ footer {
     width: 50px;
     border-radius: 5px;
     font-size: 2rem;
+    --shadow-color: var(--color-light-navy);
+    box-shadow: 5px 5px var(--shadow-color);
 }
 
 .onePenalty {
     color: var(--p-1B);
     background-color: var(--p-1);
-    box-shadow: 5px 5px var(--p-1B);
+    --shadow-color: var(--p-1B);
 }
 
 .twoPenalties {
     color: var(--p-2B);
     background-color: var(--p-2);
-    box-shadow: 5px 5px var(--p-2B);
+    --shadow-color: var(--p-2B);
 }
 
 .threePenalties {
     color: var(--p-3B);
     background-color: var(--p-3);
-    box-shadow: 5px 5px var(--p-3B);
+    --shadow-color: var(--p-3B);
 }
 
 .fourPenalties {
     color: var(--p-4B);
     background-color: var(--p-4);
-    box-shadow: 5px 5px var(--p-4B);
+    --shadow-color: var(--p-4B);
 }
 
 .maxPenalty {
     padding: .2rem;
     fill: white;
     background-color: var(--p-max);
-    box-shadow: 5px 5px black;
+    --shadow-color: black;
 }
 
 .modifier {
@@ -263,6 +320,12 @@ footer {
     box-shadow: 0 5px var(--color-navy);
 }
 
+.caseStyle {
+    background-color: var(--color-light-navy);
+    color: var(--color-grey);
+    --shadow-color: var(--color-navy);
+}
+
 .caseSelected {
     pointer-events: none;
     animation: pressDown 1000ms ease-out 0 forwards ;
@@ -276,10 +339,6 @@ footer {
     filter: brightness(50%);
 }
 
-.caseRevealed {
-
-}
-
 /* Player Classes */
 
 .player {
@@ -290,7 +349,7 @@ footer {
     margin-inline: .5rem;
     margin-bottom: .2rem;
     font-size: 1.5rem;
-    width: 200px;
+    width: auto;
     border-radius: 10px;
     box-shadow: -5px 5px var(--color-light-navy);
     transition: all 200ms;
@@ -372,5 +431,23 @@ footer {
         color: var(--color-dark-tan);
         transform: translateY(5px);
         box-shadow: 0 0 var(--color-navy);
+    }
+}
+
+@keyframes caseRevealDown {
+    0% {
+        transform: translateY(-7rem);
+    }
+    100% {
+        transform: translateY(30rem);
+    }
+}
+
+@keyframes caseRevealUp {
+    0% {
+        transform: translateY(30rem);
+    }
+    100% {
+        transform: translateY(-7rem);
     }
 }

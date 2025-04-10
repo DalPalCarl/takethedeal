@@ -7,6 +7,7 @@ const modifiers = $("#modifiers");
 const gameSetupForm = $("#gameSetupForm");
 const playerSetupList = $("#playerSetupList");
 const newPlayerName = $("#newPlayerName");
+const revealCaseElement = $("#caseRevealCaseFront");
 const MAXPLAYERCOUNT = 10;
 const ROUNDS = 8;
 
@@ -17,6 +18,8 @@ let totalCases = 0;
 let penaltyList = [];
 
 let game;
+
+$("#caseRevealContainer").hide();
 
 $("#addPlayer").on("click", () => {
     addPlayerToList();
@@ -57,7 +60,7 @@ gameSetupForm.on("submit", (event) => {
     }
     else {
         $("#backdrop").fadeOut();
-        $("#gameSetupContainer").fadeOut();
+        $("#gameSetup").fadeOut();
         initializeGame();
         setTimeout(() => {
             startFirstRound();
@@ -225,13 +228,38 @@ function handleCaseClicked(clickedCase, index) {
         progressGameStep();
     }
     else{
-        $("#backdrop").fadeIn();
+        revealCase(clickedCase, index);
     }
     // console.log(clickedCase, game.penaltyList[index]);
 }
 
-function revealCase() {
+function revealCase(clickedCase, index) {
+    $("#backdrop").fadeIn();
+    revealCaseElement.addClass("caseStyle");
+    $("#caseRevealContainer").fadeIn(2000, () => {
+        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in").delay(1000)
+            .one("animationend", () => {
+                const penaltyClass = findPenaltyClass(index);
+                console.log(penaltyClass)
+                revealCaseElement.removeClass("caseStyle").addClass(penaltyClass);
+                $("#caseRevealCase").css("animation", "caseRevealUp 1000ms ease-in forwards")
+            })
+    });
+}
 
+function findPenaltyClass(i) {
+    switch(game.penaltyList[i]){
+        case 1:
+            return "onePenalty";
+        case 2:
+            return "twoPenalties";
+        case 3:
+            return "threePenalties";
+        case 4:
+            return "fourPenalties";
+        case 5:
+            return "maxPenalty";
+    }
 }
 
 function progressGameStep() {
