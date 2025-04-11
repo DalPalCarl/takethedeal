@@ -152,8 +152,7 @@ function loadPenalties(totalCases, pList) {
 function loadModifiers(modifierData) {
     modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
-        $(modElement).css("transform", "scale(0)");
-        $(modElement).addClass("modifier teko text-thicc").text(mod + "X").css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
+        $(modElement).addClass("modifier modifierShown teko text-thicc").text("X").css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
         $(modifiers).append(modElement);
     })
 }
@@ -236,27 +235,30 @@ function revealCase(index) {
     $("#backdrop").fadeIn();
     revealCaseElement.addClass("caseStyle").text(index+1);
     updatePlayerScore(game.players[game.roundStep], game.penaltyList[index], game.modifierList[index]);
+    $("#caseRevealText").text(game.players[game.roundStep].name);
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
                 const penaltyClass = findPenaltyClass(index);
-                const penaltyElement = $("#valueGrid").find($("."+ penaltyClass)).first();
+                const penaltyElement = $("#valueGrid").find($("." + penaltyClass)).first();
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     if (game.modifierList[index]){
+                        const modifierElem = $("#modifiers").find($(".modifierShown")).first();
                         $("#caseRevealModifier").addClass("modifierAppear").on("animationend", () => {
                             $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                                 .one("click", () => {
-                                    handleContinueButton(penaltyElement, penaltyClass);
+                                    handleContinueButton(penaltyElement, penaltyClass, modifierElem);
                                     $("#caseRevealCase").css("animation", "none");
+                                    $("#caseRevealModifier").removeClass("modifierAppear");
                             });
                         })
                     }
                     else {
                         $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                             .one("click", () => {
-                                handleContinueButton(penaltyElement, penaltyClass);
+                                handleContinueButton(penaltyElement, penaltyClass, null);
                                 $("#caseRevealCase").css("animation", "none");
                         });
                     }
@@ -265,7 +267,7 @@ function revealCase(index) {
     });
 }
 
-function handleContinueButton(penaltyElem, penaltyClass) {
+function handleContinueButton(penaltyElem, penaltyClass, modElem) {
     $("#backdrop").hide();
     $("#closeCaseRevealModalButton").hide();
     $("#caseRevealContainer").hide();
@@ -274,6 +276,10 @@ function handleContinueButton(penaltyElem, penaltyClass) {
             penaltyElem.removeClass(penaltyClass);
             revealCaseElement.removeClass(penaltyClass);
         });
+    if(modElem){
+        modElem.removeClass("modifierShown")
+            .css("animation", "pressDownPenalty 1000ms forwards")
+    }
     progressGameStep();
 }
 
