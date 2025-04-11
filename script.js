@@ -143,7 +143,7 @@ function loadPenalties(totalCases, pList) {
                 $(newVal).addClass("value fourPenalties teko text-thicc").text("4").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 5:
-                $(newVal).addClass("value maxPenalty teko text-thicc").html("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d='M416 398.9c58.5-41.1 96-104.1 96-174.9C512 100.3 397.4 0 256 0S0 100.3 0 224c0 70.7 37.5 133.8 96 174.9c0 .4 0 .7 0 1.1l0 64c0 26.5 21.5 48 48 48l48 0 0-48c0-8.8 7.2-16 16-16s16 7.2 16 16l0 48 64 0 0-48c0-8.8 7.2-16 16-16s16 7.2 16 16l0 48 48 0c26.5 0 48-21.5 48-48l0-64c0-.4 0-.7 0-1.1zM96 256a64 64 0 1 1 128 0A64 64 0 1 1 96 256zm256-64a64 64 0 1 1 0 128 64 64 0 1 1 0-128z'/></svg>")
+                $(newVal).addClass("value maxPenalty teko text-thicc").text("X")
                 .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
             }
         $(valueBoard).append(newVal);
@@ -227,28 +227,39 @@ function handleCaseClicked(clickedCase, index) {
         progressGameStep();
     }
     else{
-        revealCase(clickedCase, index);
+        revealCase(index);
     }
     // console.log(clickedCase, game.penaltyList[index]);
 }
 
-function revealCase(clickedCase, index) {
+function revealCase(index) {
     $("#backdrop").fadeIn();
     revealCaseElement.addClass("caseStyle").text(index+1);
     updatePlayerScore(game.players[game.roundStep], game.penaltyList[index], game.modifierList[index]);
     $("#caseRevealContainer").fadeIn(1000, () => {
-        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in").delay(1000 + (Math.random() * 5000))
+        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
                 const penaltyClass = findPenaltyClass(index);
-                const penaltyElement = $("#valueGrid").find($("."+ penaltyClass + "")).first();
+                const penaltyElement = $("#valueGrid").find($("."+ penaltyClass)).first();
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
-                    $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
-                        .one("click", () => {
-                            handleContinueButton(penaltyElement, penaltyClass);
-                            $("#caseRevealCase").css("animation", "none");
-                    });
+                    if (game.modifierList[index]){
+                        $("#caseRevealModifier").addClass("modifierAppear").on("animationend", () => {
+                            $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
+                                .one("click", () => {
+                                    handleContinueButton(penaltyElement, penaltyClass);
+                                    $("#caseRevealCase").css("animation", "none");
+                            });
+                        })
+                    }
+                    else {
+                        $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
+                            .one("click", () => {
+                                handleContinueButton(penaltyElement, penaltyClass);
+                                $("#caseRevealCase").css("animation", "none");
+                        });
+                    }
                 })
             })
     });
