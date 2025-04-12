@@ -136,6 +136,48 @@ footer {
     cursor: pointer;
 }
 
+#dondChoiceContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    justify-content: start;
+    align-items: center;
+    z-index: 3;
+    width: 30rem;
+    height: 30rem;
+}
+
+#dondChoiceText {
+    font-size: 4rem;
+    padding: 0;
+    margin: 0;
+}
+
+#dondChoiceCase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    margin-bottom: 1rem;
+    aspect-ratio: 1 / 1;
+    font-size: 3rem;
+    background-color: var(--color-light-navy);
+    border-radius: 10px;
+    box-shadow: 0 5px var(--color-navy);
+    color: var(--color-grey);
+}
+
+#dondDrink {
+    --shadow-color: rgb(0, 95, 0);
+    background-color: rgb(3, 139, 3);
+}
+
+#dondNoDrink {
+    --shadow-color: rgb(97, 0, 0);
+    background-color: rgb(197, 8, 8);
+}
 
 #backdrop {
     display: block;
@@ -269,6 +311,20 @@ footer {
     border: solid var(--color-tan);
 }
 
+.dondButton {
+    border: none;
+    width: 15rem;
+    padding: 1rem;
+    background-color: var(--color-dark-tan);
+    border-radius: 10px;
+    margin: .5rem;
+    font-size: 2rem;
+    --shadow-color: var(--color-navy);
+    box-shadow: 0 7px var(--shadow-color);
+    color: var(--color-grey);
+    cursor: pointer;
+}
+
 .modalContainer {
     display: flex;
     position: absolute;
@@ -334,6 +390,7 @@ footer {
 .maxPenalty {
     color: white;
     background-color: var(--p-max);
+    font-weight: 100;
     --shadow-color: black;
 }
 

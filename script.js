@@ -21,6 +21,7 @@ let game;
 
 $("#caseRevealContainer").hide();
 $("#closeCaseRevealModalButton").hide();
+$("#gameSetup").hide();
 
 $("#addPlayer").on("click", () => {
     addPlayerToList();
@@ -143,7 +144,7 @@ function loadPenalties(totalCases, pList) {
                 $(newVal).addClass("value fourPenalties teko text-thicc").text("4").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 5:
-                $(newVal).addClass("value maxPenalty teko text-thicc").text("X")
+                $(newVal).addClass("value maxPenalty teko").html("<span>&#128369;</span>")
                 .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
             }
         $(valueBoard).append(newVal);
@@ -240,12 +241,12 @@ function revealCase(index) {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
                 const penaltyClass = findPenaltyClass(index);
-                const penaltyElement = $("#valueGrid").find($("." + penaltyClass)).first();
+                const penaltyElement = $("#valueGrid").find($("." + penaltyClass)).last();
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     if (game.modifierList[index]){
-                        const modifierElem = $("#modifiers").find($(".modifierShown")).first();
+                        const modifierElem = $("#modifiers").find($(".modifierShown")).last();
                         $("#caseRevealModifier").addClass("modifierAppear").on("animationend", () => {
                             $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                                 .one("click", () => {
@@ -330,6 +331,10 @@ function progressGameStep() {
             $(nextPlayer).addClass("playerTurn");
         }
     }
+}
+
+function offerChoice() {
+
 }
 
 // Animation Functions
