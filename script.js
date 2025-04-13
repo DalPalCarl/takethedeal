@@ -9,7 +9,7 @@ const playerSetupList = $("#playerSetupList");
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const MAXPLAYERCOUNT = 10;
-const ROUNDS = 8;
+const ROUNDS = 4;
 
 let playerCount = 0;
 let modifierCount = 0;
@@ -21,18 +21,19 @@ let game;
 
 $("#caseRevealContainer").hide();
 $("#closeCaseRevealModalButton").hide();
-$("#gameSetup").hide();
+// $("#gameSetup").hide();
+$("#dondChoiceContainer").hide();
 
 $("#addPlayer").on("click", () => {
     addPlayerToList();
-})
+});
 
 $("#newPlayerName").on("keypress", (event) => {
     if(event.key === "Enter"){
         event.preventDefault();
         addPlayerToList();
     }
-})
+});
 
 $(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
 $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
@@ -228,6 +229,7 @@ function handleCaseClicked(clickedCase, index) {
     }
     else{
         revealCase(index);
+        $(clickedCase).addClass("caseRevealed");
     }
     // console.log(clickedCase, game.penaltyList[index]);
 }
@@ -235,7 +237,6 @@ function handleCaseClicked(clickedCase, index) {
 function revealCase(index) {
     $("#backdrop").fadeIn();
     revealCaseElement.addClass("caseStyle").text(index+1);
-    updatePlayerScore(game.players[game.roundStep], game.penaltyList[index], game.modifierList[index]);
     $("#caseRevealText").text(game.players[game.roundStep].name);
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
@@ -247,7 +248,7 @@ function revealCase(index) {
                 .one("animationend", () => {
                     if (game.modifierList[index]){
                         const modifierElem = $("#modifiers").find($(".modifierShown")).last();
-                        $("#caseRevealModifier").addClass("modifierAppear").on("animationend", () => {
+                        $("#caseRevealModifier").addClass("modifierAppear").one("animationend", () => {
                             $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                                 .one("click", () => {
                                     handleContinueButton(penaltyElement, penaltyClass, modifierElem);
@@ -279,7 +280,7 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem) {
         });
     if(modElem){
         modElem.removeClass("modifierShown")
-            .css("animation", "pressDownPenalty 1000ms forwards")
+            .css("animation", "pressDownPenalty 1000ms forwards");
     }
     progressGameStep();
 }
@@ -288,6 +289,8 @@ function updatePlayerScore(player, score, mod){
     console.log(player.name, " | ", score, " | ", mod);
 }
 
+
+//Takes penalty number as input, returns associated penalty class style name
 function findPenaltyClass(i) {
     switch(game.penaltyList[i]){
         case 1:
@@ -311,30 +314,59 @@ function progressGameStep() {
     const casesLeft = $(".case").length - $(".caseRevealed").length;
     if(casesLeft > 1){
         if(game.round === ROUNDS){
-            console.log("LAST ROUND");
+            offerChoice(game.players[game.roundStep]);
         }
         else if(game.round > ROUNDS){
             console.log("Players left to pick cases!");
         }
-        else{
-            // do regular selection process
-            const prevPlayer = playerBoard.children()[game.roundStep];
-            $(prevPlayer).removeClass("playerTurn");
+        // do regular selection process
 
-            game.roundStep++;
-            if(game.roundStep === playerCount){
-                game.roundStep = 0;
-                game.round++;
-            }
+        $(playerBoard.children()[game.roundStep]).removeClass("playerTurn");
 
-            const nextPlayer = playerBoard.children()[game.roundStep];
-            $(nextPlayer).addClass("playerTurn");
+        game.roundStep++;
+        if(game.roundStep === playerCount){
+            game.round++;
+            game.roundStep = 0;
         }
+        
+        const nextPlayer = playerBoard.children()[game.roundStep];
+        if(nextPlayer.classList.contains("playerFinished")){
+            progressGameStep();
+            return;
+        }
+        console.log(nextPlayer.classList.contains("playerFinished"));
+        $(nextPlayer).addClass("playerTurn");
+        if(game.round === ROUNDS){
+            offerChoice(game.players[game.roundStep])
+        }
+    }
+    else if(casesLeft === 1){
+
     }
 }
 
-function offerChoice() {
-
+function offerChoice(player) {
+    $("#dondChoiceText").text(player.name);
+    $("#dondChoiceCase").text(player.selectedCase+1);
+    $("#backdrop").fadeIn();
+    $("#dondChoiceContainer").fadeIn();
+    $("#dondDrink").one("click", () => {
+        $("#dondChoiceContainer").hide();
+        revealCase(player.selectedCase);
+        $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
+    });
+    $("#dondNoDrink").one("click", () => {
+        $("#backdrop").fadeOut();
+        $("dondChoiceContainer").fadeOut();
+        handleNoDrink(player.selectedCase);
+        progressGameStep();
+    })
 }
 
-// Animation Functions
+function handleNoDrink(caseIndex){
+    $("#backdrop").fadeOut();
+    $("dondChoiceContainer").fadeOut();
+    $(caseBoard.children()[caseIndex]).removeClass("caseSelected").prop("disabled", false)
+        .css("animation", "pressDown 1000ms ease-in-out forwards reverse");
+}
+

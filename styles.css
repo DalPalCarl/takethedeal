@@ -62,6 +62,7 @@ footer {
     z-index: 3;
     width: 45rem;
     height: 40rem;
+    user-select: none;
 }
 
 #caseRevealText {
@@ -129,6 +130,7 @@ footer {
     background-color: var(--color-navy);
     box-shadow: 0 5px var(--color-light-navy);
     font-size: 2rem;
+    user-select: none;
 }
 
 #closeCaseRevealModalButton:hover {
