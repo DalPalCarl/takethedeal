@@ -313,10 +313,7 @@ function progressGameStep() {
     // 3) If the round is equal to ROUNDS, then we initiate the DoND round
     const casesLeft = $(".case").length - $(".caseRevealed").length;
     if(casesLeft > 1){
-        if(game.round === ROUNDS){
-            offerChoice(game.players[game.roundStep]);
-        }
-        else if(game.round > ROUNDS){
+        if(game.round > ROUNDS){
             console.log("Players left to pick cases!");
         }
         // do regular selection process
@@ -334,14 +331,14 @@ function progressGameStep() {
             progressGameStep();
             return;
         }
-        console.log(nextPlayer.classList.contains("playerFinished"));
         $(nextPlayer).addClass("playerTurn");
+        console.log(game.round);
         if(game.round === ROUNDS){
             offerChoice(game.players[game.roundStep])
         }
     }
     else if(casesLeft === 1){
-
+        console.log("one case Left");
     }
 }
 
@@ -353,6 +350,7 @@ function offerChoice(player) {
     $("#dondDrink").one("click", () => {
         $("#dondChoiceContainer").hide();
         revealCase(player.selectedCase);
+        $(caseBoard.children()[player.selectedCase]).addClass("caseRevealed");
         $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
     });
     $("#dondNoDrink").one("click", () => {
