@@ -9,7 +9,7 @@ const playerSetupList = $("#playerSetupList");
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const MAXPLAYERCOUNT = 10;
-const ROUNDS = 4;
+const ROUNDS = 2;
 
 let playerCount = 0;
 let modifierCount = 0;
@@ -151,6 +151,7 @@ function loadPenalties(totalCases, pList) {
         $(valueBoard).append(newVal);
     }
 }
+
 function loadModifiers(modifierData) {
     modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
@@ -236,6 +237,7 @@ function handleCaseClicked(clickedCase, index) {
 
 function revealCase(index) {
     $("#backdrop").fadeIn();
+    console.log(index);
     revealCaseElement.addClass("caseStyle").text(index+1);
     $("#caseRevealText").text(game.players[game.roundStep].name);
     $("#caseRevealContainer").fadeIn(1000, () => {
@@ -312,34 +314,50 @@ function progressGameStep() {
     //    we keep playing as normal
     // 3) If the round is equal to ROUNDS, then we initiate the DoND round
     const casesLeft = $(".case").length - $(".caseRevealed").length;
-    if(casesLeft > 1){
-        if(game.round > ROUNDS){
-            console.log("Players left to pick cases!");
-        }
-        // do regular selection process
-
-        $(playerBoard.children()[game.roundStep]).removeClass("playerTurn");
-
-        game.roundStep++;
-        if(game.roundStep === playerCount){
-            game.round++;
-            game.roundStep = 0;
-        }
-        
-        const nextPlayer = playerBoard.children()[game.roundStep];
-        if(nextPlayer.classList.contains("playerFinished")){
-            progressGameStep();
-            return;
-        }
-        $(nextPlayer).addClass("playerTurn");
-        console.log(game.round);
-        if(game.round === ROUNDS){
-            offerChoice(game.players[game.roundStep])
-        }
+    if(casesLeft === 0){
+        endGame();
+        return;
     }
-    else if(casesLeft === 1){
-        console.log("one case Left");
+
+    if(game.round > ROUNDS){
+        console.log("Players left to pick cases!");
     }
+    // do regular selection process
+    
+    $(playerBoard.children()[game.roundStep]).removeClass("playerTurn");
+    
+    game.roundStep++;
+    if(game.roundStep === playerCount){
+        game.round++;
+        game.roundStep = 0;
+    }
+    
+    const nextPlayer = playerBoard.children()[game.roundStep];
+    if(nextPlayer.classList.contains("playerFinished")){
+        progressGameStep();
+        return;
+    }
+    $(nextPlayer).addClass("playerTurn");
+    if(casesLeft === 1){
+        const i = findLastCase();
+        $(nextPlayer).addClass("playerFinished");
+        revealCase(i);
+        return;
+    }
+    if(game.round === ROUNDS){
+        offerChoice(game.players[game.roundStep]);
+    }
+}
+
+function findLastCase(){
+    let index = 0;
+    caseBoard.children().toArray().forEach((c, i) => {
+        if(!c.classList.contains("caseRevealed")){
+            $(c).addClass("caseRevealed");
+            index = i;
+        }
+    });
+    return index;
 }
 
 function offerChoice(player) {
@@ -347,24 +365,36 @@ function offerChoice(player) {
     $("#dondChoiceCase").text(player.selectedCase+1);
     $("#backdrop").fadeIn();
     $("#dondChoiceContainer").fadeIn();
-    $("#dondDrink").one("click", () => {
+    const drinkButton = document.getElementById("dondDrink");
+    const noDrinkButton = document.getElementById("dondNoDrink");
+    drinkButton.onclick = () => {
         $("#dondChoiceContainer").hide();
-        revealCase(player.selectedCase);
-        $(caseBoard.children()[player.selectedCase]).addClass("caseRevealed");
-        $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
-    });
-    $("#dondNoDrink").one("click", () => {
+        handleDrink(player);
+    }
+    noDrinkButton.onclick = () => {
         $("#backdrop").fadeOut();
         $("dondChoiceContainer").fadeOut();
-        handleNoDrink(player.selectedCase);
+        handleNoDrink(player);
         progressGameStep();
-    })
+    }
 }
 
-function handleNoDrink(caseIndex){
+function handleDrink(player){
+    revealCase(player.selectedCase);
+    $(caseBoard.children()[player.selectedCase]).addClass("caseRevealed");
+    $(playerBoard.children()[game.roundStep]).addClass("playerFinished")
+    
+}
+
+function handleNoDrink(player){
     $("#backdrop").fadeOut();
     $("dondChoiceContainer").fadeOut();
-    $(caseBoard.children()[caseIndex]).removeClass("caseSelected").prop("disabled", false)
+    $($(playerBoard.children().get(game.roundStep)).children().get(1)).hide();
+    $(caseBoard.children()[player.selectedCase]).removeClass("caseSelected").prop("disabled", false)
         .css("animation", "pressDown 1000ms ease-in-out forwards reverse");
+}
+
+function endGame(){
+    console.log("End Game");
 }
 
