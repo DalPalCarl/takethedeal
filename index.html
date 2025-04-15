@@ -20,26 +20,25 @@
         <div id="gameSetup" class="boardBG teko">
             <h1>Game Setup</h1>
             <div id="inputSetupContainer">
-                <form id="gameSetupForm">
-                    <input type="text" id="newPlayerName" 
+                <form id="gameSetupForm" class="work-sans">
+                    <input type="text" id="newPlayerName"
                         minlength="1" maxlength="16" 
                         placeholder="Add Player" 
                         pattern="[a-zA-Z ]+"
                         autocomplete="off"
                         autofocus="true">
-                    <button type="button" id="addPlayer">Add</button>
+                    <button type="button" id="addPlayer" class="work-sans">Add</button>
                     <label for="modifierSetting">Modifier Frequency</label>
-                    <select id="modifierSetting" name="modifierSetting">
+                    <select id="modifierSetting" name="modifierSetting" class="work-sans">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="volatile">Volatile</option>
                     </select>
-                    <button type="submit">Start Game</button>
+                    <button type="submit" class="work-sans">Start Game</button>
                 </form>
                 <div id="displayPlayerList">
                     <h2>Players</h2>
                     <ul id="playerSetupList">
-    
                     </ul>
                 </div>
             </div>

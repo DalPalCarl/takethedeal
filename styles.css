@@ -426,6 +426,8 @@ footer {
 .setupPlayer:hover {
     cursor: pointer;
     filter: brightness(70%);
+    background-color: var(--p-4);
+    box-shadow: 5px 5px var(--p-4B);
 }
 
 .value {

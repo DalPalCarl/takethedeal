@@ -82,13 +82,13 @@ function addPlayerToList() {
         const newName = newPlayerName[0].value;
         const newPlayerElement = document.createElement("li");
         $(newPlayerElement).text(newName).addClass("setupPlayer");
+        newPlayerElement.onclick = () => {
+            newPlayerElement.remove();
+        }
         playerSetupList.append(newPlayerElement);
         newPlayerName[0].value = "";
+
     }
-}
-
-function removePlayerFromList() {
-
 }
 
 function shuffle(arr) {
