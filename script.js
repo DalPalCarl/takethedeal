@@ -19,10 +19,12 @@ let penaltyList = [];
 
 let game;
 
+// $("#gameSetup").hide();
+
 $("#caseRevealContainer").hide();
 $("#closeCaseRevealModalButton").hide();
-// $("#gameSetup").hide();
 $("#dondChoiceContainer").hide();
+$("#endGameContainer").hide();
 
 $("#addPlayer").on("click", () => {
     addPlayerToList();
@@ -47,6 +49,8 @@ function GameState(playerCount, modifierNumber, playerList){
     this.players = playerList;
     this.penaltyList = [];
     this.modifierList = [];
+    this.scoreHigh = 0;
+    this.scoreLow = Number.MAX_VALUE;
 }
 
 function Player(name){
@@ -231,15 +235,18 @@ function handleCaseClicked(clickedCase, index) {
     else{
         revealCase(index);
         $(clickedCase).addClass("caseRevealed");
+        if(game.round > ROUNDS){
+            $(game.players[game.roundStep]).addClass("playerFinished");
+        }
     }
     // console.log(clickedCase, game.penaltyList[index]);
 }
 
 function revealCase(index) {
     $("#backdrop").fadeIn();
-    console.log(index);
     revealCaseElement.addClass("caseStyle").text(index+1);
     $("#caseRevealText").text(game.players[game.roundStep].name);
+    updatePlayerScore(game.players[game.roundStep], game.penaltyList[index], null);
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
@@ -288,7 +295,9 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem) {
 }
 
 function updatePlayerScore(player, score, mod){
-    console.log(player.name, " | ", score, " | ", mod);
+    player.score += score;
+    game.scoreHigh = Math.max(player.score, game.scoreHigh);
+    game.scoreLow = Math.min(player.score, game.scoreLow);
 }
 
 
@@ -314,6 +323,9 @@ function progressGameStep() {
     //    we keep playing as normal
     // 3) If the round is equal to ROUNDS, then we initiate the DoND round
     const casesLeft = $(".case").length - $(".caseRevealed").length;
+
+    $(playerBoard.children()[game.roundStep]).removeClass("playerTurn");
+
     if(casesLeft === 0){
         endGame();
         return;
@@ -324,13 +336,13 @@ function progressGameStep() {
     }
     // do regular selection process
     
-    $(playerBoard.children()[game.roundStep]).removeClass("playerTurn");
     
     game.roundStep++;
     if(game.roundStep === playerCount){
         game.round++;
         game.roundStep = 0;
     }
+    console.log(game.roundStep);
     
     const nextPlayer = playerBoard.children()[game.roundStep];
     if(nextPlayer.classList.contains("playerFinished")){
@@ -368,27 +380,24 @@ function offerChoice(player) {
     const drinkButton = document.getElementById("dondDrink");
     const noDrinkButton = document.getElementById("dondNoDrink");
     drinkButton.onclick = () => {
-        $("#dondChoiceContainer").hide();
         handleDrink(player);
     }
     noDrinkButton.onclick = () => {
-        $("#backdrop").fadeOut();
-        $("dondChoiceContainer").fadeOut();
         handleNoDrink(player);
         progressGameStep();
     }
 }
 
 function handleDrink(player){
+    $("#dondChoiceContainer").hide();
     revealCase(player.selectedCase);
     $(caseBoard.children()[player.selectedCase]).addClass("caseRevealed");
-    $(playerBoard.children()[game.roundStep]).addClass("playerFinished")
-    
+    $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
 }
 
 function handleNoDrink(player){
     $("#backdrop").fadeOut();
-    $("dondChoiceContainer").fadeOut();
+    $("#dondChoiceContainer").fadeOut();
     $($(playerBoard.children().get(game.roundStep)).children().get(1)).hide();
     $(caseBoard.children()[player.selectedCase]).removeClass("caseSelected").prop("disabled", false)
         .css("animation", "pressDown 1000ms ease-in-out forwards reverse");
@@ -396,5 +405,29 @@ function handleNoDrink(player){
 
 function endGame(){
     console.log("End Game");
+    $("#backdrop").fadeIn();
+    $("#endGameContainer").fadeIn();
+    game.players.forEach((p, i) => {
+        const playerItem = document.createElement('div');
+        const playerScore = document.createElement('div');
+        const playerName = document.createElement('p');
+        
+        $(playerScore).addClass("playerScore").text(p.score);
+        if(p.score === game.scoreHigh){$(playerScore).addClass("highest");}
+        else if(p.score === game.scoreLow){$(playerScore).addClass("lowest");}
+        if(p.maxPenalty){$(playerScore).addClass("max");}
+
+        $(playerName).addClass("playerName").text(p.name);
+        $(playerItem).addClass("text-thicc playerStat").append(playerScore, playerName).prop("animation-delay", (i * 500) + "ms")
+            .css("animation", "popIn 1000ms ease-in-out forwards");;
+
+        $("#endGamePlayerStats").append(playerItem);
+    });
+
+    $("#backToGameSetup").onclick = () => {
+        $("#endGameContainer").hide();
+        $("#gameSetup").fadeIn();
+    }
+
 }
 

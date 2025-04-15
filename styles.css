@@ -307,6 +307,81 @@ footer {
     height: auto;
 }
 
+#endGameContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    justify-content: start;
+    align-items: center;
+    z-index: 3;
+    width: 50rem;
+    height: 35rem;
+    padding: 2rem;
+    user-select: none;
+}
+
+#endGameHeader {
+    font-size: 5rem;
+    padding: 0;
+    margin: 0;
+}
+
+#endGamePlayerStats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: var(--color-dark-tan);
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    border-radius: 10px;
+}
+
+.playerStat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.playerScore {
+    --scoreText: black;
+    --scoreFace: var(--color-grey);
+    --scoreShadow: var(--color-navy);
+    padding-inline: clamp(2rem, 20%, 4rem);
+    border-radius: 10px;
+    font-size: 3rem;
+    color: var(--scoreText);
+    background-color: var(--scoreFace);
+    box-shadow: 4px 4px var(--scoreShadow);
+}
+
+.playerName {
+    margin: 0;
+    font-size: 2rem;
+}
+
+#endGameButtons {
+    display: flex;
+}
+
+#backToGameSetup {
+    margin: 1rem;
+    border-style: none;
+    font-size: 2rem;
+    color: black;
+    background-color: var(--p-1);
+    border-radius: 10px;
+    box-shadow: 3px 3px var(--p-1B);
+    cursor: pointer;
+}
+
+#backToGameSetup:hover {
+    filter: brightness(80%);
+}
+
 .boardBG {
     background-color: var(--color-grey);
     border-radius: 10px;
@@ -507,6 +582,24 @@ footer {
 
 .text-thicc {
     font-weight: 600;
+}
+
+.highest {
+    --scoreFace: var(--p-4);
+    --scoreShadow: var(--p-4B);
+    --scoreText: var(--color-grey);
+}
+
+.lowest {
+    --scoreFace: var(--p-1);
+    --scoreShadow: var(--p-1B);
+    --scoreText: black;
+}
+
+.max {
+    --scoreFace: var(--p-max);
+    --scoreShadow: black;
+    --scoreText: var(--color-grey);
 }
 
 @media (max-width: 500px) {
