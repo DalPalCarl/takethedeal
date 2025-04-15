@@ -1,0 +1,32 @@
+[
+    {
+        "mod": "A",
+        "info": "Everybody takes this penalty!",
+        "isPlayerSelection": false
+    },
+    {
+        "mod": "2",
+        "info": "Double the penalty value!",
+        "isPlayerSelection": false
+    },
+    {
+        "mod": "3",
+        "info": "Triple the penalty value!",
+        "isPlayerSelection": false
+    },
+    {
+        "mod": "4",
+        "info": "Everybody takes this penalty!",
+        "isPlayerSelection": false
+    },
+    {
+        "mod": "5",
+        "info": "Everybody takes this penalty!",
+        "isPlayerSelection": false
+    },
+    {
+        "mod": "6",
+        "info": "Everybody takes this penalty!",
+        "isPlayerSelection": false
+    }
+]

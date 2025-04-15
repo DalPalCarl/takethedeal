@@ -159,7 +159,7 @@ function loadPenalties(totalCases, pList) {
 function loadModifiers(modifierData) {
     modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
-        $(modElement).addClass("modifier modifierShown teko text-thicc").text("X").css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
+        $(modElement).addClass("modifier modifierShown teko text-thicc").text("♕").css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
         $(modifiers).append(modElement);
     })
 }
@@ -295,9 +295,14 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem) {
 }
 
 function updatePlayerScore(player, score, mod){
-    player.score += score;
-    game.scoreHigh = Math.max(player.score, game.scoreHigh);
-    game.scoreLow = Math.min(player.score, game.scoreLow);
+    if(score === 5){
+        player.maxPenalty = true;
+    }
+    else{
+        player.score += score;
+        game.scoreHigh = Math.max(player.score, game.scoreHigh);
+        game.scoreLow = Math.min(player.score, game.scoreLow);
+    }
 }
 
 
