@@ -598,7 +598,7 @@ footer {
     --scoreText: black;
 }
 
-.max {
+.maxim {
     --scoreFace: var(--p-max);
     --scoreShadow: black;
     --scoreText: var(--color-grey);

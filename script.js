@@ -9,7 +9,7 @@ const playerSetupList = $("#playerSetupList");
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const MAXPLAYERCOUNT = 10;
-const ROUNDS = 2;
+const ROUNDS = 8;
 
 let playerCount = 0;
 let modifierCount = 0;
@@ -50,7 +50,7 @@ function GameState(playerCount, modifierNumber, playerList){
     this.penaltyList = [];
     this.modifierList = [];
     this.scoreHigh = 0;
-    this.scoreLow = Number.MAX_VALUE;
+    this.scoreLow = 0;
 }
 
 function Player(name){
@@ -236,7 +236,7 @@ function handleCaseClicked(clickedCase, index) {
         revealCase(index);
         $(clickedCase).addClass("caseRevealed");
         if(game.round > ROUNDS){
-            $(game.players[game.roundStep]).addClass("playerFinished");
+            $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
         }
     }
     // console.log(clickedCase, game.penaltyList[index]);
@@ -330,10 +330,6 @@ function progressGameStep() {
         endGame();
         return;
     }
-
-    if(game.round > ROUNDS){
-        console.log("Players left to pick cases!");
-    }
     // do regular selection process
     
     
@@ -342,7 +338,6 @@ function progressGameStep() {
         game.round++;
         game.roundStep = 0;
     }
-    console.log(game.roundStep);
     
     const nextPlayer = playerBoard.children()[game.roundStep];
     if(nextPlayer.classList.contains("playerFinished")){
@@ -404,7 +399,7 @@ function handleNoDrink(player){
 }
 
 function endGame(){
-    console.log("End Game");
+    calculateHighestAndLowest();
     $("#backdrop").fadeIn();
     $("#endGameContainer").fadeIn();
     game.players.forEach((p, i) => {
@@ -415,7 +410,7 @@ function endGame(){
         $(playerScore).addClass("playerScore").text(p.score);
         if(p.score === game.scoreHigh){$(playerScore).addClass("highest");}
         else if(p.score === game.scoreLow){$(playerScore).addClass("lowest");}
-        if(p.maxPenalty){$(playerScore).addClass("max");}
+        if(p.maxPenalty){$(playerScore).addClass("maxim");}
 
         $(playerName).addClass("playerName").text(p.name);
         $(playerItem).addClass("text-thicc playerStat").append(playerScore, playerName).prop("animation-delay", (i * 500) + "ms")
@@ -424,10 +419,34 @@ function endGame(){
         $("#endGamePlayerStats").append(playerItem);
     });
 
-    $("#backToGameSetup").onclick = () => {
+    document.getElementById("backToGameSetup").onclick = () => {
+        clearOldGameElements();
         $("#endGameContainer").hide();
         $("#gameSetup").fadeIn();
     }
-
 }
 
+function clearOldGameElements(){
+    //cases
+    caseBoard.children().remove();
+
+    //values
+    valueBoard.children().remove();
+
+    //players
+    playerBoard.children().remove();
+
+    //modifiers
+    modifiers.children().remove();
+}
+
+function calculateHighestAndLowest() {
+    let h = 0;
+    let l = Number.MAX_VALUE;
+    game.players.forEach((p) => {
+        h = Math.max(h, p.score);
+        l = Math.min(l, p.score);
+    });
+    game.scoreHigh = h;
+    game.scoreLow = l;
+}
