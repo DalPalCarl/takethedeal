@@ -37,9 +37,9 @@ main {
     display: grid;
     grid-template-columns: 3fr 3fr 2fr;
     margin: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 5rem;
-    height: max(90vh, 50%);
+    margin-top: 5rem;
+    height: max(80vh, 50%);
+    /* height: auto; */
     user-select: none;
 }
 
