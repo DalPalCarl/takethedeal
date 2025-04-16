@@ -23,8 +23,9 @@ $("#caseRevealContainer").hide();
 $("#closeCaseRevealModalButton").hide();
 $("#dondChoiceContainer").hide();
 $("#endGameContainer").hide();
+$("#modifierContainer").hide();
 
-$("#addPlayer").on("click", () => {
+$("#addPlayerButton").on("click", () => {
     addPlayerToList();
 });
 
@@ -176,7 +177,7 @@ function loadPenalties(totalCases, pList) {
 function loadModifiers(modifierData) {
     modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
-        $(modElement).addClass("modifier modifierShown teko text-thicc").text(mod.mod).css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
+        $(modElement).addClass("modifier modifierShown bokor text-thicc").text(mod.mod).css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
         $(modifiers).append(modElement);
     })
 }
@@ -273,18 +274,21 @@ function revealCase(index) {
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     if (game.modifierList[index]){
+                        const modifierData = game.modifierList[index];
                         const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
                         $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").one("animationend", () => {
                             $("#caseRevealContent").delay(1000).fadeOut().one("animationend", () => {
-                                $("#modifierContainer").fadeIn();
+                                $("#modifierName").text(modifierData.mod);
+                                $("#modifierInfo").text(modifierData.info);
                                 $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                                 .one("click", () => {
                                     handleContinueButton(penaltyElement, penaltyClass, modifierElem);
                                     $("#caseRevealCase").css("animation", "none");
                                     $("#caseRevealModifier").removeClass("modifierAppear");
-                                    $("#modifierContainter").hide();
+                                    $("#modifierContainer").hide();
                                     $("#caseRevealContent").show();
                                 });
+                                $("#modifierContainer").delay(2000).fadeIn();
                             })
                         })
                     }
@@ -399,25 +403,25 @@ function offerChoice(player) {
     $("#dondChoiceCase").text(player.selectedCase+1);
     $("#backdrop").fadeIn();
     $("#dondChoiceContainer").fadeIn();
-    const drinkButton = document.getElementById("dondDrink");
-    const noDrinkButton = document.getElementById("dondNoDrink");
-    drinkButton.onclick = () => {
-        handleDrink(player);
+    const takeButton = document.getElementById("dondTake");
+    const leaveButton = document.getElementById("dondLeave");
+    takeButton.onclick = () => {
+        handleTake(player);
     }
-    noDrinkButton.onclick = () => {
-        handleNoDrink(player);
+    leaveButton.onclick = () => {
+        handleLeave(player);
         progressGameStep();
     }
 }
 
-function handleDrink(player){
+function handleTake(player){
     $("#dondChoiceContainer").hide();
     revealCase(player.selectedCase);
     $(caseBoard.children()[player.selectedCase]).addClass("caseRevealed");
     $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
 }
 
-function handleNoDrink(player){
+function handleLeave(player){
     $("#backdrop").fadeOut();
     $("#dondChoiceContainer").fadeOut();
     $($(playerBoard.children().get(game.roundStep)).children().get(1)).hide();

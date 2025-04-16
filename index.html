@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drink or No Drink</title>
+    <title>Take the Deal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&family=Bokor&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/styles.css"/>
 </head>
@@ -21,20 +21,21 @@
             <h1>Game Setup</h1>
             <div id="inputSetupContainer">
                 <form id="gameSetupForm" class="work-sans">
-                    <input type="text" id="newPlayerName"
+                    <label for="newPlayerName">Enter New Player</label>
+                    <input type="text" id="newPlayerName" class="work-sans"
                         minlength="1" maxlength="16" 
                         placeholder="Add Player" 
                         pattern="[a-zA-Z ]+"
                         autocomplete="off"
                         autofocus="true">
-                    <button type="button" id="addPlayer" class="work-sans">Add</button>
+                    <button type="button" id="addPlayerButton" class="teko text-thicc">Add</button>
                     <label for="modifierSetting">Modifier Frequency</label>
                     <select id="modifierSetting" name="modifierSetting" class="work-sans">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="volatile">Volatile</option>
                     </select>
-                    <button type="submit" class="work-sans">Start Game</button>
+                    <button type="submit" id="submitButton" class="teko text-thicc">Start Game</button>
                 </form>
                 <div id="displayPlayerList">
                     <h2>Players</h2>
@@ -50,8 +51,8 @@
             <p id="dondChoiceText" class="teko text-thicc">Dallas</p>
             <p class="work-sans">Your case is</p>
             <div id="dondChoiceCase" class="teko text-thicc">42</div>
-            <button id="dondDrink" class="dondButton teko text-thicc">Drink</button>
-            <button id="dondNoDrink" class="dondButton teko text-thicc">No Drink</button>
+            <button id="dondTake" class="dondButton teko text-thicc">Take</button>
+            <button id="dondLeave" class="dondButton teko text-thicc">Leave</button>
         </div>
     </section>
 
@@ -62,7 +63,7 @@
                 <div id="caseRevealMask">
                     <div id="caseRevealBackground">
                         <div id="caseRevealCase" class="teko text-thicc">
-                            <div id="caseRevealModifier"></div>
+                            <div id="caseRevealModifier" class="bokor"></div>
                             <div id="caseRevealCaseEdge">
                                 <div id="caseRevealCaseFront">
                                 </div>
@@ -72,8 +73,8 @@
                 </div>
             </div>
             <div id="modifierContainer">
-                <p id="modifierName"></p>
-                <p id="modifierInfo"></p>
+                <p id="modifierName" class="bokor text-thicc"></p>
+                <p id="modifierInfo" class="teko text-thicc"></p>
             </div>
             <button id="closeCaseRevealModalButton" class="teko">
                 Continue
@@ -102,7 +103,7 @@
             <section id="valueGrid">
             </section>
             <p id="modifierHeader" class="teko text-thicc">Modifiers</p>
-            <section id="modifiers">
+            <section id="modifiers" class="fredericka">
             </section>
 
         </section>

@@ -65,6 +65,10 @@ footer {
     user-select: none;
 }
 
+#caseRevealContainer:last-child {
+    justify-self: end;
+}
+
 #caseRevealContent {
     display: flex;
     flex-direction: column;
@@ -177,12 +181,12 @@ footer {
     color: var(--color-grey);
 }
 
-#dondDrink {
+#dondTake {
     --shadow-color: rgb(0, 95, 0);
     background-color: rgb(3, 139, 3);
 }
 
-#dondNoDrink {
+#dondLeave {
     --shadow-color: rgb(97, 0, 0);
     background-color: rgb(197, 8, 8);
 }
@@ -226,9 +230,45 @@ footer {
     gap: 20px;
 }
 
-#gameSetupForm #addPlayer, #modifierSetting {
+#gameSetupForm {
+
+}
+
+#newPlayerName {
+    padding: .2rem;
+    padding-inline: .5rem;
+    border-radius: 10px;
+    border: solid 1px var(--color-navy);
+}
+
+#modifierSetting {
     contain: content;
     margin-bottom: 1rem;
+    padding: .2rem;
+    border: solid 1px var(--color-navy);
+    border-radius: 10px;
+}
+
+#addPlayerButton {
+    margin-bottom: 1rem;
+    border: none;
+    padding: .2rem;
+    color: var(--color-grey);
+    background-color: var(--color-light-navy);
+    box-shadow: 3px 3px var(--color-navy);
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+#submitButton {
+    margin-bottom: 1rem;
+    border: none;
+    padding: .2rem;
+    color: var(--color-grey);
+    background-color: var(--p-max);
+    box-shadow: 3px 3px var(--color-navy);
+    border-radius: 10px;
+    font-size: 1rem;
 }
 
 #displayPlayerList {
@@ -318,6 +358,37 @@ footer {
     gap: .2rem;
     width: 100%;
     height: auto;
+}
+
+#modifierContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+    width: 90%;
+}
+
+#modifierName {
+    font-size: 4rem;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    background-color: var(--m);
+    border-radius: 10px;
+    color: var(--color-navy);
+    text-align: center;
+    box-shadow: 3px 3px var(--mB);
+}
+
+#modifierInfo {
+    font-size: 1.5rem;
+    background-color: var(--p-max);
+    color: var(--color-grey);
+    margin-top: .5rem;
+    padding: 1rem;
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
 }
 
 #endGameContainer {
@@ -592,6 +663,12 @@ footer {
     font-family: "Teko", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;
+    font-style: normal;
+}
+
+.bokor {
+    font-family: "Bokor", system-ui;
+    font-weight: 400;
     font-style: normal;
 }
 
