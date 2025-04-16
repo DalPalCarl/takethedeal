@@ -1,6 +1,6 @@
 const valueBoard = $("#valueGrid");
 const caseBoard = $("#caseGrid");
-const playerBoard = $("#playerContainer");
+const playerBoard = $("#playerContent");
 const modifiers = $("#modifiers");
 const gameSetupForm = $("#gameSetupForm");
 const playerSetupList = $("#playerSetupList");
@@ -273,14 +273,19 @@ function revealCase(index) {
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     if (game.modifierList[index]){
-                        const modifierElem = $("#modifiers").find($(".modifierShown")).last();
-                        $("#caseRevealModifier").addClass("modifierAppear").one("animationend", () => {
-                            $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
+                        const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
+                        $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").one("animationend", () => {
+                            $("#caseRevealContent").delay(1000).fadeOut().one("animationend", () => {
+                                $("#modifierContainer").fadeIn();
+                                $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                                 .one("click", () => {
                                     handleContinueButton(penaltyElement, penaltyClass, modifierElem);
                                     $("#caseRevealCase").css("animation", "none");
                                     $("#caseRevealModifier").removeClass("modifierAppear");
-                            });
+                                    $("#modifierContainter").hide();
+                                    $("#caseRevealContent").show();
+                                });
+                            })
                         })
                     }
                     else {

@@ -118,7 +118,7 @@ footer {
     justify-content: center;
     align-items: center;
     position: fixed;
-    font-size: 4rem;
+    font-size: 6rem;
     background-color: var(--m);
     box-shadow: 3px 3px var(--mB);
     border-radius: 10px;
@@ -256,7 +256,7 @@ footer {
     flex-direction: column;
     justify-content: start;
     margin: .5rem;
-    padding: 1rem;
+    padding: 1.2rem;
     height: 100%;
     box-shadow: 5px 5px var(--color-tan);
 }
@@ -297,11 +297,11 @@ footer {
     width: 100%;
 }
 
-#modifierHeader {
+#modifierHeader, #valueHeader, #caseHeader, #playerHeader {
     display: flex;
     justify-content: center;
     padding: 0;
-    margin-bottom: 0;
+    margin: 0;
     font-size: 2rem;
 }
 
