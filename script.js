@@ -1,5 +1,3 @@
-
-
 const valueBoard = $("#valueGrid");
 const caseBoard = $("#caseGrid");
 const playerBoard = $("#playerContainer");
@@ -9,7 +7,7 @@ const playerSetupList = $("#playerSetupList");
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const MAXPLAYERCOUNT = 10;
-const ROUNDS = 8;
+const ROUNDS = 8;    
 
 let playerCount = 0;
 let modifierCount = 0;
@@ -37,9 +35,22 @@ $("#newPlayerName").on("keypress", (event) => {
     }
 });
 
+
 $(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
 $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
 $(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
+
+async function getModifierJSON() {
+    return await fetch("./modifierTypes.json")
+        .then(res => res.json())
+        .then(data => {return data})
+        .catch(err => console.error("Error loading JSON:", err));
+};
+let modifierTypes;
+async function assignModifierJSON() {
+    modifierTypes = await getModifierJSON();
+}
+assignModifierJSON();
 
 function GameState(playerCount, modifierNumber, playerList){
     this.round = 0;
@@ -49,6 +60,7 @@ function GameState(playerCount, modifierNumber, playerList){
     this.players = playerList;
     this.penaltyList = [];
     this.modifierList = [];
+    this.modifierTypes = modifierTypes;
     this.scoreHigh = 0;
     this.scoreLow = 0;
 }
