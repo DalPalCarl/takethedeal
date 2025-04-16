@@ -65,6 +65,12 @@ footer {
     user-select: none;
 }
 
+#caseRevealContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #caseRevealText {
     font-size: 6rem;
     padding: 0;
@@ -291,6 +297,14 @@ footer {
     width: 100%;
 }
 
+#modifierHeader {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin-bottom: 0;
+    font-size: 2rem;
+}
+
 #modifiers {
     display: grid;
     justify-items: center;
@@ -299,8 +313,7 @@ footer {
     background-color: var(--color-grey);
     box-shadow: 4px 4px var(--color-dark-tan);
     border-radius: 10px;
-    margin-top: 1.5rem;
-    padding: .2rem;
+    padding-right: .2rem;
     padding-bottom: 1rem;
     gap: .2rem;
     width: 100%;

@@ -46,10 +46,12 @@ async function getModifierJSON() {
         .then(data => {return data})
         .catch(err => console.error("Error loading JSON:", err));
 };
+
 let modifierTypes;
 async function assignModifierJSON() {
     modifierTypes = await getModifierJSON();
 }
+
 assignModifierJSON();
 
 function GameState(playerCount, modifierNumber, playerList){
@@ -112,6 +114,8 @@ function shuffle(arr) {
     }
 }
 
+//Our GENERATE functions build the data for our game object
+
 function generatePlayers() {
     let pList = [];
     playerSetupList.children().each((_, p) => {
@@ -134,14 +138,15 @@ function generatePenaltyList(cases) {
 function generateModifierList(cases, setting) {
     let modList = [];
     for(let i = 0; i < setting; i++){
-        modList.push(2);
+        const randIndex = Math.floor(Math.random() * game.modifierTypes.length);
+        modList.push(game.modifierTypes[randIndex]);
     }
-    for(let i = 0; i < setting; i++){
-        modList.push(3);
-    }
-    modList.push(...Array(cases-(setting*2)).fill(null));
+    modList.sort((a, b) => a.mod.localeCompare(b.mod, "en"));
+    modList.push(...Array(cases-setting).fill(null));
     return modList;
 }
+
+//Our LOAD functions build the UI components from the data we previously built
 
 function loadPenalties(totalCases, pList) {
     for(let i = 0; i < totalCases; i++){
@@ -171,7 +176,7 @@ function loadPenalties(totalCases, pList) {
 function loadModifiers(modifierData) {
     modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
-        $(modElement).addClass("modifier modifierShown teko text-thicc").text("♕").css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
+        $(modElement).addClass("modifier modifierShown teko text-thicc").text(mod.mod).css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
         $(modifiers).append(modElement);
     })
 }
@@ -205,9 +210,9 @@ function initializeGame() {
     const modifierSetting = gameSetupForm[0].modifierSetting.value
     playerCount = playerSetupList[0].children.length;
     totalCases = ROUNDS * playerCount;
-    modifierCount = modifierSetting === 'low' ? 1 
-        : modifierSetting === 'medium' ? (totalCases/ROUNDS) 
-        : (totalCases/(ROUNDS/2));
+    modifierCount = modifierSetting === 'low' ? 3 
+        : modifierSetting === 'medium' ? (totalCases/(ROUNDS/2)) 
+        : (totalCases/(ROUNDS/4));
     
     game = new GameState(playerCount, modifierCount, generatePlayers());
     
@@ -217,7 +222,7 @@ function initializeGame() {
     loadPenalties(totalCases, game.penaltyList);
     shuffle(game.penaltyList);
     game.modifierList = generateModifierList(totalCases, modifierCount)
-    const modifierData = game.modifierList.slice(0, modifierCount*2);
+    const modifierData = game.modifierList.slice(0, modifierCount);
     loadModifiers(modifierData);
     shuffle(game.modifierList);
     loadCases();
