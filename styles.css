@@ -282,15 +282,6 @@ footer {
     margin: 0;
 }
 
-#playerSetupList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    justify-items: start;
-    list-style: none;
-    padding: 0;
-}
-
 #valueContainer {
     display: flex;
     flex-direction: column;
@@ -470,6 +461,15 @@ footer {
     background-color: var(--color-grey);
     border-radius: 10px;
     border: solid var(--color-tan);
+}
+
+.playerList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-items: start;
+    list-style: none;
+    padding: 0;
 }
 
 .dondButton {

@@ -6,6 +6,7 @@ const gameSetupForm = $("#gameSetupForm");
 const playerSetupList = $("#playerSetupList");
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
+const modifierPlayerSelection = $("#modifierPlayerSelection");
 const MAXPLAYERCOUNT = 10;
 const ROUNDS = 8;    
 

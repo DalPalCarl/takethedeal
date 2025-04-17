@@ -16,17 +16,17 @@
     },
     {
         "mod": "4",
-        "info": "Everybody takes this penalty!",
-        "isPlayerSelection": false
+        "info": "Choose someone to take this penalty instead!",
+        "isPlayerSelection": true
     },
     {
         "mod": "5",
-        "info": "Everybody takes this penalty!",
-        "isPlayerSelection": false
+        "info": "Take this penalty with another player!",
+        "isPlayerSelection": true
     },
     {
         "mod": "6",
-        "info": "Everybody takes this penalty!",
-        "isPlayerSelection": false
+        "info": "Choose 2 players to take this penalty value!",
+        "isPlayerSelection": true
     }
 ]
