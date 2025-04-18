@@ -2,31 +2,49 @@
     {
         "mod": "A",
         "info": "Everybody takes this penalty!",
-        "isPlayerSelection": false
+        "isPlayerSelection": false,
+        "includesSelf": true,
+        "selectNum": 0,
+        "multiplier": 1
     },
     {
         "mod": "2",
         "info": "Double the penalty value!",
-        "isPlayerSelection": false
+        "isPlayerSelection": false,
+        "includesSelf": true,
+        "selectNum": 0,
+        "multiplier": 2
     },
     {
         "mod": "3",
         "info": "Triple the penalty value!",
-        "isPlayerSelection": false
+        "isPlayerSelection": false,
+        "includesSelf": true,
+        "selectNum": 0,
+        "multiplier": 3
     },
     {
         "mod": "4",
         "info": "Choose someone to take this penalty instead!",
-        "isPlayerSelection": true
+        "isPlayerSelection": true,
+        "includesSelf": false,
+        "selectNum": 1,
+        "multiplier": 1
     },
     {
         "mod": "5",
         "info": "Take this penalty with another player!",
-        "isPlayerSelection": true
+        "isPlayerSelection": true,
+        "includesSelf": true,
+        "selectNum": 1,
+        "multiplier": 1
     },
     {
         "mod": "6",
         "info": "Choose 2 players to take this penalty value!",
-        "isPlayerSelection": true
+        "isPlayerSelection": true,
+        "includesSelf": false,
+        "selectNum": 2,
+        "multiplier": 1
     }
 ]

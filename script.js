@@ -272,79 +272,90 @@ function handleCaseClicked(clickedCase, index) {
 }
 
 function revealCase(index) {
+    const currentPlayer = game.players[game.roundStep];
     $("#backdrop").fadeIn();
     revealCaseElement.addClass("caseStyle").text(index+1);
-    $("#caseRevealText").text(game.players[game.roundStep].name);
-    updatePlayerScore(game.players[game.roundStep], game.penaltyList[index], null);
+    $("#caseRevealText").text(currentPlayer.name);
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
+                let playerIndexList = [];
                 const penaltyClass = findPenaltyClass(index);
                 const penaltyElement = $("#valueGrid").find($("." + penaltyClass)).last();
+                const penaltyValue = game.penaltyList[index];
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     if (game.modifierList[index]){
-                        let playerIndexList = [];
                         const modifierData = game.modifierList[index];
                         const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
-                        $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").one("animationend", () => {
-                            $("#caseRevealContent").delay(1000).fadeOut().one("animationend", () => {
+                        $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").delay(2000).one("animationend", () => {
+                            $("#caseRevealContent").delay(2000).fadeOut().one("animationend", () => {
                                 $("#modifierName").text(modifierData.mod);
                                 $("#modifierInfo").text(modifierData.info);
-                                $("#closeCaseRevealModalButton").one("click", () => {
-                                    handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList);
+                                $("#modifierPenaltyValue").addClass(penaltyClass).text(penaltyElement.text());
+                                document.getElementById("closeCaseRevealModalButton").onclick = () => {
+                                    if(modifierData.includesSelf){playerIndexList.push(game.roundStep);}
+                                    handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, (penaltyValue*(modifierData.multiplier)));
                                     $("#caseRevealCase").css("animation", "none");
                                     $("#caseRevealModifier").removeClass("modifierAppear");
                                     $("#modifierContainer").hide();
                                     $("#caseRevealContent").show();
-                                });
+                                    $("#modifierPenaltyValue").removeClass(penaltyClass);
+                                    $(playerSelectList.get(0).children).each((_, p) => {
+                                        $(p).removeClass("selectPlayerActive").show();
+                                    });
+                                    $(playerSelectList).hide();
+                                }
                                 $("#caseRevealCase").css("animation", "none");
-                                $("#caseRevealModifier").removeClass("modifierAppear");
-                                $("#modifierContainer").hide();
-                                $("#caseRevealContent").show();
                                 if(modifierData.isPlayerSelection){
                                     $(playerSelectList.get(0).children).each((i, p) => {
-                                        p.onclick = () => {
-                                            $(p).toggleClass("selectPlayerActive");
-                                            if($(p).hasClass("selectPlayerActive")){
-                                                playerIndexList.push(i);
+                                        if(i !== game.roundStep){
+                                            p.onclick = () => {
+                                                $(p).toggleClass("selectPlayerActive");
+                                                if($(p).hasClass("selectPlayerActive")){
+                                                    playerIndexList.push(i);
+                                                }
+                                                else{
+                                                    playerIndexList.splice(playerIndexList.indexOf(i), 1);
+                                                }
+                                                
+                                                if(playerIndexList.length === modifierData.selectNum){
+                                                    $("#closeCaseRevealModalButton").show();
+                                                }
+                                                else{
+                                                    $("#closeCaseRevealModalButton").hide();
+                                                }
                                             }
-                                            else{
-                                                playerIndexList.splice(playerIndexList.indexOf(i), 1);
-                                            }
-                                            
-                                            if(playerIndexList.length === 1){
-                                                $("#closeCaseRevealModalButton").show();
-                                            }
-                                            else{
-                                                $("#closeCaseRevealModalButton").hide();
-                                            }
+                                        }
+                                        else{
+                                            $(p).hide();
                                         }
                                     });
                                     playerSelectList.show();
                                 }
                                 else{
-                                    playerSelectList.push(game.players[game.roundStep]);
-                                    $("#closeCaseRevealModalButton").show();
+                                    $("#closeCaseRevealModalButton").delay(8000).show();
+                                    playerSelectList.hide();
                                 }
                             });
-                            $("#modifierContainer").delay(2000).fadeIn();
+                            $("#modifierContainer").delay(3000).fadeIn();
                         });
                     }
                     else {
-                        $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
-                            .one("click", () => {
-                                handleContinueButton(penaltyElement, penaltyClass, null, null);
-                                $("#caseRevealCase").css("animation", "none");
-                        });
+                        playerIndexList.push(game.roundStep);
+                        document.getElementById("closeCaseRevealModalButton").onclick = () => {
+                            handleContinueButton(penaltyElement, penaltyClass, null, playerIndexList, penaltyValue);
+                            $("#caseRevealCase").css("animation", "none");
+                        }
+                        $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow");
                     }
                 })
             })
     });
 }
 
-function handleContinueButton(penaltyElem, penaltyClass, modElem, modPlayerList) {
+function handleContinueButton(penaltyElem, penaltyClass, modElem, playersToUpdate, score) {
     $("#backdrop").hide();
     $("#closeCaseRevealModalButton").hide();
     $("#caseRevealContainer").hide();
@@ -356,20 +367,23 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem, modPlayerList)
     if(modElem){
         modElem.removeClass("modifierShown")
             .css("animation", "pressDownPenalty 1000ms forwards");
-        console.log(modPlayerList);
     }
+    console.log(playersToUpdate)
+    updatePlayerScore(score, playersToUpdate);
     progressGameStep();
 }
 
-function updatePlayerScore(player, score, mod){
-    if(score === 5){
-        player.maxPenalty = true;
-    }
-    else{
-        player.score += score;
-        game.scoreHigh = Math.max(player.score, game.scoreHigh);
-        game.scoreLow = Math.min(player.score, game.scoreLow);
-    }
+function updatePlayerScore(score, players){
+    players.forEach((pIndex) => {
+        const player = game.players[pIndex];
+        if(score === 5){
+            player.maxPenalty = true;
+        }
+        else{
+            player.score += score;
+        }
+    })
+    console.log(game.players);
 }
 
 
