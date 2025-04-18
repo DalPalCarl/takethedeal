@@ -4,6 +4,7 @@ const playerBoard = $("#playerContent");
 const modifiers = $("#modifiers");
 const gameSetupForm = $("#gameSetupForm");
 const playerSetupList = $("#playerSetupList");
+const playerSelectList = $("#modifierPlayerSelection")
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const modifierPlayerSelection = $("#modifierPlayerSelection");
@@ -196,6 +197,14 @@ function loadPlayers() {
     })
 }
 
+function loadPlayerSelection() {
+    $(game.players).each((_, p) => {
+        const player = document.createElement('li');
+        $(player).text(p.name).addClass("selectPlayer");
+        playerSelectList.append(player);
+    })
+}
+
 function loadCases() {
     for(let i = 0; i < totalCases; i++){
         const newCase = document.createElement("button");
@@ -229,6 +238,7 @@ function initializeGame() {
     shuffle(game.modifierList);
     loadCases();
     loadPlayers();
+    loadPlayerSelection();
 }
 
 function startFirstRound() {
@@ -275,28 +285,57 @@ function revealCase(index) {
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     if (game.modifierList[index]){
+                        let playerIndexList = [];
                         const modifierData = game.modifierList[index];
                         const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
                         $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").one("animationend", () => {
                             $("#caseRevealContent").delay(1000).fadeOut().one("animationend", () => {
                                 $("#modifierName").text(modifierData.mod);
                                 $("#modifierInfo").text(modifierData.info);
-                                $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
-                                .one("click", () => {
-                                    handleContinueButton(penaltyElement, penaltyClass, modifierElem);
+                                $("#closeCaseRevealModalButton").one("click", () => {
+                                    handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList);
                                     $("#caseRevealCase").css("animation", "none");
                                     $("#caseRevealModifier").removeClass("modifierAppear");
                                     $("#modifierContainer").hide();
                                     $("#caseRevealContent").show();
                                 });
-                                $("#modifierContainer").delay(2000).fadeIn();
-                            })
-                        })
+                                $("#caseRevealCase").css("animation", "none");
+                                $("#caseRevealModifier").removeClass("modifierAppear");
+                                $("#modifierContainer").hide();
+                                $("#caseRevealContent").show();
+                                if(modifierData.isPlayerSelection){
+                                    $(playerSelectList.get(0).children).each((i, p) => {
+                                        p.onclick = () => {
+                                            $(p).toggleClass("selectPlayerActive");
+                                            if($(p).hasClass("selectPlayerActive")){
+                                                playerIndexList.push(i);
+                                            }
+                                            else{
+                                                playerIndexList.splice(playerIndexList.indexOf(i), 1);
+                                            }
+                                            
+                                            if(playerIndexList.length === 1){
+                                                $("#closeCaseRevealModalButton").show();
+                                            }
+                                            else{
+                                                $("#closeCaseRevealModalButton").hide();
+                                            }
+                                        }
+                                    });
+                                    playerSelectList.show();
+                                }
+                                else{
+                                    playerSelectList.push(game.players[game.roundStep]);
+                                    $("#closeCaseRevealModalButton").show();
+                                }
+                            });
+                            $("#modifierContainer").delay(2000).fadeIn();
+                        });
                     }
                     else {
                         $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow")
                             .one("click", () => {
-                                handleContinueButton(penaltyElement, penaltyClass, null);
+                                handleContinueButton(penaltyElement, penaltyClass, null, null);
                                 $("#caseRevealCase").css("animation", "none");
                         });
                     }
@@ -305,7 +344,7 @@ function revealCase(index) {
     });
 }
 
-function handleContinueButton(penaltyElem, penaltyClass, modElem) {
+function handleContinueButton(penaltyElem, penaltyClass, modElem, modPlayerList) {
     $("#backdrop").hide();
     $("#closeCaseRevealModalButton").hide();
     $("#caseRevealContainer").hide();
@@ -317,6 +356,7 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem) {
     if(modElem){
         modElem.removeClass("modifierShown")
             .css("animation", "pressDownPenalty 1000ms forwards");
+        console.log(modPlayerList);
     }
     progressGameStep();
 }

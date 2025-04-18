@@ -211,6 +211,7 @@ footer {
     font-size: 25px;
     width: 40rem;
     height: auto;
+    user-select: none;
 }
 
 #inputSetupContainer {
@@ -228,10 +229,6 @@ footer {
     font-size: large;
     text-align: center;
     gap: 20px;
-}
-
-#gameSetupForm {
-
 }
 
 #newPlayerName {
@@ -512,6 +509,32 @@ footer {
     filter: brightness(70%);
     background-color: var(--p-4);
     box-shadow: 5px 5px var(--p-4B);
+}
+
+.selectPlayer {
+    background-color: var(--color-light-navy);
+    border-radius: 10px;
+    width: auto;
+    margin: 5px;
+    color: var(--color-grey);
+    padding: .5rem;
+    padding-inline: 2rem;
+    box-shadow: 5px 5px var(--color-navy);
+}
+
+.selectPlayer:hover {
+    cursor: pointer;
+    filter: brightness(70%);
+    background-color: var(--color-grey);
+    color: black;
+}
+
+.selectPlayerActive {
+    background-color: var(--p-1);
+}
+
+.selectPlayerActive:hover {
+    background-color: var(--p-1);
 }
 
 .value {
