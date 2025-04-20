@@ -36,10 +36,8 @@ header {
 main {
     display: grid;
     grid-template-columns: 3fr 3fr 2fr;
-    margin: 1.5rem;
-    margin-top: 5rem;
+    margin: 1rem;
     height: max(80vh, 50%);
-    /* height: auto; */
     user-select: none;
 }
 
@@ -49,6 +47,13 @@ footer {
     color: var(--color-tan);
     position: absolute;
     bottom: 1rem;
+}
+
+#gameLogo {
+    display: flex;
+    justify-self: center;
+    width: 25rem;
+    margin: 0;
 }
 
 #caseRevealContainer {
