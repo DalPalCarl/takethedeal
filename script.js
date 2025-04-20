@@ -342,7 +342,7 @@ function revealCase(index) {
                                     playerSelectList.show();
                                 }
                                 else {
-                                    $("#closeCaseRevealModalButton").delay(7000).fadeIn();
+                                    $("#closeCaseRevealModalButton").delay(5000).fadeIn();
                                 }
                             });
                             $("#modifierContainer").delay(3000).fadeIn();
