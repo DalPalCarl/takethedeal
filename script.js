@@ -202,7 +202,8 @@ function loadPlayerSelection() {
         const player = document.createElement('li');
         $(player).text(p.name).addClass("selectPlayer");
         playerSelectList.append(player);
-    })
+    });
+    playerSelectList.hide();
 }
 
 function loadCases() {
@@ -295,7 +296,13 @@ function revealCase(index) {
                                 $("#modifierInfo").text(modifierData.info);
                                 $("#modifierPenaltyValue").addClass(penaltyClass).text(penaltyElement.text());
                                 document.getElementById("closeCaseRevealModalButton").onclick = () => {
-                                    if(modifierData.includesSelf){playerIndexList.push(game.roundStep);}
+                                    if(modifierData.mod === "A"){
+                                        game.players.forEach((_, i) => {
+                                            playerIndexList.push(i);
+                                        });
+                                    }
+                                    else if(modifierData.includesSelf){playerIndexList.push(game.roundStep);}
+                                    console.log(playerIndexList);
                                     handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, (penaltyValue*(modifierData.multiplier)));
                                     $("#caseRevealCase").css("animation", "none");
                                     $("#caseRevealModifier").removeClass("modifierAppear");
@@ -334,9 +341,8 @@ function revealCase(index) {
                                     });
                                     playerSelectList.show();
                                 }
-                                else{
-                                    $("#closeCaseRevealModalButton").delay(8000).show();
-                                    playerSelectList.hide();
+                                else {
+                                    $("#closeCaseRevealModalButton").delay(7000).fadeIn();
                                 }
                             });
                             $("#modifierContainer").delay(3000).fadeIn();
@@ -348,7 +354,7 @@ function revealCase(index) {
                             handleContinueButton(penaltyElement, penaltyClass, null, playerIndexList, penaltyValue);
                             $("#caseRevealCase").css("animation", "none");
                         }
-                        $("#closeCaseRevealModalButton").delay(2000).fadeIn("slow");
+                        $("#closeCaseRevealModalButton").delay(3000).fadeIn("slow");
                     }
                 })
             })
@@ -368,7 +374,6 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem, playersToUpdat
         modElem.removeClass("modifierShown")
             .css("animation", "pressDownPenalty 1000ms forwards");
     }
-    console.log(playersToUpdate)
     updatePlayerScore(score, playersToUpdate);
     progressGameStep();
 }
@@ -376,7 +381,7 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem, playersToUpdat
 function updatePlayerScore(score, players){
     players.forEach((pIndex) => {
         const player = game.players[pIndex];
-        if(score === 5){
+        if(score === 5 || score === 10 || score === 15){
             player.maxPenalty = true;
         }
         else{

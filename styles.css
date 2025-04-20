@@ -268,6 +268,12 @@ footer {
     font-size: 1rem;
 }
 
+#addPlayerButton:hover, #submitButton:hover {
+    background-color: var(--color-tan);
+    color: black;
+    cursor: pointer;
+}
+
 #displayPlayerList {
     display: flex;
     flex-direction: column;

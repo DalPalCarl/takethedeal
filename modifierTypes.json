@@ -9,7 +9,7 @@
     },
     {
         "mod": "2",
-        "info": "Double the penalty value!",
+        "info": "Take double the penalty value!",
         "isPlayerSelection": false,
         "includesSelf": true,
         "selectNum": 0,
@@ -17,7 +17,7 @@
     },
     {
         "mod": "3",
-        "info": "Triple the penalty value!",
+        "info": "Take triple the penalty value!",
         "isPlayerSelection": false,
         "includesSelf": true,
         "selectNum": 0,
@@ -41,7 +41,7 @@
     },
     {
         "mod": "6",
-        "info": "Choose 2 players to take this penalty value!",
+        "info": "Choose 2 players to take this penalty value instead!",
         "isPlayerSelection": true,
         "includesSelf": false,
         "selectNum": 2,
