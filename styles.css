@@ -56,6 +56,16 @@ footer {
     margin: 0;
 }
 
+#volumeControls {
+    z-index: 55;
+    position: absolute;
+}
+
+#volumeIcon {
+    color: var(--color-grey);
+    size: 3rem;
+}
+
 #caseRevealContainer {
     position: absolute;
     display: flex;
