@@ -9,7 +9,12 @@ const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const modifierPlayerSelection = $("#modifierPlayerSelection");
 const MAXPLAYERCOUNT = 10;
-const ROUNDS = 8;    
+const ROUNDS = 8;
+
+const audioContext = new AudioContext();
+const gainNode = new GainNode(audioContext);
+gainNode.connect(audioContext.destination);
+const volumeSlider = document.getElementById("volumeSlider");
 
 let playerCount = 0;
 let modifierCount = 0;
@@ -38,6 +43,9 @@ $("#newPlayerName").on("keypress", (event) => {
     }
 });
 
+volumeSlider.addEventListener("input", () => {
+    gainNode.gain.value = volumeSlider.value;
+})
 
 $(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
 $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
