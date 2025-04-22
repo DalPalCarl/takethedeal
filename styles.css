@@ -26,13 +26,6 @@ body {
     background-color: var(--color-navy);
 }
 
-header {
-    display: flex;
-    justify-content: center;
-    color: var(--color-tan);
-    margin: 0;
-}
-
 main {
     display: grid;
     grid-template-columns: 3fr 3fr 2fr;
@@ -58,7 +51,7 @@ footer {
 
 #volumeControls {
     z-index: 55;
-    position: absolute;
+    position: relative;
 }
 
 #volumeIcon {
@@ -244,6 +237,7 @@ footer {
     font-size: large;
     text-align: center;
     gap: 20px;
+    width: 15rem;
 }
 
 #newPlayerName {
@@ -292,8 +286,9 @@ footer {
 #displayPlayerList {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 20rem;
     text-align: center;
+    margin: .5rem;
 }
 
 #displayPlayerList h2 {
@@ -329,6 +324,7 @@ footer {
 
 #caseGrid {
     display: grid;
+    grid-template-columns: repeat(8, 1fr);
     position: relative;
     gap: 5px;
     row-gap: 10px;
@@ -339,6 +335,7 @@ footer {
 
 #valueGrid {
     display: grid;
+    grid-template-columns: repeat(10, 1fr);
     align-self: start;
     justify-items: center;
     align-content: center;
@@ -356,6 +353,7 @@ footer {
 
 #modifiers {
     display: grid;
+    grid-template-columns: repeat(10, 1fr);
     justify-items: center;
     align-content: center;
     align-self: start;
@@ -744,9 +742,7 @@ footer {
     --scoreText: var(--color-grey);
 }
 
-@media (max-width: 500px) {
-    
-}
+/* Animations */
 
 .popIn {
     --anim-delay: 0ms;
@@ -819,5 +815,76 @@ footer {
     100% {
         transform: scale(100%);
         opacity: 100%;
+    }
+}
+
+/* Media Queries */
+
+
+@media (max-width: 500px) {
+
+    main {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    #gameBoardContainer {
+        display: flex;
+        justify-content: center;
+        width: auto;
+    }
+    
+    #gameBoardNav {
+        display: flex;
+        border-radius: 10px;
+        overflow: hidden;
+        justify-content: center;
+        width: inherit;
+    }
+    
+    #gameBoardNav button {
+        border: none;
+        margin: 0;
+        padding: .5rem;
+    }
+    
+    #gameSetupForm, #displayPlayerList {
+        align-self: center;
+    }
+
+    #inputSetupContainer {
+        flex-direction: column;
+    }
+
+    #valueContainer {
+        height: auto;
+    }
+    
+    #caseContainer {
+        height: auto;
+
+    }
+    
+    #playerContainer {
+        height: auto;
+
+    }
+
+    #caseGrid {
+        grid-template-columns: repeat(5, 1fr);
+
+    }
+    
+    #valueGrid {
+        grid-template-columns: repeat(6, 1fr);
+
+    }
+
+    #modifiers {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    
+    #modifierContainer {
     }
 }

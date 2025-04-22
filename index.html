@@ -12,11 +12,6 @@
     <link rel="stylesheet" href="./styles.css"/>
 </head>
 <body>
-    <header>
-        <!-- <h1>Drink or No Drink</h1> -->
-    </header>
-    
-
     <section class="modalContainer">
         <div id="gameSetup" class="boardBG teko">
             <h1 style="margin-bottom: 0;">Game Setup</h1>
@@ -101,11 +96,19 @@
     <section id="backdrop">
     </section>
 
+    <img id="gameLogo" src="./logo.png" alt="Take the Deal"/>
     <section id="volumeControls">
-        <input type="range" title="Master Volume" min="0" max="1" value="1" step="0.01" id="volumeSlider"/>
+        <input type="range" title="Master Volume" min="0" max="1" value=".5" step="0.01" id="volumeSlider"/>
         <ion-icon name="volume-high" id="volumeIcon"></ion-icon>
     </section>
-    <img id="gameLogo" src="./logo.png" alt="Take the Deal"/>
+
+    <div id="gameBoardContainer">
+        <nav id="gameBoardNav">
+            <button id="navValueButtons" class="teko text-thicc">Values</button>
+            <button id="navCaseButton" class="teko text-thicc">Cases</button>
+            <button id="navPlayerButton" class="teko text-thicc">Players</button>
+        </nav>
+    </div>
     <main>
 
         <!-- Penalty values -->

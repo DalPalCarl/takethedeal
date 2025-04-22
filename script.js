@@ -47,9 +47,9 @@ volumeSlider.addEventListener("input", () => {
     gainNode.gain.value = volumeSlider.value;
 })
 
-$(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
-$(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
-$(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
+// $(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
+// $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
+// $(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
 
 async function getModifierJSON() {
     return await fetch("./modifierTypes.json")
