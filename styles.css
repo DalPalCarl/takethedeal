@@ -50,13 +50,16 @@ footer {
 }
 
 #volumeControls {
-    z-index: 55;
     position: relative;
 }
 
 #volumeIcon {
     color: var(--color-grey);
     size: 3rem;
+}
+
+#gameBoardContainer {
+    display: none;
 }
 
 #caseRevealContainer {
@@ -335,7 +338,7 @@ footer {
 
 #valueGrid {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(20px, 50px));
     align-self: start;
     justify-items: center;
     align-content: center;
@@ -559,11 +562,10 @@ footer {
 }
 
 .value {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     aspect-ratio: 1 / 1;
-    width: 50px;
     border-radius: 5px;
     font-size: 2rem;
     --shadow-color: var(--color-light-navy);
@@ -877,7 +879,6 @@ footer {
     }
     
     #valueGrid {
-        grid-template-columns: repeat(6, 1fr);
 
     }
 
