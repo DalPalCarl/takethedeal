@@ -43,20 +43,22 @@ $(document).ready(() => {
         }
     });
 
-    async function changeBoards(board, navButton) {
+    function getBoard(board) {
         const oldBoard = board === "values" ? $("#valueContainer") : board === "cases" ? $("#caseContainer") : $("#playerContainer");
         return oldBoard;
     }
 
-    function removeActiveClass(tab) {
-        $($("#gameBoardNav").children(".active").get(0))
-            .removeClass("active")
-        changeBoards(tab, null).hide();
+    function removeActiveClass() {
+        const oldBoardNav = $("#gameBoardNav").children(".active").get(0);
+        $(oldBoardNav).removeClass("active")
+        const oldBoardComponent = getBoard(oldBoardNav.dataset.component);
+        $(oldBoardComponent).removeClass("active");
     }
 
-    function addActiveClass(tab, navButton) {
-        navButton.addClass("active")
-        changeBoards(tab, null).show();
+    function addActiveClass(board, navButton) {
+        navButton.addClass("active");
+        const boardComponent = getBoard(board);
+        boardComponent.addClass("active");
     }
 
     $("#navValueButton").on("click", () => {

@@ -104,9 +104,9 @@
 
     <div id="gameBoardContainer">
         <nav id="gameBoardNav">
-            <button id="navValueButton" type="button" class="teko text-thicc">Values</button>
-            <button id="navCaseButton" type="button" class="teko text-thicc active">Cases</button>
-            <button id="navPlayerButton" type="button" class="teko text-thicc">Players</button>
+            <button id="navValueButton" data-component="values" type="button" class="teko text-thicc">Values</button>
+            <button id="navCaseButton" data-component="cases" type="button" class="teko text-thicc active">Cases</button>
+            <button id="navPlayerButton" data-component="players" type="button" class="teko text-thicc">Players</button>
         </nav>
     </div>
     <main>
@@ -124,7 +124,7 @@
 
         <!-- Cases -->
 
-        <section id="caseContainer" class="boardBG">
+        <section id="caseContainer" class="boardBG active">
             <p id="caseHeader" class="teko text-thicc">Cases</p>
             <div id="caseGrid">
             </div>
