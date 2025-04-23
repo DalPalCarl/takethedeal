@@ -25,27 +25,61 @@ let penaltyList = [];
 let game;
 
 // $("#gameSetup").hide();
-
-$("#caseRevealContainer").hide();
-$("#closeCaseRevealModalButton").hide();
-$("#dondChoiceContainer").hide();
-$("#endGameContainer").hide();
-$("#modifierContainer").hide();
-
-$("#addPlayerButton").on("click", () => {
-    addPlayerToList();
-});
-
-$("#newPlayerName").on("keypress", (event) => {
-    if(event.key === "Enter"){
-        event.preventDefault();
+$(document).ready(() => {
+    $("#caseRevealContainer").hide();
+    $("#closeCaseRevealModalButton").hide();
+    $("#dondChoiceContainer").hide();
+    $("#endGameContainer").hide();
+    $("#modifierContainer").hide();
+    
+    $("#addPlayerButton").on("click", () => {
         addPlayerToList();
-    }
-});
+    });
+    
+    $("#newPlayerName").on("keypress", (event) => {
+        if(event.key === "Enter"){
+            event.preventDefault();
+            addPlayerToList();
+        }
+    });
 
-volumeSlider.addEventListener("input", () => {
-    gainNode.gain.value = volumeSlider.value;
-});
+    async function changeBoards(board, navButton) {
+        const oldBoard = board === "values" ? $("#valueContainer") : board === "cases" ? $("#caseContainer") : $("#playerContainer");
+        return oldBoard;
+    }
+
+    function removeActiveClass(tab) {
+        $($("#gameBoardNav").children(".active").get(0))
+            .removeClass("active")
+        changeBoards(tab, null).hide();
+    }
+
+    function addActiveClass(tab, navButton) {
+        navButton.addClass("active")
+        changeBoards(tab, null).show();
+    }
+
+    $("#navValueButton").on("click", () => {
+        removeActiveClass("values");
+        addActiveClass("values", $("#navValueButton"));
+    });
+
+    $("#navCaseButton").on("click", () => {
+        removeActiveClass("cases");
+        addActiveClass("cases", $("#navCaseButton"));
+    })
+
+    $("#navPlayerButton").on("click", () => {
+        removeActiveClass("players");
+        addActiveClass("players", $("#navPlayerButton"));
+    })
+    
+    volumeSlider.addEventListener("input", () => {
+        gainNode.gain.value = volumeSlider.value;
+    });
+    
+    assignModifierJSON();
+})
 
 async function getModifierJSON() {
     return await fetch("./modifierTypes.json")
@@ -59,7 +93,6 @@ async function assignModifierJSON() {
     modifierTypes = await getModifierJSON();
 }
 
-assignModifierJSON();
 
 function GameState(playerCount, modifierNumber, playerList){
     this.round = 0;
