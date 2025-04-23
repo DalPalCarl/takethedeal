@@ -45,11 +45,7 @@ $("#newPlayerName").on("keypress", (event) => {
 
 volumeSlider.addEventListener("input", () => {
     gainNode.gain.value = volumeSlider.value;
-})
-
-// $(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
-// $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
-// $(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
+});
 
 async function getModifierJSON() {
     return await fetch("./modifierTypes.json")
@@ -87,8 +83,8 @@ function Player(name){
 
 gameSetupForm.on("submit", (event) => {
     event.preventDefault();
-    if(playerSetupList[0].children.length <= 1){
-        alert("Must have at least 2 players to start!");
+    if(playerSetupList[0].children.length <= 2){
+        alert("Must have at least 3 players to start!");
     }
     else {
         $("#backdrop").fadeOut();

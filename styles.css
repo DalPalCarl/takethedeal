@@ -45,12 +45,18 @@ footer {
 #gameLogo {
     display: flex;
     justify-self: center;
-    width: 25rem;
+    width: clamp(15rem, 40%, 25rem);
     margin: 0;
 }
 
 #volumeControls {
     position: relative;
+    margin-left: 1rem;
+    opacity: 50%;
+}
+
+#volumeControls:hover {
+    opacity: 100%;
 }
 
 #volumeIcon {
@@ -220,7 +226,8 @@ footer {
     justify-content: start;
     align-items: center;
     font-size: 25px;
-    width: 40rem;
+    width: auto;
+    /* width: min(40rem, 85vw); */
     height: auto;
     user-select: none;
 }
@@ -327,11 +334,11 @@ footer {
 
 #caseGrid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(20px, 50px));
     position: relative;
-    gap: 5px;
+    gap: 1rem;
     row-gap: 10px;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
     width: 100%;
 }
@@ -339,8 +346,8 @@ footer {
 #valueGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20px, 50px));
-    align-self: start;
-    justify-items: center;
+    align-self: center;
+    justify-content: center;
     align-content: center;
     gap: .2rem;
     width: 100%;
@@ -356,8 +363,8 @@ footer {
 
 #modifiers {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(20px, 50px));;
+    justify-content: center;
     align-content: center;
     align-self: start;
     background-color: var(--color-grey);
@@ -823,7 +830,7 @@ footer {
 /* Media Queries */
 
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
 
     main {
         display: flex;
@@ -874,7 +881,6 @@ footer {
     }
 
     #caseGrid {
-        grid-template-columns: repeat(5, 1fr);
 
     }
     
@@ -883,7 +889,6 @@ footer {
     }
 
     #modifiers {
-        grid-template-columns: repeat(6, 1fr);
     }
     
     #modifierContainer {
