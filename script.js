@@ -283,9 +283,7 @@ function initializeGame() {
 
 function startFirstRound() {
     $(playerBoard).children().first().addClass("playerTurn");
-    // $(playerBoard.children()).each((_, player) => {
-    //     console.log(player);
-    // })
+    $("#currentPlayerName").text(game.players[game.roundStep].name);
 }
 
 function handleCaseClicked(clickedCase, index) {
@@ -314,7 +312,7 @@ function handleCaseClicked(clickedCase, index) {
 function revealCase(index) {
     const currentPlayer = game.players[game.roundStep];
     $("#backdrop").fadeIn();
-    revealCaseElement.addClass("caseStyle").text(index+1);
+    revealCaseElement.removeClass().addClass("caseStyle").text(index+1);
     $("#caseRevealText").text(currentPlayer.name);
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
@@ -475,6 +473,13 @@ function progressGameStep() {
         return;
     }
     $(nextPlayer).addClass("playerTurn");
+
+    $("#currentPlayerName").text(game.players[game.roundStep].name)
+        .css("animation", "playerChange 500ms ease-out")
+        .one("animationend", () => {
+            $("#currentPlayerName").css("animation", "none");
+        });
+
     if(casesLeft === 1){
         const i = findLastCase();
         $(nextPlayer).addClass("playerFinished");

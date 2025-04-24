@@ -370,7 +370,7 @@ footer {
     justify-content: center;
     align-content: center;
     align-self: start;
-    background-color: var(--color-grey);
+    background-color: var(--color-tan);
     box-shadow: 4px 4px var(--color-dark-tan);
     border-radius: 10px;
     padding-right: .2rem;
@@ -877,6 +877,29 @@ footer {
         transition: all 100ms linear;
     }
     
+    #currentPlayerContainer {
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        margin: .5rem;
+        height: 6rem;
+        width: min(80%, 30rem);
+    }
+
+    #currentPlayer {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #123458;
+        color: var(--color-grey);
+        margin-inline: 1rem;
+        font-size: 1.5rem;
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px var(--color-light-navy);
+        transition: all 200ms;
+    }
+
     #gameSetupForm, #displayPlayerList {
         align-self: center;
     }
@@ -896,20 +919,168 @@ footer {
     
     #playerContainer {
         height: auto;
-
     }
 
-    #caseGrid {
-
-    }
-    
-    #valueGrid {
-
-    }
-
-    #modifiers {
+    #caseRevealContainer {
+        width: 90%;
+        height: 40rem;
     }
     
-    #modifierContainer {
+    #caseRevealMask {
+        justify-content: center;
+        align-items: end;
+        width: 60vw;
+        height: 40vh;
+    }
+    
+    #caseRevealBackground {
+        display: flex;
+        width: 60vw;
+        height: 40vh;
+        background-color: var(--color-dark-tan);
+        border-radius: 10px;
+        box-shadow: 0 -5rem var(--color-tan)
+    }
+    
+    #caseRevealCase {
+        transform: translateY(-1rem);
+        display: flex;
+        justify-content: center;
+    }
+    
+    #caseRevealCaseFront {
+        font-size: 10rem;
+        width: 60vw;
+        height: 40vh;
+    }
+    
+    #caseRevealModifier {
+        width: 10rem;
+        margin-top: 2rem;
+    }
+    
+    #closeCaseRevealModalButton {
+        margin: 1rem;
+        border: none;
+        border-radius: 10px;
+        color: var(--color-grey);
+        background-color: var(--color-navy);
+        box-shadow: 0 5px var(--color-light-navy);
+        font-size: 2rem;
+        user-select: none;
+    }
+    
+    #closeCaseRevealModalButton:hover {
+        filter: brightness(110%);
+        cursor: pointer;
+    }
+
+    #endGameContainer {
+        width: auto;
+        height: auto;
+        padding: 2rem;
+        margin-top: 10rem;
+    }
+    
+    #endGameHeader {
+        font-size: 3rem;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #endGamePlayerStats {
+        grid-template-columns: repeat(auto-fit, 10rem);
+        justify-content: center;
+    }
+    
+    .playerStat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .playerScore {
+        --scoreText: black;
+        --scoreFace: var(--color-grey);
+        --scoreShadow: var(--color-navy);
+        padding-inline: clamp(2rem, 20%, 4rem);
+        border-radius: 10px;
+        font-size: 3rem;
+        color: var(--scoreText);
+        background-color: var(--scoreFace);
+        box-shadow: 4px 4px var(--scoreShadow);
+    }
+    
+    .playerName {
+        margin: 0;
+        font-size: 2rem;
+    }
+    
+    #endGameButtons {
+        display: flex;
+    }
+
+    @keyframes caseRevealDown {
+        0% {
+            transform: translateY(-1rem);
+        }
+        100% {
+            transform: translateY(30rem);
+        }
+    }
+    
+    @keyframes caseRevealUp {
+        0% {
+            transform: translateY(30rem);
+        }
+        100% {
+            transform: translateY(-1rem);
+        }
+    }
+    
+    @keyframes modifierAppear {
+        0% {
+            transform: scale(100);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(100%);
+            opacity: 100%;
+        }
+    }
+
+    @keyframes playerChange {
+        50% {
+            transform: scale(110%);
+            color: var(--m);
+        }
+        100% {
+            transform: scale(100%);
+        }
+    }
+}
+
+@media (max-height: 600px) {
+    #gameSetup {
+        margin-top: 2rem;
+    }
+
+    #inputSetupContainer {
+        display: flex;
+        flex-direction: row;
+        height: 70vh;
+        margin-bottom: 2rem;
+        width: 90%;
+        justify-content: space-around;
+        font-size: large;
+    }
+
+    #caseRevealContainer {
+        margin-top: 15rem;
+    }
+
+    #caseRevealCaseFront {
+        box-shadow: 0 10rem var(--shadow-color);
     }
 }
