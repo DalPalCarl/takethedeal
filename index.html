@@ -101,6 +101,21 @@
         <input type="range" title="Master Volume" min="0" max="1" value=".5" step="0.01" id="volumeSlider"/>
         <ion-icon name="volume-high" id="volumeIcon"></ion-icon>
     </section>
+
+    <div id="gameBoardContainer">
+        <nav id="gameBoardNav">
+            <button id="navValueButton" data-component="values" type="button" class="teko text-thicc">Values</button>
+            <button id="navCaseButton" data-component="cases" type="button" class="teko text-thicc active">Cases</button>
+            <button id="navPlayerButton" data-component="players" type="button" class="teko text-thicc">Players</button>
+        </nav>
+    </div>
+
+    <div id="currentPlayerContainer" class="boardBG">
+        <div id="currentPlayer">
+            <p id="currentPlayerName" class="teko text-thicc"></p>
+        </div>
+    </div>
+  
     <main>
 
         <!-- Penalty values -->
@@ -116,7 +131,7 @@
 
         <!-- Cases -->
 
-        <section id="caseContainer" class="boardBG">
+        <section id="caseContainer" class="boardBG active">
             <p id="caseHeader" class="teko text-thicc">Cases</p>
             <div id="caseGrid">
             </div>

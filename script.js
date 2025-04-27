@@ -25,31 +25,63 @@ let penaltyList = [];
 let game;
 
 // $("#gameSetup").hide();
-
-$("#caseRevealContainer").hide();
-$("#closeCaseRevealModalButton").hide();
-$("#dondChoiceContainer").hide();
-$("#endGameContainer").hide();
-$("#modifierContainer").hide();
-
-$("#addPlayerButton").on("click", () => {
-    addPlayerToList();
-});
-
-$("#newPlayerName").on("keypress", (event) => {
-    if(event.key === "Enter"){
-        event.preventDefault();
+$(document).ready(() => {
+    $("#caseRevealContainer").hide();
+    $("#closeCaseRevealModalButton").hide();
+    $("#dondChoiceContainer").hide();
+    $("#endGameContainer").hide();
+    $("#modifierContainer").hide();
+    
+    $("#addPlayerButton").on("click", () => {
         addPlayerToList();
+    });
+    
+    $("#newPlayerName").on("keypress", (event) => {
+        if(event.key === "Enter"){
+            event.preventDefault();
+            addPlayerToList();
+        }
+    });
+
+    function getBoard(board) {
+        const oldBoard = board === "values" ? $("#valueContainer") : board === "cases" ? $("#caseContainer") : $("#playerContainer");
+        return oldBoard;
     }
-});
 
-volumeSlider.addEventListener("input", () => {
-    gainNode.gain.value = volumeSlider.value;
+    function removeActiveClass() {
+        const oldBoardNav = $("#gameBoardNav").children(".active").get(0);
+        $(oldBoardNav).removeClass("active")
+        const oldBoardComponent = getBoard(oldBoardNav.dataset.component);
+        $(oldBoardComponent).removeClass("active");
+    }
+
+    function addActiveClass(board, navButton) {
+        navButton.addClass("active");
+        const boardComponent = getBoard(board);
+        boardComponent.addClass("active");
+    }
+
+    $("#navValueButton").on("click", () => {
+        removeActiveClass("values");
+        addActiveClass("values", $("#navValueButton"));
+    });
+
+    $("#navCaseButton").on("click", () => {
+        removeActiveClass("cases");
+        addActiveClass("cases", $("#navCaseButton"));
+    })
+
+    $("#navPlayerButton").on("click", () => {
+        removeActiveClass("players");
+        addActiveClass("players", $("#navPlayerButton"));
+    })
+    
+    volumeSlider.addEventListener("input", () => {
+        gainNode.gain.value = volumeSlider.value;
+    });
+    
+    assignModifierJSON();
 })
-
-// $(valueBoard).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr)");
-// $(caseBoard).css("grid-template-columns", "repeat(" + (ROUNDS) + ", 1fr)");
-// $(modifiers).css("grid-template-columns", "repeat(" + (ROUNDS+2) + ", 1fr");
 
 async function getModifierJSON() {
     return await fetch("./modifierTypes.json")
@@ -63,7 +95,6 @@ async function assignModifierJSON() {
     modifierTypes = await getModifierJSON();
 }
 
-assignModifierJSON();
 
 function GameState(playerCount, modifierNumber, playerList){
     this.round = 0;
@@ -87,8 +118,8 @@ function Player(name){
 
 gameSetupForm.on("submit", (event) => {
     event.preventDefault();
-    if(playerSetupList[0].children.length <= 1){
-        alert("Must have at least 2 players to start!");
+    if(playerSetupList[0].children.length <= 2){
+        alert("Must have at least 3 players to start!");
     }
     else {
         $("#backdrop").fadeOut();
@@ -252,9 +283,7 @@ function initializeGame() {
 
 function startFirstRound() {
     $(playerBoard).children().first().addClass("playerTurn");
-    // $(playerBoard.children()).each((_, player) => {
-    //     console.log(player);
-    // })
+    $("#currentPlayerName").text(game.players[game.roundStep].name);
 }
 
 function handleCaseClicked(clickedCase, index) {
@@ -283,7 +312,7 @@ function handleCaseClicked(clickedCase, index) {
 function revealCase(index) {
     const currentPlayer = game.players[game.roundStep];
     $("#backdrop").fadeIn();
-    revealCaseElement.addClass("caseStyle").text(index+1);
+    revealCaseElement.removeClass().addClass("caseStyle").text(index+1);
     $("#caseRevealText").text(currentPlayer.name);
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
@@ -444,6 +473,13 @@ function progressGameStep() {
         return;
     }
     $(nextPlayer).addClass("playerTurn");
+
+    $("#currentPlayerName").text(game.players[game.roundStep].name)
+        .css("animation", "playerChange 500ms ease-out")
+        .one("animationend", () => {
+            $("#currentPlayerName").css("animation", "none");
+        });
+
     if(casesLeft === 1){
         const i = findLastCase();
         $(nextPlayer).addClass("playerFinished");
