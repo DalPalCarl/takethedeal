@@ -96,7 +96,7 @@
     <section id="backdrop">
     </section>
 
-    <img id="gameLogo" src="./logo.png" alt="Take the Deal"/>
+    <div id="gameLogoContainer"><img id="gameLogo" src="./logo.png" alt="Take the Deal"/></div>
     <section id="volumeControls">
         <input type="range" title="Master Volume" min="0" max="1" value=".5" step="0.01" id="volumeSlider"/>
         <ion-icon name="volume-high" id="volumeIcon"></ion-icon>
@@ -110,9 +110,11 @@
         </nav>
     </div>
 
-    <div id="currentPlayerContainer" class="boardBG">
-        <div id="currentPlayer">
-            <p id="currentPlayerName" class="teko text-thicc"></p>
+    <div id="currentPlayerContainer">
+        <div id="currentPlayerBackground" class="boardBG">
+            <div id="currentPlayer">
+                <p id="currentPlayerName" class="teko text-thicc"></p>
+            </div>
         </div>
     </div>
   

@@ -48,11 +48,15 @@ footer {
     bottom: 5px;
 }
 
-#gameLogo {
-    position: relative;
+#gameLogoContainer {
     display: flex;
+    width: 100%;
     justify-self: center;
     justify-content: center;
+    
+}
+
+#gameLogo {
     width: clamp(15rem, 40%, 25rem);
     margin: 0;
 }
@@ -891,10 +895,14 @@ footer {
     
     #currentPlayerContainer {
         display: flex;
+        width: 100%;
         justify-self: center;
         align-items: center;
+    }
+    
+    #currentPlayerBackground {
         margin: .5rem;
-        height: 6rem;
+        height: 7rem;
         width: min(80%, 30rem);
     }
 
@@ -904,9 +912,9 @@ footer {
         align-items: center;
         background-color: #123458;
         color: var(--color-grey);
-        margin-inline: 1rem;
+        margin: 1rem;
         font-size: 1.5rem;
-        width: 100%;
+        width: auto;
         border-radius: 10px;
         box-shadow: 0 5px var(--color-light-navy);
         transition: all 200ms;
