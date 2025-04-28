@@ -256,6 +256,7 @@ footer {
     text-align: center;
     gap: 20px;
     width: 15rem;
+    text-transform: capitalize;
 }
 
 #newPlayerName {
