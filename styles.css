@@ -37,10 +37,12 @@ main {
 }
 
 main > * {
+    display: -webkit-flex;
     display: flex;
 }
 
 footer {
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     color: var(--color-tan);
@@ -49,6 +51,7 @@ footer {
 }
 
 #gameLogoContainer {
+    display: -webkit-flex;
     display: flex;
     width: 100%;
     justify-self: center;
@@ -88,6 +91,7 @@ footer {
 #caseRevealContainer {
     position: absolute;
     top: 4rem;
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -105,6 +109,7 @@ footer {
 }
 
 #caseRevealContent {
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,6 +123,7 @@ footer {
 }
 
 #caseRevealMask {
+    display: -webkit-flex;
     display: flex;
     justify-content: end;
     align-items: end;
@@ -128,6 +134,7 @@ footer {
 }
 
 #caseRevealBackground {
+    display: -webkit-flex;
     display: flex;
     width: 30rem;
     aspect-ratio: 2 / 1;
@@ -138,11 +145,13 @@ footer {
 
 #caseRevealCase {
     transform: translateY(-8rem);
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
 }
 
 #caseRevealCaseFront {
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,6 +163,7 @@ footer {
 }
 
 #caseRevealModifier {
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -186,6 +196,7 @@ footer {
 
 #dondChoiceContainer {
     position: absolute;
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -204,6 +215,7 @@ footer {
 }
 
 #dondChoiceCase {
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,6 +251,7 @@ footer {
 }
 
 #gameSetup {
+    display: -webkit-flex;
     display: flex;
     z-index: 4;
     flex-direction: column;
@@ -252,6 +265,7 @@ footer {
 }
 
 #inputSetupContainer {
+    display: -webkit-flex;
     display: flex;
     height: 100%;
     margin-bottom: 2rem;
@@ -261,6 +275,7 @@ footer {
 }
 
 #gameSetupForm {
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     font-size: large;
@@ -314,6 +329,7 @@ footer {
 }
 
 #displayPlayerList {
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     width: 20rem;
@@ -373,6 +389,7 @@ footer {
 }
 
 #modifierHeader, #valueHeader, #caseHeader, #playerHeader {
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     padding: 0;
@@ -397,6 +414,7 @@ footer {
 }
 
 #modifierContainer {
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -430,6 +448,7 @@ footer {
 
 #endGameContainer {
     position: absolute;
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -461,6 +480,7 @@ footer {
 }
 
 .playerStat {
+    display: -webkit-flex;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -485,6 +505,7 @@ footer {
 }
 
 #endGameButtons {
+    display: -webkit-flex;
     display: flex;
 }
 
@@ -510,6 +531,7 @@ footer {
 }
 
 .playerList {
+    display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -533,6 +555,7 @@ footer {
 }
 
 .modalContainer {
+    display: -webkit-flex;
     display: flex;
     position: absolute;
     justify-self: center;
@@ -636,6 +659,7 @@ footer {
 }
 
 .modifier {
+    display: -webkit-flex;
     display: flex;
     transform: scale(0);
     justify-content: center;
@@ -686,6 +710,7 @@ footer {
 /* Player Classes */
 
 .player {
+    display: -webkit-flex;
     display: flex;
     justify-content: space-around;
     background-color: #123458;
@@ -716,6 +741,7 @@ footer {
 }
 
 .playerSelectedCase {
+    display: -webkit-flex;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -855,6 +881,7 @@ footer {
 @media (max-width: 1000px) {
 
     main {
+        display: -webkit-flex;
         display: flex;
         flex-direction: column;
         margin: 1rem;
@@ -865,16 +892,19 @@ footer {
     }
 
     main > .active {
+        display: -webkit-flex;
         display: flex;
     }
 
     #gameBoardContainer {
+        display: -webkit-flex;
         display: flex;
         justify-content: center;
         width: auto;
     }
     
     #gameBoardNav {
+        display: -webkit-flex;
         display: flex;
         border-radius: 10px;
         overflow: hidden;
@@ -897,6 +927,7 @@ footer {
     }
     
     #currentPlayerContainer {
+        display: -webkit-flex;
         display: flex;
         width: 100%;
         justify-self: center;
@@ -910,6 +941,7 @@ footer {
     }
 
     #currentPlayer {
+        display: -webkit-flex;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -958,6 +990,7 @@ footer {
     }
     
     #caseRevealBackground {
+        display: -webkit-flex;
         display: flex;
         width: 60vw;
         aspect-ratio: 2 / 1;
@@ -1023,6 +1056,7 @@ footer {
     }
     
     .playerStat {
+        display: -webkit-flex;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1047,6 +1081,7 @@ footer {
     }
     
     #endGameButtons {
+        display: -webkit-flex;
         display: flex;
     }
 
@@ -1085,6 +1120,7 @@ footer {
     }
 
     #inputSetupContainer {
+        display: -webkit-flex;
         display: flex;
         flex-direction: row;
         height: 70vh;
