@@ -311,6 +311,7 @@ function handleCaseClicked(clickedCase, index) {
 
 function revealCase(index) {
     const currentPlayer = game.players[game.roundStep];
+    window.location.href = "#gameLogo";
     $("#backdrop").fadeIn();
     revealCaseElement.removeClass().addClass("caseStyle").text(index+1);
     $("#caseRevealText").text(currentPlayer.name);
