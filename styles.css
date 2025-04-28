@@ -72,6 +72,10 @@ footer {
     display: none;
 }
 
+#currentPlayerContainer {
+    display: none;
+}
+
 #caseRevealContainer {
     position: absolute;
     display: flex;
@@ -107,7 +111,7 @@ footer {
     justify-content: end;
     align-items: end;
     width: 30rem;
-    height: 26rem;
+    aspect-ratio: 15 / 13;
     overflow: hidden;
     border-radius: 10px;
 }
@@ -115,14 +119,14 @@ footer {
 #caseRevealBackground {
     display: flex;
     width: 30rem;
-    height: 15rem;
+    aspect-ratio: 2 / 1;
     background-color: var(--color-dark-tan);
     border-radius: 10px;
     box-shadow: 0 -5rem var(--color-tan)
 }
 
 #caseRevealCase {
-    transform: translateY(-7rem);
+    transform: translateY(-8rem);
     display: flex;
     justify-content: center;
 }
@@ -133,7 +137,7 @@ footer {
     align-items: center;
     font-size: 15rem;
     width: 30rem;
-    height: 20rem;
+    aspect-ratio: 3 / 2;
     border-radius: 10px;
     box-shadow: 0 15rem var(--shadow-color);
 }
@@ -803,7 +807,7 @@ footer {
 
 @keyframes caseRevealDown {
     0% {
-        transform: translateY(-7rem);
+        transform: translateY(-8rem);
     }
     100% {
         transform: translateY(30rem);
@@ -815,7 +819,7 @@ footer {
         transform: translateY(30rem);
     }
     100% {
-        transform: translateY(-7rem);
+        transform: translateY(-8rem);
     }
 }
 
@@ -905,7 +909,7 @@ footer {
     }
 
     #inputSetupContainer {
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     #valueContainer {
@@ -914,7 +918,6 @@ footer {
     
     #caseContainer {
         height: auto;
-
     }
     
     #playerContainer {
@@ -922,36 +925,43 @@ footer {
     }
 
     #caseRevealContainer {
-        width: 90%;
-        height: 40rem;
+        width: 90vw;
+        height: auto;
+        aspect-ratio: 3/2;
+        padding-bottom: 2rem;
     }
     
     #caseRevealMask {
+        padding-top: 7rem;
         justify-content: center;
-        align-items: end;
         width: 60vw;
-        height: 40vh;
+        aspect-ratio: 3 / 2;
     }
     
     #caseRevealBackground {
         display: flex;
         width: 60vw;
-        height: 40vh;
+        aspect-ratio: 2 / 1;
         background-color: var(--color-dark-tan);
         border-radius: 10px;
         box-shadow: 0 -5rem var(--color-tan)
     }
+
+    #caseRevealText {
+        font-size: clamp(3rem, 30vw, 6rem);
+        padding: 0;
+        margin: 0;
+    }
     
     #caseRevealCase {
-        transform: translateY(-1rem);
-        display: flex;
-        justify-content: center;
+        transform: translateY(-7rem);
     }
     
     #caseRevealCaseFront {
-        font-size: 10rem;
+        font-size: clamp(8rem, 30vw, 15rem);
         width: 60vw;
-        height: 40vh;
+        aspect-ratio: 2 / 1;
+        box-shadow: 0 15vh var(--shadow-color);
     }
     
     #caseRevealModifier {
@@ -1023,7 +1033,7 @@ footer {
 
     @keyframes caseRevealDown {
         0% {
-            transform: translateY(-1rem);
+            transform: translateY(-7rem);
         }
         100% {
             transform: translateY(30rem);
@@ -1035,18 +1045,7 @@ footer {
             transform: translateY(30rem);
         }
         100% {
-            transform: translateY(-1rem);
-        }
-    }
-    
-    @keyframes modifierAppear {
-        0% {
-            transform: scale(100);
-            opacity: 0;
-        }
-        100% {
-            transform: scale(100%);
-            opacity: 100%;
+            transform: translateY(-7rem);
         }
     }
 
