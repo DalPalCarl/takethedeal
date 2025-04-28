@@ -87,6 +87,7 @@ footer {
 
 #caseRevealContainer {
     position: absolute;
+    top: 4rem;
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -400,6 +401,7 @@ footer {
     flex-direction: column;
     align-items: center;
     padding: .5rem;
+    margin-top: 3rem;
     width: 90%;
 }
 
@@ -654,6 +656,7 @@ footer {
 
 .case {
     cursor: pointer;
+    display: inline;
     background-color: var(--color-light-navy);
     color: var(--color-grey);
     aspect-ratio: 1 / 1;
