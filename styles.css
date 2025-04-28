@@ -131,6 +131,7 @@ footer {
     aspect-ratio: 15 / 13;
     overflow: hidden;
     border-radius: 10px;
+    padding-top: 0;
 }
 
 #caseRevealBackground {
