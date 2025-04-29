@@ -208,7 +208,7 @@ function loadPenalties(totalCases, pList) {
                 $(newVal).addClass("value fourPenalties teko text-thicc").text("4").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 5:
-                $(newVal).addClass("value maxPenalty teko").text("X")
+                $(newVal).addClass("value maxPenalty bokor text-thicc").text("M")
                 .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
             }
         $(valueBoard).append(newVal);

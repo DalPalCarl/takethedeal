@@ -651,8 +651,8 @@ footer {
 .maxPenalty {
     color: white;
     background-color: var(--p-max);
-    font-weight: 100;
     --shadow-color: black;
+    font-size: 1.7rem;
 }
 
 .modifier {
