@@ -983,6 +983,7 @@ footer {
         justify-content: center;
         width: 60vw;
         aspect-ratio: 16 / 9;
+        align-items: normal;
     }
     
     #caseRevealBackground {
