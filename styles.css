@@ -897,6 +897,7 @@ footer {
         visibility: visible;
         order: -1;
     }
+
     #gameBoardContainer {
         display: -webkit-flex;
         display: flex;
@@ -1058,26 +1059,6 @@ footer {
     #endGamePlayerStats {
         grid-template-columns: repeat(auto-fit, 10rem);
         justify-content: center;
-    }
-    
-    .playerStat {
-        display: -webkit-flex;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-    
-    .playerScore {
-        --scoreText: black;
-        --scoreFace: var(--color-grey);
-        --scoreShadow: var(--color-navy);
-        padding-inline: clamp(2rem, 20%, 4rem);
-        border-radius: 10px;
-        font-size: 3rem;
-        color: var(--scoreText);
-        background-color: var(--scoreFace);
-        box-shadow: 4px 4px var(--scoreShadow);
     }
     
     .playerName {
