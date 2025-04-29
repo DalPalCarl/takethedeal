@@ -208,7 +208,7 @@ function loadPenalties(totalCases, pList) {
                 $(newVal).addClass("value fourPenalties teko text-thicc").text("4").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 5:
-                $(newVal).addClass("value maxPenalty teko").text("🕱")
+                $(newVal).addClass("value maxPenalty teko").text("X")
                 .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
             }
         $(valueBoard).append(newVal);
@@ -528,7 +528,7 @@ function handleTake(player){
 
 function handleLeave(player){
     $("#backdrop").fadeOut();
-    $("#dondChoiceContainer").fadeOut();
+    $("#dondChoiceContainer").hide();
     $($(playerBoard.children().get(game.roundStep)).children().get(1)).hide();
     $(caseBoard.children()[player.selectedCase]).removeClass("caseSelected").prop("disabled", false)
         .css("animation", "pressDown 1000ms ease-in-out forwards reverse");
