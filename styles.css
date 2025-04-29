@@ -249,6 +249,8 @@ footer {
 #gameSetup {
     display: -webkit-flex;
     display: flex;
+    position: absolute;
+    top: 10rem;
     z-index: 4;
     flex-direction: column;
     justify-content: start;
@@ -973,16 +975,14 @@ footer {
     #caseRevealContainer {
         width: 90vw;
         height: auto;
-        aspect-ratio: 3/2;
         padding-bottom: 2rem;
     }
     
     #caseRevealMask {
-        margin-top: 1rem;
-        padding-top: 50%;
+        padding-top: 15rem;
         justify-content: center;
         width: 60vw;
-        aspect-ratio: 3 / 2;
+        aspect-ratio: 16 / 9;
     }
     
     #caseRevealBackground {
