@@ -979,7 +979,7 @@ footer {
     
     #caseRevealMask {
         margin-top: 1rem;
-        padding-top: clamp(7rem, 50%, 12rem);
+        padding-top: 50%;
         justify-content: center;
         width: 60vw;
         aspect-ratio: 3 / 2;
