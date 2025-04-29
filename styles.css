@@ -250,7 +250,7 @@ footer {
     display: -webkit-flex;
     display: flex;
     position: absolute;
-    top: 10rem;
+    top: 8rem;
     z-index: 4;
     flex-direction: column;
     justify-content: start;
@@ -444,7 +444,8 @@ footer {
 }
 
 #endGameContainer {
-    position: absolute;
+    position: fixed;
+    top: 5rem;
     display: -webkit-flex;
     display: flex;
     flex-direction: column;
