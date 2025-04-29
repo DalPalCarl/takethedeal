@@ -653,6 +653,9 @@ footer {
     background-color: var(--p-max);
     --shadow-color: black;
     font-size: 1.7rem;
+    font-family: "Bokor", system-ui;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .modifier {
@@ -883,16 +886,17 @@ footer {
         flex-direction: column;
         margin: 1rem;
     }
-
+    
     main > * {
-        display: none;
+        /* display: none; */
+        visibility: hidden;
     }
-
+    
     main > .active {
-        display: -webkit-flex;
-        display: flex;
+        /* display: flex; */
+        visibility: visible;
+        order: -1;
     }
-
     #gameBoardContainer {
         display: -webkit-flex;
         display: flex;

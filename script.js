@@ -306,7 +306,6 @@ function handleCaseClicked(clickedCase, index) {
             $(playerBoard.children()[game.roundStep]).addClass("playerFinished");
         }
     }
-    // console.log(clickedCase, game.penaltyList[index]);
 }
 
 function revealCase(index) {
@@ -340,7 +339,6 @@ function revealCase(index) {
                                         });
                                     }
                                     else if(modifierData.includesSelf){playerIndexList.push(game.roundStep);}
-                                    console.log(playerIndexList);
                                     handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, (penaltyValue*(modifierData.multiplier)));
                                     $("#caseRevealCase").css("animation", "none");
                                     $("#caseRevealModifier").removeClass("modifierAppear");
@@ -425,8 +423,7 @@ function updatePlayerScore(score, players){
         else{
             player.score += score;
         }
-    })
-    console.log(game.players);
+    });
 }
 
 
@@ -534,8 +531,8 @@ function handleLeave(player){
         .css("animation", "pressDown 1000ms ease-in-out forwards reverse");
 }
 
-function endGame(){
-    calculateHighestAndLowest();
+async function endGame(){
+    await calculateHighestAndLowest();
     $("#backdrop").fadeIn();
     $("#endGameContainer").fadeIn();
     game.players.forEach((p, i) => {
@@ -571,12 +568,13 @@ function clearOldGameElements(){
 
     //players
     playerBoard.children().remove();
+    playerSelectList.children().remove();
 
     //modifiers
     modifiers.children().remove();
 }
 
-function calculateHighestAndLowest() {
+async function calculateHighestAndLowest() {
     let h = 0;
     let l = Number.MAX_VALUE;
     game.players.forEach((p) => {
