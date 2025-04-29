@@ -176,7 +176,7 @@ footer {
 }
 
 #closeCaseRevealModalButton {
-    margin: 1rem;
+    margin-top: 1rem;
     border: none;
     border-radius: 10px;
     color: var(--color-grey);
@@ -416,7 +416,6 @@ footer {
     flex-direction: column;
     align-items: center;
     padding: .5rem;
-    margin-top: 3rem;
     width: 90%;
 }
 
@@ -980,7 +979,7 @@ footer {
     }
     
     #caseRevealMask {
-        padding-top: 7rem;
+        padding-top: 7rem !important;
         justify-content: center;
         width: 60vw;
         aspect-ratio: 3 / 2;
@@ -1019,7 +1018,6 @@ footer {
     }
     
     #closeCaseRevealModalButton {
-        margin: 1rem;
         border: none;
         border-radius: 10px;
         color: var(--color-grey);
