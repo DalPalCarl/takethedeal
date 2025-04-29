@@ -104,10 +104,6 @@ footer {
     user-select: none;
 }
 
-#caseRevealContainer:last-child {
-    justify-self: end;
-}
-
 #caseRevealContent {
     display: -webkit-flex;
     display: flex;
@@ -879,7 +875,7 @@ footer {
 /* Media Queries */
 
 
-@media (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
 
     main {
         display: -webkit-flex;
