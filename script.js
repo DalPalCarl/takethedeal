@@ -236,10 +236,15 @@ function loadPlayers() {
     $(game.players).each((i, p) => {
         const playerElement = document.createElement("div");
         const playerName = document.createElement("p");
+        const scoreContainer = document.createElement("div");
         $(playerName).text(p.name).addClass("playerName");
         $(playerElement).css("transform", "scale(0)");
+        $(scoreContainer)
+            .html("<p style='font-size: 1rem;' class='playerScoreInfo'>Score</p><p style='font-size: 2rem;' class='playerScoreInfo playerScoreValue'>0</p>")
+            .addClass("playerScoreContainer");
         $(playerElement).addClass("player teko")
             .append(playerName)
+            .append(scoreContainer)
             .css("animation", "popIn 1000ms " + (200 * i) + "ms forwards");
         $(playerBoard).append(playerElement);
     })
@@ -361,6 +366,9 @@ function revealCase(index) {
                                 }
                                 $("#caseRevealCase").css("animation", "none");
                                 if(modifierData.isPlayerSelection){
+                                    $("#playerContainer").css("z-index", "50");
+                                    $("#gameBoardNav").css("z-index", "50");
+
                                     $(playerSelectList.get(0).children).each((i, p) => {
                                         if(i !== game.roundStep){
                                             p.onclick = () => {
@@ -398,6 +406,8 @@ function revealCase(index) {
                         document.getElementById("closeCaseRevealModalButton").onclick = () => {
                             handleContinueButton(penaltyElement, penaltyClass, null, playerIndexList, penaltyValue);
                             $("#caseRevealCase").css("animation", "none");
+                            $("#playerContainer").css("z-index", "1");
+                            $("#gameBoardNav").css("z-index", "1");
                         }
                         $("#closeCaseRevealModalButton").delay(3000).fadeIn("slow");
                     }
@@ -432,6 +442,8 @@ function updatePlayerScore(score, players){
         else{
             player.score += score;
         }
+        const currentPlayerScore = $(playerBoard.children().get(pIndex)).find(".playerScoreValue")[0];
+        $(currentPlayerScore).text(player.score);
     });
 }
 
@@ -519,11 +531,15 @@ function offerChoice(player) {
     $("#dondChoiceContainer").fadeIn();
 
     $("#gameBoardNav").css("z-index", "50");
+    
 
     const takeButton = document.getElementById("dondTake");
     const leaveButton = document.getElementById("dondLeave");
     takeButton.onclick = () => {
         $("#gameBoardNav").css("z-index", "1");
+        $("#playerContainer").css("z-index", "1");
+        $("#valueContainer").css("z-index", "1");
+
         handleTake(player);
     }
     leaveButton.onclick = () => {
@@ -542,7 +558,7 @@ function handleTake(player){
 function handleLeave(player){
     $("#backdrop").fadeOut();
     $("#dondChoiceContainer").hide();
-    $($(playerBoard.children().get(game.roundStep)).children().get(1)).hide();
+    $($(playerBoard.children().get(game.roundStep)).children().get(2)).hide();
     $(caseBoard.children()[player.selectedCase]).removeClass("caseSelected").prop("disabled", false)
         .css("animation", "pressDown 1000ms ease-in-out forwards reverse");
 }

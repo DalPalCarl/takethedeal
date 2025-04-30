@@ -86,8 +86,9 @@ footer {
 }
 
 #caseRevealContainer {
-    position: fixed;
-    top: 4rem;
+    position: absolute;
+    top: 8rem;
+    left: 20vw;
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -95,7 +96,7 @@ footer {
     justify-content: start;
     align-items: center;
     z-index: 3;
-    width: 45rem;
+    width: 50vw;
     height: 40rem;
     user-select: none;
 }
@@ -141,6 +142,8 @@ footer {
 #caseRevealCaseFront {
     display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     font-size: 15rem;
     width: 30rem;
     aspect-ratio: 3 / 2;
@@ -345,6 +348,21 @@ footer {
     padding: 1rem;
     height: 100%;
     box-shadow: -5px 5px var(--color-tan);
+}
+
+.playerScoreInfo {
+    margin: 0;
+}
+
+.playerScoreContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-color: var(--p-1);
+    width: 3rem;
 }
 
 #caseGrid {
@@ -628,10 +646,9 @@ footer {
     color: white;
     background-color: var(--p-max);
     --shadow-color: black;
-    font-size: 1.7rem;
+    font-size: 2rem;
     font-family: "Bokor", system-ui;
     font-weight: 400;
-    font-style: normal;
 }
 
 .modifier {
@@ -948,6 +965,7 @@ footer {
         width: 90vw;
         height: auto;
         padding-bottom: 2rem;
+        left: auto;
     }
     
     #caseRevealMask {
