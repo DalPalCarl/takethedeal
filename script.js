@@ -24,11 +24,12 @@ let penaltyList = [];
 
 let game;
 
-$("#gameSetup").hide();
+// $("#gameSetup").hide();
 $(document).ready(() => {
     $("#caseRevealContainer").hide();
     $("#closeCaseRevealModalButton").hide();
-    // $("#dondChoiceContainer").hide();
+    $("#dondChoiceContainer").hide();
+
     $("#endGameContainer").hide();
     $("#modifierContainer").hide();
     
@@ -59,6 +60,14 @@ $(document).ready(() => {
         navButton.addClass("active");
         const boardComponent = getBoard(board);
         boardComponent.addClass("active");
+        if(game.round === ROUNDS){
+            if(board === "cases"){
+                $("#dondChoiceContainer").show();
+            }
+            else{
+                $("#dondChoiceContainer").hide();
+            }
+        }
     }
 
     $("#navValueButton").on("click", () => {
@@ -482,10 +491,12 @@ function progressGameStep() {
         const i = findLastCase();
         $(nextPlayer).addClass("playerFinished");
         revealCase(i);
+        $("#valueContainer").css("z-index", "1");
         return;
     }
     if(game.round === ROUNDS){
         $("#valueContainer").css("z-index", "50");
+        $("#playerContainer").css("z-index", "50");
         offerChoice(game.players[game.roundStep]);
     }
 }
@@ -506,9 +517,13 @@ function offerChoice(player) {
     $("#dondChoiceCase").text(player.selectedCase+1);
     $("#backdrop").fadeIn();
     $("#dondChoiceContainer").fadeIn();
+
+    $("#gameBoardNav").css("z-index", "50");
+
     const takeButton = document.getElementById("dondTake");
     const leaveButton = document.getElementById("dondLeave");
     takeButton.onclick = () => {
+        $("#gameBoardNav").css("z-index", "1");
         handleTake(player);
     }
     leaveButton.onclick = () => {
@@ -573,6 +588,10 @@ function clearOldGameElements(){
 
     //modifiers
     modifiers.children().remove();
+
+    //reset styles
+    $("#valueContainer").css("z-index", "");
+    $("#playerContainer").css("z-index", "");
 }
 
 async function calculateHighestAndLowest() {
