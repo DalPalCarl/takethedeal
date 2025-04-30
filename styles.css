@@ -141,7 +141,6 @@ footer {
 #caseRevealCaseFront {
     display: flex;
     justify-content: center;
-    align-items: center;
     font-size: 15rem;
     width: 30rem;
     aspect-ratio: 3 / 2;
