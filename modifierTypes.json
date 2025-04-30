@@ -1,6 +1,7 @@
 [
     {
         "mod": "A",
+        "name": "Everyone",
         "info": "Everybody takes this penalty!",
         "isPlayerSelection": false,
         "includesSelf": true,
@@ -9,6 +10,7 @@
     },
     {
         "mod": "2",
+        "name": "Double",
         "info": "Take double the penalty value!",
         "isPlayerSelection": false,
         "includesSelf": true,
@@ -17,6 +19,7 @@
     },
     {
         "mod": "3",
+        "name": "Triple",
         "info": "Take triple the penalty value!",
         "isPlayerSelection": false,
         "includesSelf": true,
@@ -25,6 +28,7 @@
     },
     {
         "mod": "4",
+        "name": "Give Out",
         "info": "Choose someone to take this penalty instead!",
         "isPlayerSelection": true,
         "includesSelf": false,
@@ -33,6 +37,7 @@
     },
     {
         "mod": "5",
+        "name": "Choose Buddy",
         "info": "Take this penalty with another player!",
         "isPlayerSelection": true,
         "includesSelf": true,
@@ -41,6 +46,7 @@
     },
     {
         "mod": "6",
+        "name": "Give Two Out",
         "info": "Choose 2 players to take this penalty value instead!",
         "isPlayerSelection": true,
         "includesSelf": false,

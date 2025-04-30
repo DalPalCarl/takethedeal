@@ -192,15 +192,13 @@ footer {
 
 #dondChoiceContainer {
     position: fixed;
-    display: -webkit-flex;
+    left: 50vw;
+    right: 30vw;
     display: flex;
     flex-direction: column;
-    justify-self: center;
-    align-self: center;
-    justify-content: start;
     align-items: center;
     z-index: 3;
-    width: 30rem;
+    width: auto;
     height: 30rem;
 }
 
@@ -540,7 +538,7 @@ footer {
 
 .dondButton {
     border: none;
-    width: 15rem;
+    width: 90%;
     padding: 1rem;
     background-color: var(--color-dark-tan);
     border-radius: 10px;

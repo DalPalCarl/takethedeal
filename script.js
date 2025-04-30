@@ -24,11 +24,11 @@ let penaltyList = [];
 
 let game;
 
-// $("#gameSetup").hide();
+$("#gameSetup").hide();
 $(document).ready(() => {
     $("#caseRevealContainer").hide();
     $("#closeCaseRevealModalButton").hide();
-    $("#dondChoiceContainer").hide();
+    // $("#dondChoiceContainer").hide();
     $("#endGameContainer").hide();
     $("#modifierContainer").hide();
     
@@ -329,7 +329,7 @@ function revealCase(index) {
                         const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
                         $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").delay(2000).one("animationend", () => {
                             $("#caseRevealContent").delay(2000).fadeOut().one("animationend", () => {
-                                $("#modifierName").text(modifierData.mod);
+                                $("#modifierName").text(modifierData.name);
                                 $("#modifierInfo").text(modifierData.info);
                                 $("#modifierPenaltyValue").addClass(penaltyClass).text(penaltyElement.text());
                                 document.getElementById("closeCaseRevealModalButton").onclick = () => {
@@ -485,6 +485,7 @@ function progressGameStep() {
         return;
     }
     if(game.round === ROUNDS){
+        $("#valueContainer").css("z-index", "50");
         offerChoice(game.players[game.roundStep]);
     }
 }
