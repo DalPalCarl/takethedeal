@@ -1,19 +1,19 @@
-# 🎲 Take The Deal
+[![Take The Deal](/logo.png)](https://dalpalcarl.github.io/takethedeal/)
 
-**Take The Deal** is a chaotic, multiplayer party game inspired by *Deal or No Deal*, with a boozy twist! Designed for 2–10 players, this game blends strategy, chance, and social drinking into a single hilarious and unpredictable experience.
+**Take The Deal** is a multiplayer party game inspired by *Deal or No Deal*. Designed for 3–10 players, this game blends strategy and chance into a single hilarious, unpredictable experience.
 
 ## 🍻 Game Overview
 
-Unlike the original *Deal or No Deal*, your goal in *Take The Deal* is to **collect the highest number of penalties** — and then unleash them on your friends at the end of the game. The game flows similarly to multiplayer party games like *Piccolo*, encouraging group interaction, competition, and lots of laughs.
+Unlike the original *Deal or No Deal*, your goal in *Take The Deal* is to **collect the lowest or highest number of penalties**. The game flows similarly to multiplayer party games like *Piccolo*, encouraging group interaction, competition, and lots of laughs.
 
 ## 🕹️ How to Play
 
 ### Game Setup
-1. **Add Players**: Enter 2–10 player names. Each will be randomly assigned a color.
-2. **Select Modifiers**:
-   - **Low** – 1 of each modifier type
-   - **Medium** – ⅛ of total cases
-   - **Volatile** – ½ of total cases
+1. **Add Players**: Enter 3–10 player names. Click on names to remove them from the Player Setup List. Order will be randomly assigned at start.
+2. **Select Modifier Setting** - Modifier types will be randomly picked at start:
+   - **Low** – 3 total modifiers
+   - **Medium** – 1/4 of total cases
+   - **Volatile** – 1/2 of total cases
 3. The game generates a penalty list and shuffles them into randomly numbered cases.
 
 ### Gameplay Flow
