@@ -8,7 +8,7 @@ const playerSelectList = $("#modifierPlayerSelection")
 const newPlayerName = $("#newPlayerName");
 const revealCaseElement = $("#caseRevealCaseFront");
 const modifierPlayerSelection = $("#modifierPlayerSelection");
-const MAXPLAYERCOUNT = 10;
+const MAXPLAYERCOUNT = 20;
 const ROUNDS = 8;
 
 const audioContext = new AudioContext();
