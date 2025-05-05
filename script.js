@@ -297,6 +297,12 @@ function initializeGame() {
     loadCases();
     loadPlayers();
     loadPlayerSelection();
+
+    for(let i = 0; i < game.penaltyList.length; i++){
+        if(game.penaltyList[i] === 0 && game.modifierList[i] !== null){
+            console.log(i);
+        }
+    }
 }
 
 function startFirstRound() {
@@ -345,7 +351,7 @@ function revealCase(index) {
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
                     $("#caseRevealInstruction").css("opacity", "100%");
-                    if (game.modifierList[index]){
+                    if (game.modifierList[index] && penaltyValue !== 0){
                         const modifierData = game.modifierList[index];
                         const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
                         $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").delay(2000).one("animationend", () => {
@@ -411,7 +417,11 @@ function revealCase(index) {
                     else {
                         playerIndexList.push(game.roundStep);
                         document.getElementById("closeCaseRevealModalButton").onclick = () => {
-                            handleContinueButton(penaltyElement, penaltyClass, null, playerIndexList, penaltyValue);
+                            let modifierElem = null;
+                            if(game.modifierList[index]){
+                                modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
+                            }
+                            handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, penaltyValue);
                             $("#caseRevealCase").css("animation", "none");
                             $("#playerContainer").css("z-index", "1");
                             $("#gameBoardNav").css("z-index", "1");
@@ -438,6 +448,7 @@ function handleContinueButton(penaltyElem, penaltyClass, modElem, playersToUpdat
     }
     updatePlayerScore(score, playersToUpdate);
     progressGameStep();
+
 }
 
 function updatePlayerScore(score, players){
