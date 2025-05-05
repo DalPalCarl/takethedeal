@@ -97,8 +97,9 @@ footer {
     align-items: center;
     z-index: 3;
     width: 50vw;
-    height: 40rem;
+    height: auto;
     user-select: none;
+    padding-bottom: 1rem;
 }
 
 #caseRevealContent {
@@ -447,6 +448,39 @@ footer {
     border-radius: 10px;
 }
 
+#triviaAnswerList {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 0;
+    gap: 10px;
+}
+
+#triviaQuestionText {
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+#triviaQuestionResultText {
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+.triviaAnswer {
+    background-color: var(--color-navy);
+    color: var(--color-grey);
+    border-radius: 10px;
+    padding: .5rem;
+    box-shadow: 3px 3px var(--color-light-navy);
+    cursor: pointer;
+    font-size: 1.6rem;
+    border-style: none;
+}
+
+.triviaAnswer:hover {
+    filter: brightness(140%);
+}
+
 #endGameContainer {
     position: absolute;
     top: 5rem;
@@ -598,10 +632,16 @@ footer {
     color: black;
 }
 
-.selectPlayerActive {
+.selectPlayerActive, .triviaCorrectAnswer {
     background-color: var(--p-1);
     color: black;
     box-shadow: 5px 5px var(--p-1B);
+}
+
+.triviaWrongAnswer {
+    background-color: var(--p-4);
+    color: black;
+    box-shadow: 5px 5px var(--p-4B);
 }
 
 .selectPlayerActive:hover {

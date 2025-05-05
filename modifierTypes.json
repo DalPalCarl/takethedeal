@@ -52,5 +52,12 @@
         "includesSelf": false,
         "selectNum": 2,
         "multiplier": 1
+    },
+    {
+        "mod": "T",
+        "name": "Trivia",
+        "info": "Answer this trivia question correctly or take this penalty!",
+        "includesSelf": true,
+        "multiplier": 1
     }
 ]
