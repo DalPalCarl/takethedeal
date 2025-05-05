@@ -114,6 +114,12 @@ footer {
     margin: 0;
 }
 
+#caseRevealInstruction {
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+}
+
 #caseRevealMask {
     display: flex;
     justify-content: end;
@@ -618,6 +624,12 @@ footer {
     font-size: 4rem;
 }
 
+.zeroPenalty {
+    color: var(--color-light-navy);
+    background-color: white;
+    --shadow-color: var(--color-light-navy);
+}
+
 .onePenalty {
     color: var(--p-1B);
     background-color: var(--p-1);
@@ -990,6 +1002,10 @@ footer {
         padding: 0;
         margin: 0;
     }
+
+    #caseRevealInstruction {
+        font-size: 5vw;
+    }
     
     #caseRevealCase {
         transform: translateY(-7rem);
@@ -1027,7 +1043,6 @@ footer {
         top: 10rem;
         left: 0;
         right: 0;
-
     }
 
     #endGameContainer {
@@ -1092,7 +1107,6 @@ footer {
     }
 
     #inputSetupContainer {
-        
         display: flex;
         flex-direction: row;
         height: 70vh;

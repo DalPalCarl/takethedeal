@@ -178,7 +178,8 @@ function generatePlayers() {
 
 function generatePenaltyList(cases) {
     let penList = [];
-    penList.push(...Array((cases/(ROUNDS/4))-1).fill(1));
+    penList.push(...Array((cases/(ROUNDS/2))-1).fill(0));
+    penList.push(...Array((cases/(ROUNDS/2))).fill(1));
     penList.push(...Array(cases/(ROUNDS/2)).fill(2));
     penList.push(...Array(cases/ROUNDS).fill(3));
     penList.push(...Array(cases/ROUNDS).fill(4));
@@ -204,6 +205,9 @@ function loadPenalties(totalCases, pList) {
         const newVal = document.createElement("div");
         $(newVal).css("transform", "scale(0)");
         switch (pList[i]){
+            case 0:
+                $(newVal).addClass("value zeroPenalty teko text-thicc").text("0").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
+                break;
             case 1:
                 $(newVal).addClass("value onePenalty teko text-thicc").text("1").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
@@ -328,16 +332,19 @@ function revealCase(index) {
     $("#backdrop").fadeIn();
     revealCaseElement.removeClass().addClass("caseStyle").text(index+1);
     $("#caseRevealText").text(currentPlayer.name);
+    $("#caseRevealInstruction").css("opacity", "0");
     $("#caseRevealContainer").fadeIn(1000, () => {
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
                 let playerIndexList = [];
-                const penaltyClass = findPenaltyClass(index);
+                const [penaltyClass, penaltyInstruction] = findPenaltyClass(index);
                 const penaltyElement = $("#valueGrid").find($("." + penaltyClass)).last();
                 const penaltyValue = game.penaltyList[index];
+                $("#caseRevealInstruction").text(penaltyInstruction);
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
+                    $("#caseRevealInstruction").css("opacity", "100%");
                     if (game.modifierList[index]){
                         const modifierData = game.modifierList[index];
                         const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
@@ -451,16 +458,18 @@ function updatePlayerScore(score, players){
 //Takes penalty number as input, returns associated penalty class style name
 function findPenaltyClass(i) {
     switch(game.penaltyList[i]){
+        case 0:
+            return ["zeroPenalty", "No penalties!"];
         case 1:
-            return "onePenalty";
+            return ["onePenalty", "Take 1 penalty!"];
         case 2:
-            return "twoPenalties";
+            return ["twoPenalties", "Take 2 penalties!"];
         case 3:
-            return "threePenalties";
+            return ["threePenalties", "Take 3 penalties!"];
         case 4:
-            return "fourPenalties";
+            return ["fourPenalties", "Take 4 penalties!"];
         case 5:
-            return "maxPenalty";
+            return ["maxPenalty", "Take a MAX PENALTY!"];
     }
 }
 
