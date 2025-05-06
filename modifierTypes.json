@@ -52,5 +52,34 @@
         "includesSelf": false,
         "selectNum": 2,
         "multiplier": 1
+    },
+    {
+        "mod": "T",
+        "name": "Trivia",
+        "info": "Answer this trivia question correctly or take this penalty!",
+        "includesSelf": true,
+        "multiplier": 1
+    },
+    {
+        "mod": "D",
+        "name": "Dare",
+        "info": "Do the dare or take this penalty!",
+        "includesSelf": true,
+        "multiplier": 1,
+        "dareList": [
+            "Stand up and give an Oscar speech to the group",
+            "Show the group your last three Google searches",
+            "Walk around the room like a crab for 30 seconds",
+            "Let someone give you a wedgie",
+            "Do an impression of someone in the room and have everyone guess who it is",
+            "Tell us your most embarrassing/goofy story from college",
+            "Balance your drink on your head for 10 seconds",
+            "Hold a plank for 30 seconds",
+            "Spin around 10 times and walk in a straight line",
+            "Trade shirts with someone for the rest of the game",
+            "Let someone draw on your face",
+            "Describe your worst date in 5 words",
+            "Tell the group your guilty pleasure tv show/movie/artist nobody knows you like"
+        ]
     }
 ]

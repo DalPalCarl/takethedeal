@@ -24,6 +24,21 @@ let penaltyList = [];
 
 let game;
 
+const triviaCall = async function() {
+    return await fetch("https://opentdb.com/api.php?amount=1&type=multiple")
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            return data;
+        })
+};
+
+let triviaQuestion;
+async function getTriviaQuestion() {
+    triviaQuestion = await triviaCall();
+}
+
 // $("#gameSetup").hide();
 $(document).ready(() => {
     $("#caseRevealContainer").hide();
@@ -32,6 +47,15 @@ $(document).ready(() => {
 
     $("#endGameContainer").hide();
     $("#modifierContainer").hide();
+
+    $("#triviaQuestionText").hide();
+    $("#triviaAnswerList").hide();
+    $("#triviaQuestionResultText").hide();
+
+    $("#dareText").hide();
+    $("#dareCompleted").hide();
+    $("#dareNotCompleted").hide();
+
     
     $("#addPlayerButton").on("click", () => {
         addPlayerToList();
@@ -90,6 +114,9 @@ $(document).ready(() => {
     });
     
     assignModifierJSON();
+
+
+    
 })
 
 async function getModifierJSON() {
@@ -297,12 +324,6 @@ function initializeGame() {
     loadCases();
     loadPlayers();
     loadPlayerSelection();
-
-    for(let i = 0; i < game.penaltyList.length; i++){
-        if(game.penaltyList[i] === 0 && game.modifierList[i] !== null){
-            console.log(i);
-        }
-    }
 }
 
 function startFirstRound() {
@@ -346,75 +367,15 @@ function revealCase(index) {
                 const [penaltyClass, penaltyInstruction] = findPenaltyClass(index);
                 const penaltyElement = $("#valueGrid").find($("." + penaltyClass)).last();
                 const penaltyValue = game.penaltyList[index];
-                $("#caseRevealInstruction").text(penaltyInstruction);
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
+                $("#caseRevealInstruction").text(penaltyInstruction);
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
-                    $("#caseRevealInstruction").css("opacity", "100%");
                     if (game.modifierList[index] && penaltyValue !== 0){
-                        const modifierData = game.modifierList[index];
-                        const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
-                        $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").delay(2000).one("animationend", () => {
-                            $("#caseRevealContent").delay(2000).fadeOut().one("animationend", () => {
-                                $("#modifierName").text(modifierData.name);
-                                $("#modifierInfo").text(modifierData.info);
-                                $("#modifierPenaltyValue").addClass(penaltyClass).text(penaltyElement.text());
-                                document.getElementById("closeCaseRevealModalButton").onclick = () => {
-                                    if(modifierData.mod === "A"){
-                                        game.players.forEach((_, i) => {
-                                            playerIndexList.push(i);
-                                        });
-                                    }
-                                    else if(modifierData.includesSelf){playerIndexList.push(game.roundStep);}
-                                    handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, (penaltyValue*(modifierData.multiplier)));
-                                    $("#caseRevealCase").css("animation", "none");
-                                    $("#caseRevealModifier").removeClass("modifierAppear");
-                                    $("#modifierContainer").hide();
-                                    $("#caseRevealContent").show();
-                                    $("#modifierPenaltyValue").removeClass(penaltyClass);
-                                    $(playerSelectList.get(0).children).each((_, p) => {
-                                        $(p).removeClass("selectPlayerActive").show();
-                                    });
-                                    $(playerSelectList).hide();
-                                }
-                                $("#caseRevealCase").css("animation", "none");
-                                if(modifierData.isPlayerSelection){
-                                    $("#playerContainer").css("z-index", "50");
-                                    $("#gameBoardNav").css("z-index", "50");
-
-                                    $(playerSelectList.get(0).children).each((i, p) => {
-                                        if(i !== game.roundStep){
-                                            p.onclick = () => {
-                                                $(p).toggleClass("selectPlayerActive");
-                                                if($(p).hasClass("selectPlayerActive")){
-                                                    playerIndexList.push(i);
-                                                }
-                                                else{
-                                                    playerIndexList.splice(playerIndexList.indexOf(i), 1);
-                                                }
-                                                
-                                                if(playerIndexList.length === modifierData.selectNum){
-                                                    $("#closeCaseRevealModalButton").show();
-                                                }
-                                                else{
-                                                    $("#closeCaseRevealModalButton").hide();
-                                                }
-                                            }
-                                        }
-                                        else{
-                                            $(p).hide();
-                                        }
-                                    });
-                                    playerSelectList.show();
-                                }
-                                else {
-                                    $("#closeCaseRevealModalButton").delay(5000).fadeIn();
-                                }
-                            });
-                            $("#modifierContainer").delay(3000).fadeIn();
-                        });
+                        handleModifierCase(index, playerIndexList, penaltyClass, penaltyElement, penaltyValue);
                     }
                     else {
+                        $("#caseRevealInstruction").delay(700).css("opacity", "100%");
                         playerIndexList.push(game.roundStep);
                         document.getElementById("closeCaseRevealModalButton").onclick = () => {
                             let modifierElem = null;
@@ -430,6 +391,141 @@ function revealCase(index) {
                     }
                 })
             })
+    });
+}
+
+function handleModifierCase(index, playerIndexList, penaltyClass, penaltyElement, penaltyValue) {
+    const modifierData = game.modifierList[index];
+    const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
+    let modifierMult = modifierData.multiplier;
+    $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").delay(2000).one("animationend", () => {
+        $("#caseRevealContent").delay(2000).fadeOut().one("animationend", () => {
+            $("#modifierName").text(modifierData.name);
+            $("#modifierInfo").text(modifierData.info);
+            $("#modifierPenaltyValue").addClass(penaltyClass).text(penaltyElement.text());
+            document.getElementById("closeCaseRevealModalButton").onclick = () => {
+                if(modifierData.mod === "A"){
+                    game.players.forEach((_, i) => {
+                        playerIndexList.push(i);
+                    });
+                }
+                else if(modifierData.includesSelf){playerIndexList.push(game.roundStep);}
+                $("#caseRevealCase").css("animation", "none");
+                $("#caseRevealModifier").removeClass("modifierAppear");
+                $("#modifierContainer").hide();
+                $("#caseRevealContent").show();
+                $("#modifierPenaltyValue").removeClass(penaltyClass);
+                if(modifierData.mod === "T"){
+                    $("#triviaQuestionText").hide();
+                    $("#triviaAnswerList").empty().hide();
+                    $("#triviaQuestionResultText").hide();
+                }
+                else if(modifierData.mod === "D"){
+                    $("#dareText").hide();
+                    $("#dareCompleted").hide();
+                    $("#dareNotCompleted").hide();
+                }
+                $(playerSelectList.get(0).children).each((_, p) => {
+                    $(p).removeClass("selectPlayerActive").show();
+                });
+                $(playerSelectList).hide();
+                handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, (penaltyValue * modifierMult));
+            }
+            $("#caseRevealCase").css("animation", "none");
+            if(modifierData.isPlayerSelection){
+                $("#playerContainer").css("z-index", "50");
+                $("#gameBoardNav").css("z-index", "50");
+
+                $(playerSelectList.get(0).children).each((i, p) => {
+                    if(i !== game.roundStep){
+                        p.onclick = () => {
+                            $(p).toggleClass("selectPlayerActive");
+                            if($(p).hasClass("selectPlayerActive")){
+                                playerIndexList.push(i);
+                            }
+                            else{
+                                playerIndexList.splice(playerIndexList.indexOf(i), 1);
+                            }
+                            
+                            if(playerIndexList.length === modifierData.selectNum){
+                                $("#closeCaseRevealModalButton").show();
+                            }
+                            else{
+                                $("#closeCaseRevealModalButton").hide();
+                            }
+                        }
+                    }
+                    else{
+                        $(p).hide();
+                    }
+                });
+                playerSelectList.show();
+            }
+            else if(modifierData.mod === "T"){
+                let questionData;
+                let answers;
+                getTriviaQuestion()
+                    .then(() => {
+                        questionData = triviaQuestion.results[0];
+                        answers = [...questionData.incorrect_answers, questionData.correct_answer];
+                        shuffle(answers);
+                        $("#triviaQuestionText").html(questionData.question);
+                        $("#triviaQuestionText").show();
+                        $("#triviaAnswerList").empty().show();
+                        answers.forEach((a) => {
+                            const item = document.createElement("button");
+                            $(item).addClass("triviaAnswer teko").html(a);
+                            item.onclick = () => {
+                                if(a === questionData.correct_answer){
+                                    $(item).addClass("triviaCorrectAnswer");
+                                }
+                                else{
+                                    $(item).addClass("triviaWrongAnswer");
+                                }
+                                answerTrivia(a);
+                            }
+                            $("#triviaAnswerList").append(item);
+                        });
+
+                        function answerTrivia(answer) {
+                            let isCorrect = answer === questionData.correct_answer;
+                            let feedback = "Wrong!!!!";
+                            if(isCorrect){
+                                feedback = "Correct! No penalties for you!!";
+                                modifierMult = 0;
+                            }
+                            $("#triviaAnswerList").children().each((_, a) => {
+                                if($(a).text() === questionData.correct_answer){
+                                    $(a).addClass("triviaCorrectAnswer");
+                                }
+                                a.onclick = null;
+                            });
+                            $("#triviaQuestionResultText").text(feedback).show();
+                            $("#closeCaseRevealModalButton").delay(1000).fadeIn();
+                        }
+                });
+            }
+            else if(modifierData.mod === "D"){
+                const randomDare = modifierData.dareList[Math.floor(Math.random() * modifierData.dareList.length-1)];
+                $("#dareText").text(randomDare).show();
+                $("#dareCompleted").show();
+                $("#dareNotCompleted").show();
+                document.getElementById("dareCompleted").onclick = () => {
+                    modifierMult = 0;
+                    $("#closeCaseRevealModalButton").show();
+                    $("#dareNotCompleted").hide();
+                }
+                document.getElementById("dareNotCompleted").onclick = () => {
+                    modifierMult = 1;
+                    $("#closeCaseRevealModalButton").show();
+                    $("#dareCompleted").hide();
+                }
+            }
+            else {
+                $("#closeCaseRevealModalButton").delay(5000).fadeIn();
+            }
+        });
+        $("#modifierContainer").delay(3000).fadeIn();
     });
 }
 
