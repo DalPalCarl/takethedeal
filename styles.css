@@ -481,6 +481,42 @@ footer {
     filter: brightness(140%);
 }
 
+#dareText {
+    font-size: 3rem;
+    text-align: center;
+}
+
+#dareCompleted {
+    border-style: none;
+    background-color: var(--p-1);
+    box-shadow: 5px 5px var(--p-1B);
+    color: black;
+    border-radius: 10px;
+    padding: 7px;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40%;
+    text-align: center;
+}
+
+#dareNotCompleted {
+    border-style: none;
+    background-color: var(--p-4);
+    box-shadow: 5px 5px var(--p-4B);
+    color: black;
+    border-radius: 10px;
+    padding: 7px;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40%;
+    text-align: center;
+}
+
+#dareCompleted:hover, #dareNotCompleted:hover {
+    filter: brightness(140%);
+}
+
 #endGameContainer {
     position: absolute;
     top: 5rem;
@@ -1044,7 +1080,7 @@ footer {
     }
 
     #caseRevealInstruction {
-        font-size: 5vw;
+        font-size: 8vw;
     }
     
     #caseRevealCase {
@@ -1083,6 +1119,38 @@ footer {
         top: 10rem;
         left: 0;
         right: 0;
+    }
+
+    #dareText {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    #dareCompleted {
+        border-style: none;
+        background-color: var(--p-1);
+        box-shadow: 5px 5px var(--p-1B);
+        color: black;
+        border-radius: 10px;
+        padding: 7px;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        cursor: pointer;
+        width: 60%;
+        text-align: center;
+    }
+    
+    #dareNotCompleted {
+        border-style: none;
+        background-color: var(--p-4);
+        box-shadow: 5px 5px var(--p-4B);
+        color: black;
+        border-radius: 10px;
+        padding: 7px;
+        font-size: 1.4rem;
+        cursor: pointer;
+        width: 60%;
+        text-align: center;
     }
 
     #endGameContainer {
