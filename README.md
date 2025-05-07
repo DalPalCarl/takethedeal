@@ -46,6 +46,8 @@ Modifiers add unpredictable twists and can stack with penalties:
 | Give Out       | Give the penalty to another player.                                         |
 | Choose Buddy   | Share your penalty with another player.                                     |
 | Everyone | All players take the penalty.                                               |
+| Dare | Do a randomly selected dare or take the penalty.                                               |
+| Trivia | Answer the trivia question correctly or take the penalty                                               |
 
 Modifiers can be added to cases based on the selected Modifier Setting.
 
