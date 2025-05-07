@@ -11,10 +11,19 @@ const modifierPlayerSelection = $("#modifierPlayerSelection");
 const MAXPLAYERCOUNT = 20;
 const ROUNDS = 8;
 
+
+
 const audioContext = new AudioContext();
 const gainNode = new GainNode(audioContext);
 gainNode.connect(audioContext.destination);
 const volumeSlider = document.getElementById("volumeSlider");
+
+const audio = new Audio("./sound/caseRevealDown.wav");
+const source = audioContext.createMediaElementSource(audio);
+source.connect(gainNode);
+
+
+
 
 let playerCount = 0;
 let modifierCount = 0;
@@ -38,6 +47,8 @@ let triviaQuestion;
 async function getTriviaQuestion() {
     triviaQuestion = await triviaCall();
 }
+
+let audioElem;
 
 // $("#gameSetup").hide();
 $(document).ready(() => {
@@ -112,10 +123,8 @@ $(document).ready(() => {
     volumeSlider.addEventListener("input", () => {
         gainNode.gain.value = volumeSlider.value;
     });
-    
+
     assignModifierJSON();
-
-
     
 })
 
@@ -361,6 +370,7 @@ function revealCase(index) {
     $("#caseRevealText").text(currentPlayer.name);
     $("#caseRevealInstruction").css("opacity", "0");
     $("#caseRevealContainer").fadeIn(1000, () => {
+        // AUDIO: CASE DOWN 
         $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
             .one("animationend", () => {
                 let playerIndexList = [];
@@ -369,8 +379,10 @@ function revealCase(index) {
                 const penaltyValue = game.penaltyList[index];
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealInstruction").text(penaltyInstruction);
+                // AUDIO: CASE UP
                 $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
                 .one("animationend", () => {
+                    // AUDIO: CASE TYPE FEEDBACK
                     if (game.modifierList[index] && penaltyValue !== 0){
                         handleModifierCase(index, playerIndexList, penaltyClass, penaltyElement, penaltyValue);
                     }
@@ -398,7 +410,9 @@ function handleModifierCase(index, playerIndexList, penaltyClass, penaltyElement
     const modifierData = game.modifierList[index];
     const modifierElem = $("#modifiers").find($(".modifierShown:contains(" + game.modifierList[index].mod + ")")).last();
     let modifierMult = modifierData.multiplier;
+    // AUDIO: MODIFIER FADE IN
     $("#caseRevealModifier").text(modifierElem.text()).addClass("modifierAppear").delay(2000).one("animationend", () => {
+        // AUDIO: MODIFIER IMPACT
         $("#caseRevealContent").delay(2000).fadeOut().one("animationend", () => {
             $("#modifierName").text(modifierData.name);
             $("#modifierInfo").text(modifierData.info);
