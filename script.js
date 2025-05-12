@@ -361,7 +361,7 @@ function revealCase(index) {
     $("#caseRevealText").text(currentPlayer.name);
     $("#caseRevealInstruction").css("opacity", "0");
     $("#caseRevealContainer").fadeIn(1000, () => {
-        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards")
+        $("#caseRevealCase").css("animation", "caseRevealDown 1500ms ease-in forwards").delay(2000 + (Math.random() * 3000))
             .one("animationend", () => {
                 let playerIndexList = [];
                 const [penaltyClass, penaltyInstruction] = findPenaltyClass(index);
@@ -369,7 +369,7 @@ function revealCase(index) {
                 const penaltyValue = game.penaltyList[index];
                 revealCaseElement.removeClass("caseStyle").addClass(penaltyClass).text(penaltyElement.text());
                 $("#caseRevealInstruction").text(penaltyInstruction);
-                $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3)")
+                $("#caseRevealCase").css("animation", "caseRevealUp 1000ms cubic-bezier(0.17, 0.2, 0, 1.3) " + (500 + (Math.random() * 1500) + ((game.round-1) * 100)) + "ms backwards")
                 .one("animationend", () => {
                     if (game.modifierList[index] && penaltyValue !== 0){
                         handleModifierCase(index, playerIndexList, penaltyClass, penaltyElement, penaltyValue);
@@ -623,8 +623,6 @@ function progressGameStep() {
         return;
     }
     if(game.round === ROUNDS){
-        $("#valueContainer").css("z-index", "50");
-        $("#playerContainer").css("z-index", "50");
         offerChoice(game.players[game.roundStep]);
     }
 }
@@ -643,6 +641,8 @@ function findLastCase(){
 function offerChoice(player) {
     $("#dondChoiceText").text(player.name);
     $("#dondChoiceCase").text(player.selectedCase+1);
+    $("#valueContainer").css("z-index", "50");
+    $("#playerContainer").css("z-index", "50");
     $("#backdrop").fadeIn();
     $("#dondChoiceContainer").fadeIn();
 
@@ -720,6 +720,9 @@ function clearOldGameElements(){
 
     //modifiers
     modifiers.children().remove();
+
+    //end game
+    $("#endGamePlayerStats").empty();
 
     //reset styles
     $("#valueContainer").css("z-index", "");
