@@ -306,7 +306,10 @@ function loadCases() {
         $(newCase).addClass("case teko").text(i+1)
             .prop("--anim-delay", `${(20 * i)}ms`)
             .addClass("popIn");
-        newCase.addEventListener("click", () => handleCaseClicked(newCase, i));
+        newCase.addEventListener("click", () => {
+            // AUDIO: CASE CLICK
+            handleCaseClicked(newCase, i)
+        });
         $(caseBoard).append(newCase);
     }
 }
@@ -697,6 +700,7 @@ async function endGame(){
     await calculateHighestAndLowest();
     $("#backdrop").fadeIn();
     $("#endGameContainer").fadeIn();
+    // AUDIO: END GAME INDICATOR
     game.players.forEach((p, i) => {
         const playerItem = document.createElement('div');
         const playerScore = document.createElement('div');
