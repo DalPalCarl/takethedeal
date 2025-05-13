@@ -81,5 +81,19 @@
             "Describe your worst date in 5 words",
             "Tell the group your guilty pleasure tv show/movie/artist nobody knows you like"
         ]
+    },
+    {
+        "mod": "V",
+        "name": "Versus",
+        "info": "Complete the challenge with this other player. Loser takes the penalty!",
+        "isPlayerSelection": true,
+        "includesSelf": false,
+        "multiplier": 1,
+        "challengeList": [
+            "Staring Contest",
+            "Rock-Paper-Scissors (Best of 3)",
+            "Bottle Flip (First to land)",
+            "Longest Plank Hold"
+        ]
     }
 ]

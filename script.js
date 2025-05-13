@@ -56,6 +56,9 @@ $(document).ready(() => {
     $("#dareCompleted").hide();
     $("#dareNotCompleted").hide();
 
+    $("#versusText").hide();
+    $("#versusInstruction").hide();
+
     
     $("#addPlayerButton").on("click", () => {
         addPlayerToList();
@@ -67,6 +70,8 @@ $(document).ready(() => {
             addPlayerToList();
         }
     });
+
+    
 
     function getBoard(board) {
         const oldBoard = board === "values" ? $("#valueContainer") : board === "cases" ? $("#caseContainer") : $("#playerContainer");
@@ -425,40 +430,69 @@ function handleModifierCase(index, playerIndexList, penaltyClass, penaltyElement
                     $("#dareCompleted").hide();
                     $("#dareNotCompleted").hide();
                 }
+                else if(modifierData.mod === "V"){
+                    $("#versusText").hide();
+                    $("#versusInstruction").hide();
+                }
                 $(playerSelectList.get(0).children).each((_, p) => {
                     $(p).removeClass("selectPlayerActive").show();
                 });
                 $(playerSelectList).hide();
+                $("#playerContainer").css("z-index", "1");
                 handleContinueButton(penaltyElement, penaltyClass, modifierElem, playerIndexList, (penaltyValue * modifierMult));
             }
             $("#caseRevealCase").css("animation", "none");
             if(modifierData.isPlayerSelection){
                 $("#playerContainer").css("z-index", "50");
                 $("#gameBoardNav").css("z-index", "50");
-
-                $(playerSelectList.get(0).children).each((i, p) => {
-                    if(i !== game.roundStep){
-                        p.onclick = () => {
-                            $(p).toggleClass("selectPlayerActive");
-                            if($(p).hasClass("selectPlayerActive")){
-                                playerIndexList.push(i);
-                            }
-                            else{
-                                playerIndexList.splice(playerIndexList.indexOf(i), 1);
-                            }
-                            
-                            if(playerIndexList.length === modifierData.selectNum){
-                                $("#closeCaseRevealModalButton").show();
-                            }
-                            else{
-                                $("#closeCaseRevealModalButton").hide();
+                if(modifierData.mod === "V"){
+                    const versusChallenge = modifierData.challengeList[Math.floor(Math.random() * modifierData.challengeList.length)];
+                    $("#versusText").text(versusChallenge);
+                    const randPlayerIndex = Math.floor(Math.random() * (playerCount-1)) + 1 + game.roundStep;
+                    let hasSelected = false;
+                    $(playerSelectList.get(0).children).each((i, p) => {
+                        if(i === game.roundStep || i === randPlayerIndex % playerCount){
+                            p.onclick = () => {
+                                if(!hasSelected){
+                                    $(p).addClass("selectPlayerActive");
+                                    playerIndexList.push(i);
+                                    hasSelected = true;
+                                    $("#closeCaseRevealModalButton").show();
+                                }
                             }
                         }
-                    }
-                    else{
-                        $(p).hide();
-                    }
-                });
+                        else{
+                            $(p).hide();
+                        }
+                    })
+                    $("#versusText").show();
+                    $("#versusInstruction").show();
+                }
+                else{
+                    $(playerSelectList.get(0).children).each((i, p) => {
+                        if(i !== game.roundStep){
+                            p.onclick = () => {
+                                $(p).toggleClass("selectPlayerActive");
+                                if($(p).hasClass("selectPlayerActive")){
+                                    playerIndexList.push(i);
+                                }
+                                else{
+                                    playerIndexList.splice(playerIndexList.indexOf(i), 1);
+                                }
+                                
+                                if(playerIndexList.length === modifierData.selectNum){
+                                    $("#closeCaseRevealModalButton").show();
+                                }
+                                else{
+                                    $("#closeCaseRevealModalButton").hide();
+                                }
+                            }
+                        }
+                        else{
+                            $(p).hide();
+                        }
+                    });
+                }
                 playerSelectList.show();
             }
             else if(modifierData.mod === "T"){
