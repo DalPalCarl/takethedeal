@@ -27,7 +27,7 @@
         "multiplier": 3
     },
     {
-        "mod": "4",
+        "mod": "G",
         "name": "Give Out",
         "info": "Choose someone to take this penalty instead!",
         "isPlayerSelection": true,
@@ -36,7 +36,7 @@
         "multiplier": 1
     },
     {
-        "mod": "5",
+        "mod": "B",
         "name": "Choose Buddy",
         "info": "Take this penalty with another player!",
         "isPlayerSelection": true,
@@ -45,8 +45,8 @@
         "multiplier": 1
     },
     {
-        "mod": "6",
-        "name": "Give Two Out",
+        "mod": "P",
+        "name": "Give to Pair",
         "info": "Choose 2 players to take this penalty value instead!",
         "isPlayerSelection": true,
         "includesSelf": false,

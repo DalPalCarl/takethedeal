@@ -253,7 +253,7 @@ function loadPenalties(totalCases, pList) {
                 $(newVal).addClass("value fourPenalties teko text-thicc").text("4").css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
                 break;
             case 5:
-                $(newVal).addClass("value maxPenalty bokor text-thicc").text("M")
+                $(newVal).addClass("value maxPenalty p-marker text-thicc").text("M")
                 .css("animation", "popIn 1000ms " + (20 * i) + "ms forwards");
             }
         $(valueBoard).append(newVal);
@@ -263,7 +263,7 @@ function loadPenalties(totalCases, pList) {
 function loadModifiers(modifierData) {
     modifierData.forEach((mod, i) => {
         const modElement = document.createElement("div");
-        $(modElement).addClass("modifier modifierShown bokor text-thicc").text(mod.mod).css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
+        $(modElement).addClass("modifier modifierShown p-marker text-thicc").text(mod.mod).css("animation", "popIn 1000ms " + (30 * i) + "ms forwards");
         $(modifiers).append(modElement);
     })
 }
